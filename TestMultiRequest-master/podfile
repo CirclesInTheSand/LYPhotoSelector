@@ -4,5 +4,5 @@ platform :ios, '8.0'
 target 'TestMutiRequest' do
     pod 'VasSonic', '1.0'
     pod 'MBProgressHUD'
-    pod 'SDWebImage'
+    pod 'SDWebImage'.   
 end	
