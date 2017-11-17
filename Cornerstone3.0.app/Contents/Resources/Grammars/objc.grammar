@@ -1,0 +1,176 @@
+{
+	name                    : 'objc';
+	title                   : 'Objective-C';
+	import									: [ 'c', 'cpp' ];
+	superset-of							: [ 'cpp' ];
+
+	match:
+	[ 
+		import								: 'cpp:regex',
+		uti										: 'public.c-header',
+		uti										: 'public.objective-c-source',
+		uti										: 'public.objective-c-plus-plus-source',
+		extension							: 'objc',
+		extension							: 'pch',
+		
+		# Common Objective-C keywords
+		regex									: @'\b(self|super)\b',
+
+		# Common Foundation symbols
+		regex:
+		{
+			score								: 2;
+			pattern							: @'\b(NSObject|NSString|NSDate|NSTimeInterval|NSNumber|NSArray|NSMutableArray|NSDictionary|NSMutableDictionary|NSSet|NSMutableSet|NSException|NSParameterAssert|NSAssert|NSManagedObject|NSUserDefaults|NSBundle|NSNotificationCenter)\b';
+		},
+
+		# Common AppKit symbols
+		regex:
+		{
+			score								: 2;
+			pattern							: @'\b(NSApplication|NSApp|NSWindow|NSView|NSMenu|NSDocument|awakeFromNib)\b';
+		},
+
+		# Common UIKit symbols
+		regex:
+		{
+			score								: 2;
+			pattern							: @'\b(UIApplication|UIWindow|UIDevice|UIView|UIDocument|sharedApplication)\b';
+		},
+
+		# String literal
+		regex									: @'@".*?(?<!\\)"',
+
+		# Common literals
+		regex									: @'@(YES|NO)\b',
+
+		# Object literals
+		regex									: @'@[\(\[{]',
+
+		# Common Obj-C keywords
+		regex:
+		{
+			score								: 2;
+			pattern							: @'@(interface|implementation|end|class|protocol|synchronized|autoreleasepool|selector|property|synthesize|dynamic|public|protected|private|throw|optional|required)\b';
+		},
+
+		# Common IB keywords
+		regex:
+		{
+			score								: 2;
+			pattern							: @'\b(IBOutlet|IBAction)\b';
+		},
+
+		# Common ARC keywords
+		regex									: @'\b(__strong|__weak)\b',
+
+		# Bridging ARC keywords
+		regex:
+		{
+			score								: 2;
+			pattern							: @'\b(__bridge|__bridge_transfer|__bridge_retain|__unsafe_unretained|__autoreleasing)\b';
+		},
+
+		# Method call (no args)
+		regex									: @'\[[:alpha:]\w*\s+[:alpha:]\w*\]',
+
+		# Method call (1+ args)
+		regex:
+		{
+			score								: 2;
+			pattern							: @'\[[:alpha:]\w*\s+[:alpha:]\w*\:';
+		},
+
+		# Block argument type
+		regex									: @'\(\^\)',
+
+		# Method declaration
+		regex:
+		{
+			score								: 2;
+			pattern							: @'[+-]\s*\([:alpha:]\w*(\s*\*\s*)?\)\s*[:alpha:]\w*';
+		},
+
+		# Action
+		regex:
+		{
+			score								: 2;
+			pattern							: @'\-\s*\((void|IBAction)\)\s*\w+:\s*\(\s*id\s*\)\s*[:alpha:]\w*';
+		},
+	];
+	
+	rules:
+	[
+		whitespace-rule:
+		{
+		},
+		
+		ref										: 'comment.multiline.c',
+		ref										: 'comment.singleline.c',
+		ref										: 'keyword.c',
+		ref										: 'keyword.cpp',
+	
+		word-rule:
+		{
+			name                : 'keyword.objc';
+			case-insensitive		: no;
+			words:          		[
+														'@protocol', '@class', '@interface', '@public', '@protected', 
+														'@private', '@begin', '@end', '@implementation', '@selector', 
+														'@try', '@catch', '@finally', '@throw', '@protocol', '@synchronized', 
+														'@property', '@synthesize', '@dynamic',
+														'@optional', '@required',
+														'@defs', '@encode',
+														'_cmd', 'nil', 'Nil', 'id', 'BOOL', 'SEL', 'YES', 'NO', 'instancetype',
+														'__autoreleasing', '__strong', '__weak', '__unsafe_unretained', '__attribute__',
+														'__bridge', '__bridge_transfer', '__bridge_retained',
+														'in', 'out', 'bycopy', 'byref', 'oneway',
+														'self', 'super',
+														'IBAction', 'IBOutlet',
+													];
+		},
+	
+		ref										: 'keyword.preprocessor.c',
+		ref										: 'symbol.preprocessor.c',
+		ref										: 'keyword.preprocessor.include.c',
+		ref										: 'keyword.preprocessor.pragma.c',
+	
+		text-literal-rule:
+		{
+			name                : 'literal.string.objcpp';
+			open-sequence       : @'@"';
+			close-sequence      : @'"';
+			escape-char         : @'\';
+			multiline          	: false;
+			quoted-tokens       : true;
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'symbol.objc.formatting.token';
+					case-insensitive  : no;
+					pattern           : @'%@';
+				},
+
+				ref									: 'symbol.c.escaped.character',
+				ref									: 'symbol.c.formatting.token',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		ref										: 'literal.string.c',
+		ref										: 'literal.char.c',
+		ref										: 'literal.number.c',
+		
+		default-rule:
+		{	
+		}
+	];
+};

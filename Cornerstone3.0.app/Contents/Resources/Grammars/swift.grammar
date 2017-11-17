@@ -1,0 +1,186 @@
+{
+	name                      : 'swift';
+	title                     : 'Swift';
+	match:
+	[ 
+		uti											: 'public.swift-source',
+
+		# Common Swift symbols
+		regex										: @'\b(this|super)\b',
+
+		# Import statement
+		regex										: @'\bimport\s+[:alpha:]\w*',
+
+		# Class definition
+		regex										: @'(?s)((\bpublic|\binternal)\s+)*\bclass\s+[:alpha:]\w*',
+
+		# Class definition extending another class
+		regex										: @'(?s)((\bpublic|\bprivate|\babstract)\s+)*\bclass\s+[:upper:]\w*\s+extends\s+[:alpha:]\w*(\.[:alpha:]\w*)*',
+
+		# Class definition implementing interface (multiple interfaces not included in match)
+		regex										: @'(?s)((\bpublic|\bprivate|\babstract)\s+)*\bclass\s+[:upper:]\w*\s+implements\s+[:alpha:]\w*(\.[:alpha:]\w*)*',
+
+		# Variable declaration
+		regex										: @'(?s)var\s+(\w+)',
+
+		# Variable assignment
+		regex										: @'(?s)let\s+(\w+)',
+
+		# Member variable dereference
+		regex										: @'(?s)self\.\w+',
+
+		# Method declaration
+		regex										: @'(\bfunc\s+)*([:alpha:]\w*(\s*\[\])?)\s+[:lower:]\w*\s*\(.*\)\s*(->\s*\w+(\??)\s*)?\{',
+
+		# Common system types
+		regex										: @'\b(bool|string|string|object)\b',
+
+		# Single-line comment
+		regex										: @'//.*',
+
+		# Multi line comment (dot matches newline)
+		regex										: @'(?s)/\*.*?\*/',
+
+		# Method call
+		regex										: @'[[:alpha:]_]\w*\s*\.\s*[:lower:]\w*\s*\(',
+
+		# throws statement
+		regex										: @'\bthrows\s[:upper:]\w*Exception',
+
+		# IB Outlets
+		regex:
+		{
+			score									: 2;
+			pattern								: @'@IBOutlet\b';
+		},
+		
+		# Question mark/exclamation mark chaff
+		regex										: @'\w+!',
+		regex										: @'\w+\?',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line comment partition which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.swift';
+			open-sequence     		: @'/*';
+			close-sequence    		: @'*/';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.swift';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.swift';
+						value           : 'comment.keyword.scm.value.swift';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.swift';
+			open-sequence					:	@'//';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				ref									: 'comment.keyword.scm.swift',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Swift keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.swift';
+			case-insensitive      : no;
+			words:                [
+															'as',
+															'break',
+															'case', 'catch', 'class', 'continue',
+															'default', 'defer', 'deinit', 'do', 'dynamic', 'dynamicType',
+															'else', 'enum', 'extension',
+															'false', 'fallthrough', 'final', 'for', 'func',
+															'guard', 'get', 
+															'if', 'in', 'import', 'infix', 'init', 'inout', 'internal', 'is', 
+															'let',
+															'nil', 'nonmutating',
+															'operator', 'optional', 'override',
+															'postfix', 'precedence', 'prefix', 'private', 'protocol', 'Protocol', 'public', 
+															'repeat', 'required', 'return', 'rethrows',
+															'self', 'Self', 'set', 'static', 'struct', 'subscript', 'super', 'switch', 
+															'throw', 'throws', 'true', 'try', 'typealias',
+															'unowned',
+															'var',
+															'weak', 'where', 'while',
+															'@IBOutlet',
+														];
+		},
+				
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.swift';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.char.swift';
+			open-sequence         : '\'';
+			close-sequence        : '\'';
+			escape-char           : @'\';
+			multi-line            : no;
+			quoted-tokens         : yes;
+		},
+		
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.swift';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|(-?(\d+)?\.(\d+)([eE]\d+)?[fF]?)|(-?\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>The Timeline Inspector</title>
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+			font-size: 9pt;
+			background-color: #fcfcfc;
+		}
+		table td {
+			border: 1px solid #dfdfdf;
+			vertical-align: top;
+			padding: 0.7em;
+		}
+		table td:first-child {
+			text-align: center;
+		}
+		h3 {
+			margin-bottom: 0em;
+		}
+		h3 + p {
+			margin-top: 0.3em;
+		}
+		h2.section {
+			text-transform: uppercase;
+		}
+		h3.property {
+			text-transform: lowercase;
+		}
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="comparing.html"></a>
+	</div>
+
+  <h1>The Timeline Inspector</h1>
+  <p>The timeline inspector displays information about the revision selected in the timeline view.<p>The inspector groups information into sections such as <span class="uiref">General</span>, <span class="uiref">Message</span> and <span class="uiref">Changes</span>. Each section can be collapsed and expanded as needed to maximize the available screen space for your current task.</p></p>
+  
+  <h2 class="section">General</h2>
+  <h3 class="property">Name</h3>
+  <p>The name of the item at the selected revision.</p>
+  <h3 class="property">Revision</h3>
+  <p>The number of the selected revision.</p>
+  <h3 class="property">Where</h3>
+  <p>The location of the item in the repository at the time of the revision.</p>
+  <h3 class="property">Date</h3>
+  <p>The date when the revision was committed.</p>
+  <h3 class="property">Action</h3>
+  <p>The type of change made to the item at the selected revision.</p>
+  <h3 class="property">Author</h3>
+  <p>The name of the user that committed the revision. This may be empty if the user repository permits anonymous access.</p>
+  
+  <h2 class="section">Message</h2>
+  <p>This section shows the message for the revision. This section may be empty if the repository permits empty messages for commits.</p>
+  <p>If issue tracking support is enabled (see <a href="../../../integration/issue-tracking.html">Integrating with Issue Tracking Systems</a> for more information), matching issue numbers are displayed as links. Clicking on the link will open a browser window on the issue&rsquo;s page in the issue tracking system.</p>
+ 
+  <h2 class="section">Changes</h2>
+  <p>This section lists the items that were changed in this revision. The following icons are used to represent the type of change committed:</p>
+  <table>
+		<tr>
+			<td><img src="../../../../images/marker-added.png" srcset="../../../../images/marker-added@2x.png 2x"/></td>
+			<td>The item was added  or branched.</td>
+		</tr>
+		<tr>
+			<td><img src="../../../../images/marker-deleted.png" srcset="../../../../images/marker-deleted@2x.png 2x"/></td>
+			<td>The item was deleted. If the item was branched in the same revision then this indicates a move or rename operation.</td>
+		</tr>
+		<tr>
+			<td><img src="../../../../images/marker-modified.png" srcset="../../../../images/marker-modified@2x.png 2x"/></td>
+			<td>The item&rsquo;s contents or properties were modified.</td>
+		</tr>
+		<tr>
+			<td><img src="../../../../images/marker-replaced.png" srcset="../../../../images/marker-replaced@2x.png 2x"/></td>
+			<td>The item was replaced, i.e. removed and added in the same revision.</td>
+		</tr>
+  </table>
+
+</body>
+</html>

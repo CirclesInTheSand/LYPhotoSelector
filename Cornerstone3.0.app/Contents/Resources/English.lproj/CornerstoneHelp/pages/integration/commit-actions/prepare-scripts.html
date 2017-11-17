@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Prepare Scripts</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="pre-commit-scripts.html"></a>
+	</div>
+
+  <h1>Prepare Scripts</h1>
+  <p>Prepare scripts are run during the preparation phase (see <a href="index.html#commit-process">the commit process</a> for more information).</p>
+  <p>The <a href="../../working/commit-view.html">commit view</a> will not be displayed until the prepare script is complete. The script can modify the contents of the working copy as necessary and the changes will be picked up by Cornerstone and presented to the user in the commit view.</p>
+  <p>A prepare script can be run in one of two ways:</p>
+  <ol>
+  	<li>
+  		<p><strong>Once for the entire working copy</strong></p>
+  		<p>The script is run once. The POSIX path of the working copy&rsquo;s top folder is passed to the script as its only parameter.</p>
+  		<p>Prepare scripts are run regardless of whether any candidate items are found in the items selected in the working copy browser.</p>
+  	</li>
+  	<li>
+  		<p><strong>Once for each changed item in the user&rsquo;s selection</strong></p>
+  		<p>The script is run multiple times, once for each changed item in the files or folders selected by the user in the working copy browser. The POSIX path of the changed item is passed to the script as its only parameter.</p>
+  		<p>Cornerstone will abort script execution as soon as the first error is encountered.</p>
+  	</li>
+  </ol>
+  <div class="note">
+  	<p>The user is prompted when a prepare script raises an error&mdash;i.e. exits with a value other than zero&mdash;with the option to continue or cancel the commit.</p>
+  	<p>Prepare scripts can therefore be used to validate changes before a commit.</p>
+  </div>
+  
+  <h2>Selecting a Script for Execution</h2>
+  <p>The prepare script is defined globally for the app. To specify which script is run:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Open the app&rsquo;s preferences by selecting <span class="uiref">Preferences...</span> (key equivalent <span class="key">⌘,</span>) from the <span class="uiref">Cornerstone</span> menu.</p>
+  		</li>
+  		<li>
+  			<p>Switch to the <span class="uiref">Working Copies</span> pane.</p>
+  		</li>
+  		<li>
+  			<p>Use the <span class="uiref">Run Script</span> field in the <span class="uiref">Before Committing...</span> section to choose the prepare script to run.</p>
+  		</li>
+  		<li>
+  			<p>Specify whether the script should be run once for the entire working copy or once for each item.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Possible Uses for Prepare Scripts</h2>
+  <ul>
+  	<li>
+  		<p>Archiving documents as .zip files ready for commit in order to workaround issues with package-format documents placed under version control.</p>
+  		<p>Documents are manually unzipped for editing and then archived by the script before commit.</p>
+  	</li>
+  	<li>
+  		<p>Searching the working copy for text (e.g. <code>NSLog</code> or <code>TODO</code>) in candidate changed files. The script raises an error if the text is found to prevent temporary or incomplete code from being committed.</p>
+  	</li>
+  	<li>
+  		<p>Verifying that the names of newly-added files conform to a particular convention.</p>
+  	</li>
+  	<li>
+  		<p>Verifying that files conform to a project&rsquo;s formatting conventions, e.g.:</p>
+  		<p>
+  			<ul>
+  				<li>Files do not contain tab characters</li>
+  				<li>Files contain a standard header</li>
+  				<li>Files contain copyright information</li>
+  			</ul>
+  		</p>
+  	</li>
+  </ul>
+  
+  <h2>Example Script</h2>
+  <table class="summary">
+  	<tr>
+  		<td>Purpose</td>
+  		<td>Scan the input file for instances of "NSLog" and generate an error if a match is found</td>
+  	</tr>
+  	<tr>
+  		<td>Type</td>
+  		<td>Item</td>
+  	</tr>
+  	<tr>
+  		<td>Argument</td>
+  		<td>Path to a text file</td>
+  	</tr>
+  </table>
+  
+  <div class="script">
+  <pre>#!/usr/bin/env bash
+
+# Finds instances of "NSLog" in the specified file. Reports error and exits
+# with exit code 1 if "NSLog" is found.
+#
+# Usage:
+#   CheckForNSLogs file
+#
+# Arguments:
+#   $1 path to the file to search
+
+# Use grep to search for instances of 'NSLog' in the specified file
+
+if [ $(grep -c "NSLog" "$1") -ne 0 ]
+then
+
+  # The file contains one or more NSLogs. Use awk to get the line numbers 
+  # of the NSLog instances and format them into a comma-separated string
+
+  lines=$(awk 'BEGIN{ORS=", "}/NSLog/{print NR}' "$1" | \
+          awk '{sub(/, +$/, ""); print}')
+          
+  name=${1##*/}
+  
+  # Echo the name of the file and line numbers to stderr in order
+  # that it is displayed to the user by Cornerstone
+  
+  msg="\"$name\" contains NSLogs on line(s) $lines."
+  msg="$msg All NSLogs should be removed before this file is committed."
+  
+  echo $msg >&2
+  
+  # Raise an error by exiting with non-zero exit code
+  
+  exit 1 
+  
+else
+  
+  # No NSLogs found so we can continue with the commit
+  
+  exit 0
+  
+fi
+</pre>
+
+  </div>
+
+	<p><code>$1</code> is used to reference the path of the changed item that is a candidate for committing. It is supplied as the script&rsquo;s single argument. It is recommended that <code>$1</code> be placed in quotation marks in order that the script functions correctly with paths containing space characters.</p>
+
+	<div class="note">
+		<p>The script formats a useful error message and writes it to <code>stderr</code>. Cornerstone picks up this output and displays it to the user.</p>
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>What is Subversion?</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="terminology/index.html"></a>
+	</div>
+
+  <h1>What is Subversion?</h1>
+  <p>Subversion is a very popular version control system which was originally designed to replace the aging CVS system which was no longer up to the task of tackling the increasingly complex software projects it was being charged with managing.</p>
+  <p>It is more flexible and scales better to manage larger, more complex projects.</p>
+  <p>It is equally suited to managing an author&rsquo;s latest book project as it is to coping with large software systems comprised of tens of thousands of source code files.</p>
+  <p>It has a client-server architecture supporting widely-distributed team members but can also be used by a single person on a single computer.</p>
+  
+  <div class="note">
+  <h2>Client-Server Architecture</h2>
+  <p>Sharing a Subversion repository between users requires the use of a server. Repositories should never be accessed simultaneously by multiple users or client apps without employing a server to manage access to the repository.</p>
+  <p>While the client and server components of a Subversion system are generally located on different computers, they don&rsquo;t have to be. The separation is not necessarily physical, it&rsquo;s more a separation of responsibilities: the server is responsible for controlling access to the files under version control and the client is responsible for enabling the user to access these files.</p>
+  <p>Cornerstone is a Subversion client and doesn&rsquo;t contain any server capabilities. If you need to share files between computers then Cornerstone can help you get started, but you will need to separately install and maintain a Subversion server.</p>
+  <p>A repository may also be used without a server, in which case the repository must be on the computer&rsquo;s local disk and only one user and/or app may access the repository at a time.</p>
+  </div>
+  
+  <p>Subversion is free software. This means that the software itself is not sold commercially. Instead it&rsquo;s published under a so-called open source license which makes it available at no cost both to users and other software developers who wish to build upon it.</p>
+  <p>You can read the terms of this license in the acknowledgements document included with Cornerstone and accessible under <span class="uiref">Help &gt; Acknowledgements.</span></p>
+  <p>You can get more information about the Subversion project from <a href="http://subversion.apache.org"/>http://subversion.apache.org</a></p>
+  
+  <h2>Do I need to install Subversion? Where can I get it from?</h2>
+  <p>You don&rsquo;t need to have Subversion installed to run Cornerstone because it comes with its own copy of Subversion baked into the app.</p>
+  <p>You will only need to install Subversion if you want to use a version of the Subversion command line tools other than that which came with your operating system. You can download binary packages of Subversion for your operating system <a href="https://subversion.apache.org/packages.html">here</a>.</p>
+  <h2>Getting more information about Subversion</h2>
+  <p>Cornerstone contains the complete Subversion reference documentation in PDF format. You can open the documentation using <span class="uiref">Help &gt; Subversion Documentation.</span></p>
+</body>
+</html>

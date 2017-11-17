@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Running an SVN Server Automatically in the Background</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="regex-syntax.html"></a>
+	</div>
+
+  <h1>Running an SVN Server Automatically in the Background</h1>
+  <p>Starting <code>svnserve</code> from the Terminal as described in <a href="svnserve.html">Setting up an SVN Server</a> is easy enough, but you will have to do this each time you restart your computer. This section describes how to configure your Mac such that this is done automatically for you.</p>
+  
+  <div class="note">
+  	<p>This section assumes that you are familiar with using the Terminal.</p>
+  	<p>Please be aware that by following these instructions you will be permanently changing your Mac&rsquo;s configuration.</p>
+  	<p><strong>This information is provided for your convenience. You do this at your own risk. Zennaware accepts no responsibility for any issues resulting from changes you make to your system&rsquo;s configuration.</strong></p>
+  </div>
+    
+  <h2>Create a launchd Property List File</h2>
+  <p>macOS includes a component called <code>launchd</code> which manages apps that run in the background. The steps outlined here describe how to configure <code>launchd</code> to run <code>svnserve</code> on demand to process each incoming request from a Subversion client.</p>
+  <div class="task">
+		<ol>
+			<li>
+				<p>You need to know where svnserve is installed on your Mac before continuing. Open the Terminal and enter:<pre>which svnserve</pre></p>
+				<p>Make a note of the path output by this command. By default it will output:<pre>/usr/bin/svnserve</pre></p>
+			</li>
+			<li>
+				<p>Next, create a text file with the following contents and save it as <code>org.tigris.subversion.svnserve.plist</code> in <code>/Library/LaunchDaemons</code></p>
+				<pre>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;!DOCTYPE plist PUBLIC &quot;-//Apple Computer//DTD PLIST 1.0//EN&quot;
+    &quot;http://www.apple.com/DTDs/PropertyList-1.0.dtd&quot;&gt;
+&lt;plist version=&quot;1.0&quot;&gt;
+    &lt;dict&gt;
+        &lt;key&gt;Disabled&lt;/key&gt;
+        &lt;false/&gt;
+        &lt;key&gt;UserName&lt;/key&gt;
+        &lt;string&gt;_svn&lt;/string&gt;
+        &lt;key&gt;Label&lt;/key&gt;
+        &lt;string&gt;org.tigris.subversion.svnserve&lt;/string&gt;
+        &lt;key&gt;ProgramArguments&lt;/key&gt;
+        &lt;array&gt;
+            &lt;string&gt;/usr/bin/svnserve&lt;/string&gt;
+            &lt;string&gt;--inetd&lt;/string&gt;
+        &lt;/array&gt;
+        &lt;key&gt;ServiceDescription&lt;/key&gt;
+        &lt;string&gt;SVN Version Control System&lt;/string&gt;
+        &lt;key&gt;Sockets&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;Listeners&lt;/key&gt;
+            &lt;array&gt;
+                &lt;dict&gt;
+                    &lt;key&gt;SockFamily&lt;/key&gt;
+                    &lt;string&gt;IPv4&lt;/string&gt;
+                    &lt;key&gt;SockServiceName&lt;/key&gt;
+                    &lt;string&gt;svn&lt;/string&gt;
+                    &lt;key&gt;SockType&lt;/key&gt;
+                    &lt;string&gt;stream&lt;/string&gt;
+                &lt;/dict&gt;
+                &lt;dict&gt;
+                    &lt;key&gt;SockFamily&lt;/key&gt;
+                    &lt;string&gt;IPv6&lt;/string&gt;
+                    &lt;key&gt;SockServiceName&lt;/key&gt;
+                    &lt;string&gt;svn&lt;/string&gt;
+                    &lt;key&gt;SockType&lt;/key&gt;
+                    &lt;string&gt;stream&lt;/string&gt;
+                &lt;/dict&gt;
+            &lt;/array&gt;
+        &lt;/dict&gt;
+        &lt;key&gt;inetdCompatibility&lt;/key&gt;
+        &lt;dict&gt;
+            &lt;key&gt;Wait&lt;/key&gt;
+            &lt;false/&gt;
+        &lt;/dict&gt;
+    &lt;/dict&gt;
+&lt;/plist&gt;</pre>
+			</li>
+			<li>
+				<p>If svnserve is not located at <code>/usr/bin/svnserve</code> on your Mac then change the path on line 14:<pre>&lt;string&gt;/path/to/svnserve&lt;/string&gt;</pre></p>
+			</li>
+			<li>
+				<p>This script will run <code>svnserve</code> as the built-in <code>_svn</code> user. You will need to ensure that <code>_svn</code> has write access to your repository by entering the following command into the Terminal:<pre>chown -R _svn /path/to/repository</pre></p>
+				<p>Alternatively, you can change the user on line 9, e.g.:<pre>&lt;string&gt;zoe&lt;/string&gt;</pre></p>
+				<p>This will run <code>svnserve</code> as zoe.</p>
+			</li>
+			<li>
+				<p>You can also specify the <code>--root</code> argument (described in the previous section) by adding the following 2 lines to the <code>ProgramArguments</code> section:<pre>&lt;string&gt;--root&lt;/string&gt;
+&lt;string&gt;/path/to/repository&lt;/string&gt;</pre></p>
+			</li>
+		</ol>
+	</div>
+	
+	<h2>Starting the Daemon</h2>
+	<p>Instruct launchd to load the contents of the file and start listening for incoming requests by entering the following commands:</p>
+	<div class="task">
+	<pre>sudo launchctl load \
+  /Library/LaunchDaemons/org.tigris.subversion.svnserve.plist
+
+sudo launchctl start \
+  org.tigris.subversion.svnserve</pre>
+	</div>
+	<p>You will be prompted to enter your password. The Terminal&rsquo;s shell must be running as a user with administrator rights.</p>
+	<p><code>launchd</code> should now automatically start listening for incoming requests each time you restart your Mac.</p>
+
+	<h2>Stopping The Daemon</h2>
+	<p>To stop listening for requests and unload the configuration, enter the following commands:</p>
+	<div class="task">
+		<pre>sudo launchctl stop \
+  org.tigris.subversion.svnserve
+	
+sudo launchctl unload \
+  /Library/LaunchDaemons/org.tigris.subversion.svnserve.plist</pre>
+  </div>
+  
+  <p>For more information on svnserve, refer to the Subversion documentation included with Cornerstone (<span class="uiref">Help &gt; Subversion Documentation</span>).</p>
+  
+</body>
+</html>

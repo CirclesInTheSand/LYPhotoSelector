@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+		}
+		td {
+			vertical-align: middle;
+			padding: 0.8em;
+		}
+		td+td {
+			width: 100%;
+		}
+		td {
+			vertical-align: top;
+		}
+	</style>
+	<title>The Working Copy Browser</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="columns.html"></a>
+	</div>
+
+  <h1>The Working Copy Browser</h1>
+  <p>The working copy browser displays a familiar, Finder-like interface for manipulating the working copy&rsquo;s files. It also provides you with an at-a-glance overview of the status of the files in your working copy.</p>
+  <p>A working copy&rsquo;s browser is displayed by selecting the working copy from the source list.</p>
+  
+ 	<h2>Getting Around</h2>
+ 	<div class="links">
+  <ul class="plain">
+    <li><a href="columns.html">Browser Columns</a></li>
+    <li><a href="filtering.html">The Filter Bar</a></li>
+    <li><a href="navigation.html">Navigation</a></li>
+    <li><a href="moving.html">Moving and Copying Items</a></li>
+    <li><a href="adding.html">Adding Items</a></li>
+    <li><a href="renaming.html">Renaming Items</a></li>
+    <li><a href="deleting.html">Deleting Items</a></li>
+  </ul>
+ 	</div>
+  
+  <h2>Staying Up to Date</h2>
+  <p>The working copy browser is automatically refreshed when</p>
+	<ol>
+		<li>an operation is performed on items in the working copy;</li>
+		<li>the app is activated; and</li>
+		<li>items in the working copy&rsquo;s repository folder are locked or unlocked.</li>
+	</ol>
+  <p>The working copy browser can be manually refreshed at any time by selecting the <span class="uiref">Refresh</span> command from the <span class="uiref">View</span> menu (key equivalent <span class="key">⌘R</span>).</p>
+
+	<h2>Options</h2>
+	<p>The following toolbar buttons control the behavior of the working copy browser:</p>
+	<table>
+		<tr>
+			<td><img class="template" src="../../../images/toolbar-show-ignored.png" srcset="../../../images/toolbar-show-ignored@2x.png 2x"/></td>
+			<td>Show ignored files and folders. By default ignored items are not shown. This is equivalent to toggling the <span class="uiref">View &gt; Show Ignored Items</span> menu item.</td>
+		</tr>
+		<tr>
+			<td><img class="template" src="../../../images/toolbar-show-contents-of-externals.png" srcset="../../../images/toolbar-show-contents-of-externals@2x.png 2x"/></td>
+			<td>Show the contents of external definitions. This is equivalent to toggling the <span class="uiref">View &gt; Show Contents of Externals</span> menu item
+				<div class="note">
+					<p>Enabling expansion of large external directories can have a significant negative impact on browsing performance, especially when combined with <span class="uiref">View &gt; Show Repository Status</span></p>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td><img class="template" src="../../../images/toolbar-show-repository-status.png" srcset="../../../images/toolbar-show-repository-status@2x.png 2x"/></td>
+			<td>Show the repository status of the browser items. This is equivalent to toggling the <span class="uiref">View &gt; Show Repository Status</span> menu item
+				<div class="note">
+					<p>Enabling <span class="uiref">View &gt; Show Repository Status</span> will cause Cornerstone to contact the repository every time the working copy is committed, updated or refreshed in the browser. Depending on the location of your repository this can have a significant impact on browser performance.</p>
+				</div>
+			</td>
+		</tr>
+	</table>
+
+</body>
+</html>

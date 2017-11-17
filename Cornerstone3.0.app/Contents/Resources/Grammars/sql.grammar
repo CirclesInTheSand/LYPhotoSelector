@@ -1,0 +1,444 @@
+{
+	name                      : 'sql';
+	title                     : 'SQL';
+	match:
+	[ 
+		extension								: 'sql',
+		extension								: 'pks', # Oracle PL/SQL package specification
+		extension								: 'pkb', # Oracle PL/SQL package body
+
+		# Common DML keywords
+		regex										: @'(?i)\b(select|insert|update|delete|from|where|order|asc|desc|group|order|values|null|prepare|execute|declare)\b',
+
+		# Common DML phrases
+		regex										: @'(?i)\b(insert\s+into|order\s+by|\bgroup\s+by)\b',
+
+		# select count
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bselect\s+count\s*\(.*\)';
+		},
+
+		# Common DDL keywords
+		regex										: @'(?i)\b(create|drop|alter)\s+(database|table|view|index|procedure)\b',
+
+		# Other DDL keywords/phrases
+		regex										: @'(?i)\b(unique|begin|end|varchar|nvarchar|autoincrement|if\s+exists|primary\s+key|not\s+null)\b',
+
+		# Common DML keywords (upper case)
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\b(SELECT|INSERT|UPDATE|DELETE|FROM|WHERE|ORDER|ASC|DESC|GROUP|ORDER|VALUES|NULL|PREPARE|EXECUTE|DECLARE)\b';
+		},
+
+		# Common DML phrases (upper case)
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\b(INSERT\s+INTO|ORDER\s+BY|GROUP\s+BY)\b';
+		},
+
+		# Common DDL keywords (upper case)
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\b(CREATE|DROP|ALTER)\s+(DATABASE|TABLE|VIEW|INDEX|PROCEDURE)\b';
+		},
+
+		# Other DDL keywords/phrases (upper case)
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\b(UNIQUE|BEGIN|END|VARCHAR|NVARCHAR|AUTOINCREMENT|IF\s+EXISTS|PRIMARY\s+KEY|NOT\s+NULL)\b';
+		},
+
+		# Oracle identifier with embedded $
+		regex										: @'# (\w*\$\w+|\w+\$\w*)',
+
+		# MySQL local variables
+		regex										: @'# (?<=\W)@\w+',
+
+		# SQL Server global variables
+		regex										: @'# (?<=\W)@@\w+',
+
+		# MySQL/SQL Server symbols
+		regex										: @'`.*`',
+
+		# set statement
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?i)\bset\s+@\w+\s*=';
+		},
+
+		# set statement
+		regex:
+		{
+			score									: 10;
+			pattern								: @'\bSET\s+@\w+\s*=';
+		},
+
+		# Semi-colon at end of the line
+		regex										: @'(?m);$',
+
+		# <> operator
+		regex										: @'<>',
+
+		# [n]varchar(<length>)
+		regex										: @'\bn?varchar\s*\(\s*(\d+|\w+)\s*\)',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line comment partition which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.sql';
+			open-sequence     		: @'/*';
+			close-sequence    		: @'*/';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.sql';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.sql';
+						value           : 'comment.keyword.scm.value.sql';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.sql';
+			open-sequence					:	@'--';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'comment.keyword.scm.sql',
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.sql.hash';
+			open-sequence					:	@'#';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'comment.keyword.scm.sql',
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# SQL:99 Keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.sql.99';
+			case-insensitive      : yes;
+			words:                [ 
+															"absolute", "action", "add", "admin", "after", "aggregate", "alias", "all", "and", "any", "are", "as", "asc", "assertion", "at", "authorization", "avg", "allocate", "alter", "array",
+															"before", "begin", "between", "both", "breadth", "by", "begin", "binary", "bit", "blob", "boolean",
+															"call", "close", "commit", "connect", "cascade", "cascaded", "case", "cast", "check", "class", "collate", "collation", "column", "completion", "connection", "constraints", "constructor", "continue", "corresponding", "count", "cross", "cube", "current", "cursor", "cycle", "catalog", "constraint", "char", "character", "clob", "create",
+															"data", "day", "desc", "default", "deferrable", "deferred", "depth", "deref", "descriptor", "destructor", "deterministic", "diagnostics", "dictionary", "distinct", "dynamic", "date", "datetime", "dec", "decimal", "double", "deallocate", "declare", "delete", "describe", "destroy", "disconnect", "domain", "drop",
+															"each", "else", "end", "end-exec", "equals", "escape", "every", "except", "exception", "exists", "external", "extract", "exec", "execute",
+															"false", "fetch", "first", "for", "foreign", "fortran", "found", "free", "from", "full", "float", "function",
+															"general", "global", "greater", "group", "grouping", "get", "go", "goto", "grant",
+															"having", "host", "hour",
+															"identity", "ignore", "immediate", "in", "indicator", "initialize", "initially", "inner", "inout", "input", "insensitive", "instead", "intersect", "interval", "into", "is", "isolation", "iterate", "index", "int", "integer", "insert",
+															"join",
+															"key",
+															"language", "large", "last", "lateral", "leading", "left", "less", "level", "like", "limit", "local", "localtime", "localtimestamp", "locator", "lower",
+															"map", "match", "max", "min", "minute", "mod", "modifies", "modify", "month", "more", "module", "money",
+															"names", "national", "natural", "new", "next", "no", "not", "nullable", "nullif", "nchar", "nclob", "number", "numeric", "null",
+															"object", "of", "old", "only", "operation", "option", "options", "or", "order", "ordinality", "out", "outer", "output", "overlaps", "overlay", "off", "on", "open",
+															"pad", "parameter", "parameters", "partial", "pascal", "path", "pli", "position", "postfix", "precision", "prefix", "preorder", "preserve", "primary", "prior", "privileges", "public", "prepare", "procedure",
+															"read", "reads", "recursive", "ref", "references", "referencing", "relative", "repeatable", "restrict", "result", "returns", "right", "rollup", "rows", "row_count", "real", "restrict", "revoke", "return", "rollback", "role", "routine",
+															"savepoint", "scale", "scope", "second", "section", "security", "self", "sensitive", "serializable", "server_name", "session", "session_user", "sets", "similar", "simple", "size", "some", "space", "specific", "specifictype", "sql", "sqlcode", "sqlerror", "sqlexception", "sqlstate", "sqlwarning", "start", "state", "statement", "static", "structure", "substring", "sum", "system_user",
+															"schema", "sequence", "scroll", "search", "select", "set", "single", "smallint", "smallmoney",
+															"table", "trigger", "temporary", "than", "time", "then", "to", "trailing", "transaction", "transform", "transforms", "translation", "treat", "trim", "type", "terminate", "translate", "time", "timestamp", "true",
+															"uncommitted", "under", "union", "unique", "unknown", "unnamed", "unnest", "upper", "usage", "using", "update", "user",
+															"value", "values", "variable", "varying", "varchar", "view",
+															"when", "whenever", "where", "with", "without", "work",
+															"write",
+															"year",
+															"zone",
+														];
+		},
+
+		# PostgreSQL Keywords
+		
+		word-rule:
+		{
+			name                  : 'keyword.sql.pgsql';
+			case-insensitive      : yes;
+			words:                [ 
+															"analyse", "analyze",
+															"backward", "bigint", "bool",
+															"c", "cache", "checked", "cobol", "contains", "conversion", "convert", "copy", "createdb", "createuser", "checkpoint", "cluster", "cstring",
+															"database", "defaults", "defined", "definer", "delimiter", "delimiters", "do",
+															"elsif", "encoding", "encrypted", "excluding", "exclusive", "existing", "explain",
+															"force", "forward", "freeze",
+															"handler",
+															"if", "ilike", "immutable", "implicit", "including", "increment", "index", "inherits", "instance", "instantiable", "instead", "invoker", "isnull", "int4", "int8",
+															"lancompiler", "load", "location", "lock", "listen",
+															"maxvalue", "minvalue",
+															"mode", "move", "nocreatedb", "nocreateuser", "none", "nothing", "notify", "notnull",
+															"offset", "oids", "operator", "owner",
+															"password", "pendant", "placing", "procedural",
+															"recheck", "reindex", "replace", "reset", "restart", "row", "rule",
+															"setof", "share", "show", "stable", "statistics", "stdin", "stdout", "storage", "strict", "sysid",
+															"template", "toast", "trusted", "truncate",
+															"unencrypted", "until", "unlisten",
+															"vacuum", "valid", "validator", "verbose", "version", "volatile",
+															"void",
+														];
+		},
+
+		# Microsoft SQL Server
+		
+		word-rule:
+		{
+			name                  : 'keyword.sql.mssql';
+			case-insensitive      : yes;
+			words:                [ 
+															"backup", "bigint",
+															"database",
+															"image",
+															"nchar", "nvarchar", "ntext",
+															"restore",
+															"smalldatetime", "sql_variant",
+															"text", "timestamp", "tinyint", "top", "truncate",
+															"uniqueidentifier",
+															"varbinary",
+														];
+		},
+
+		# MySQL
+		
+		word-rule:
+		{
+			name                  : 'keyword.sql.mysql';
+			case-insensitive      : yes;
+			words:                [ 
+															"analyze", "archive", "ascii", "auto_increment", "autocommit",
+															"backup", "bigint", "bool", "binary", "btree",
+															"cache", "charset", "cipher", "columns", "csv", "change", "checksum",
+															"database", "databases", "delayed", "disable", "discard", "do",
+															"enable", "engine", "engines", "errors", "example", "enum", "explain",
+															"federated", "fulltext", "fixed", "flush",
+															"grants",
+															"hash", "heap", "hosts",
+															"identified", "infile", "innodb", "isam", "issuer",
+															"keys", "kill",
+															"largeblob", "longtext", "load", "lock", "logs", "low_priority",
+															"master", "memory", "merge", "myisam", "mediumblob", "mediumint", "mediumtext",
+															"none",
+															"optimize", "outfile",
+															"password", "privileges", "processlist", "purge",
+															"query",
+															"regexp", "replace", "require", "rename", "repair", "restore", "reset",
+															"show", "slave", "spatial", "sql_small_result", "ssl", "status", "straight_join", "subject",
+															"tables", "tablespace", "tinyblob", "tinyint", "tinytext",
+															"unicode", "unsigned", "use",
+															"variables",
+															"warnings",
+															"x509",
+															"year",
+															"zerofill",
+														];
+		},
+
+		# Oracle
+		
+		word-rule:
+		{
+			name                  : 'keyword.sql.oracle';
+			case-insensitive      : yes;
+			words:                [ 
+															"abort", "accept", "access", "analyze", "archive", "archivelog", "arraylen", "assert", "assign",
+															"backup", "base_table", "become", "binary_integer", "block",
+															"cache", "cancel", "change", "char_base", "checkpoint", "cluster", "clusters", "cobol", "colauth", "columns", "compile", "compress", "constant", "contents", "controlfile", "crash", "currval",
+															"data_base", "datafile", "debugoff", "debugon", "definition", "delay", "delta", "digits", "disable", "dismount", "dispose", "do", "dump",	
+															"elsif", "enable", "entry", "events", "exception_init", "exceptions", "exit", "explain", "extent", "externally",	
+															"flush", "force", "form", "freelist", "freelists",	
+															"generic", "groups",
+															"identified", "if", "including", "indexes", "initrans", "instance",	
+															"layer", "limited", "link", "lists", "logfile", "loop",	
+															"manage", "manual", "maxdatafiles", "maxinstances", "maxlogfiles", "maxloghistory", "maxlogmembers", "maxtrans", "maxvalue", "minextents", "minus", "minvalue", "mlslabel", "mode", "mount", 
+															"nextval", "noarchivelog", "nocache", "nocompress", "nocycle", "nomaxvalue", "nominvalue", "none", "noorder", "noresetlogs", "normal", "nosort", "number_base",	
+															"optimal", "or", "others", "own",
+															"parallel", "partition", "pctfree", "pctincrease", "pctused", "plan", "positive", "pragma", "profile",	
+															"quota",
+															"raise", "range", "record", "recover", "release", "remr", "rename", "resetlogs", "resource", "restricted", "reuse", "reverse", "roles", "rowid", "rowlabel", "rownum", "rowtype", "run",
+															"scn", "segment", "separate", "shared", "snapshot", "sort", "sqlerrm", "statement_id", "statistics", "stddev", "stop", "storage", "subtype", "switch", "system",
+															"tabauth", "tablespace", "task", "thread", "tracing", "triggers", "truncate",
+															"unlimited", "until",
+															"values", "varchar2", "views",
+															"while",
+															"xor",
+														];
+		},
+
+		# SQLite
+		
+		word-rule:
+		{
+			name                  : 'keyword.sql.sqlite';
+			case-insensitive      : yes;
+			words:                [ 
+															"_rowid_", 
+															"abort", "analyze", "attach", "autoincrement", 
+															"conflict", "current_date", "current_time", "current_timestamp", 
+															"database", "detach", 
+															"exclusive", "explain", 
+															"fail", 
+															"glob", 
+															"if", "isnull", 
+															"main", 
+															"notnull", 
+															"offset", 
+															"plan", "pragma", 
+															"query", 
+															"raise", "reindex", "rename", "replace", "rowid", 
+															"sqlite_master", "sqlite_sequence", "sqlite_temp_master", 
+															"temp", 
+														];
+		},
+
+		# DB2
+		
+		word-rule:
+		{
+			name                  : 'keyword.sql.db2';
+			case-insensitive      : yes;
+			words:                [ 
+															"acquire", "allow", "asutime", "audit", "aux", "auxiliary", 
+															"bd2general", "bufferpool", 
+															"called", 
+															"capture", "ccsid", "cluster", "collection", "collid", "comment", "concat", "count_big", "current_lc_path", "current_path", "current_server", "current_timezone", 
+															"database", "days", "db2sql", "dba", "dbinfo", "dbspace", "disallow", "dssize", 
+															"editproc", "elseif", "erase", "exclusive", "explain", 
+															"fenced", "fieldproc", "file", "final", 
+															"generated", "graphic", 
+															"hours", 
+															"identified", "integrity", "isobid", 
+															"java", 
+															"label", "lc_type", "linktype", "locale", "locators", "lock", "locksize", "long", 
+															"microsecond", "microseconds", "minutes", "mode", "months", 
+															"name", "named", "nheader", "nodename", "nodenumber", "nulls", "numparts", 
+															"obid", "optimization", "optimize", 
+															"package", "page", "pages", "part", "partition", "pctindex", "pctree", "piecesize", "plan", "priqty", "private", "program", "psid", 
+															"queryno", 
+															"recovery", "release", "rename", "reset", "resource", "rrn", "run", 
+															"schedule", "scratchpad", "seconds", "secqty", "share", "source", "standard", "statistics", "stay", "stogroup", "stores", "storpool", "style", "subpages", "synonym", 
+															"tablespace", 
+															"validproc", "variant", "vcat", "volumes", 
+															"wlm", 
+															"years", 
+														];
+		},
+
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.sql.doublequote';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: yes;
+			quoted-tokens         : yes;
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.sql.singlequote';
+			open-sequence         : '\'';
+			close-sequence        : '\'';
+			escape-char           : @'\';
+			multiline            	: yes;
+			quoted-tokens         : yes;
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.sql.backticks';
+			open-sequence         : '`';
+			close-sequence        : '`';
+			escape-char           : @'\';
+			multiline            	: yes;
+			quoted-tokens         : yes;
+		},
+		
+		# DBMS-specified symbol rules
+		
+		regex-rule:
+		{
+			name									: 'symbol.sql.mssql.intrinsic';
+			pattern								: @'@@\w+';
+			case-insensitive			: yes;
+		},
+
+		regex-rule:
+		{
+			name									: 'symbol.sql.mssql';
+			pattern								: @'@\w+';
+			case-insensitive			: yes;
+		},
+
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.sql';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|((\d+)?\.(\d+)([eE]\d+)?[fF]?)|(\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

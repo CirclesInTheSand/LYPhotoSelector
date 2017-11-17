@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Advanced Merges</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+	</div>
+
+  <h1>
+  	<img src="../../../images/toolbar-merge-advanced.png" srcset="../../../images/toolbar-merge-advanced@2x.png 2x"/>
+  	Advanced Merges
+  </h1>
+  <p>The advanced merge strategy is appropriate when the other strategies provide insufficient flexibility.</p>
+  <p>In particular, an advanced merge allows the differences between any two branches to be merged into a third branch, even if the two branches being compared do not share a common <a href="../../introduction/terminology/tags-and-branches.html#ancestor">ancestor</a>.</p>
+    
+  <p>To perform an advanced merge:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Click the <span class="uiref">Advanced Merge</span> button:</p>
+  			<div class="view-button">
+	  			<img src="../../../images/toolbar-merge-advanced.png" srcset="../../../images/toolbar-merge-advanced@2x.png 2x"/>
+	  			<p>Advanced Merge</p>
+	  		</div>
+  		</li>
+  		<li>
+  			<p>Verify that the selected working copy does not contain any uncommitted modifications.</p>
+  			<div class="warning">
+  				<p>Merging into a working copy which contains uncommitted modifications can result in unnecessary conflicts and is not recommended.</p>
+  			</div>
+  			<p>Cornerstone will display a warning in the <span class="uiref">Working Copy Checklist</span> if modifications are detected. If necessary, click the <span class="uiref">Revert...</span> or <span class="uiref">Commit...</span> button as required.</p>
+  		</li>
+  		<li>
+  			<p>Verify that the selected working copy is up-to-date.</p>
+  			<div class="warning">
+  				<p>Merging into a working copy which is not up-to-date can result in unnecessary conflicts and is not recommended.</p>
+  			</div>
+  			<p>Cornerstone will display a warning in the <span class="uiref">Working Copy Checklist</span> if the working is not up-to-date. If necessary, click the <span class="uiref">Update to Latest Revision</span> button to bring the working copy up to date.</p>
+  		</li>
+  		<li>
+  			<p>Specify the path or URL and revision of the first branch to compare in the <span class="uiref">Compare</span> path and revision fields.</p>
+  			<p>The revision defaults to HEAD.</p>
+  		</li>
+  		<li>
+  			<p>Likewise, specify the path/URL and revision of the second branch to compare in the <span class="uiref">Against</span> path and revision fields.</p>
+  			<p>The revision also defaults to HEAD.</p>
+  		</li>
+  		<li>
+	  		<p>If required, change the <a href="index.html#options">merge options</a> by clicking on the <span class="uiref">Options</span> popup button.</p>
+  		</li>
+  		<li>
+  			<p>Cornerstone will display a preview of the changes to be merged.</p>
+  		</li>
+  		<li>
+  			<p>Click the <span class="uiref">Merge Changes</span> button to merge the differences into the working copy.</p>
+  		</li>
+  		<li>
+  			<p><a href="index.html#review">Verify the changes</a> and resolve any conflicts.</p>
+  		</li>
+  		<li>
+  			<p><a href="index.html#commit">Commit the changes</a> to the repository to complete the merge operation.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+</body>
+</html>

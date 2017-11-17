@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Downloading and Caching Your Repository&rsquo;s History</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+	</div>
+
+  <h1>Downloading and Caching Your Repository&rsquo;s History</h1>
+  <p>The good thing about historical data is that it doesn&rsquo;t change and this makes it an excellent candidate for caching.</p>
+  <p>Cornerstone can download and cache your repository&rsquo;s log to greatly speed up browsing and querying activities.</p>
+  <p>However, this behavior may not always be appropriate. For example, downloading huge repositories (e.g. the Apache.org repository has over 1.7 million revisions) may not be feasible. Or you may not intend to repeatedly browse a repository&rsquo;s history and want to avoid the overhead of caching the log on your Mac&rsquo;s hard drive.</p>
+  <p>For whatever reason, you may not want Cornerstone to cache your repository&rsquo;s log.</p>
+  <h2>Caching Options</h2>
+  <p>Cornerstone notices when a repository&rsquo;s log is accessed for the first time and asks how the log should be accessed. The possible responses are:</p>
+  
+  <div class="task">
+  	<ul class="plain">
+  		<li>
+  			<h3>Never For This Repository</h3>
+  			<p>All queries will be made directly against the repository and no information is cached. This is appropriate for very large or infrequently-accessed repositories.</p>
+  			<p>This selection is permanent.</p>
+  		</li>
+  		<li>
+  			<h3>Not Now</h3>
+  			<p>Subsequent queries during the current app session will be made directly against the repository. No Information will be cached. This is appropriate when you might want to download and cache the repository&rsquo;s history in the future but do not want to do so at the current time.</p>
+  			<p>This selection is temporary. You will be asked again for this repository next time the app is started.</p>
+  		</li>
+  		<li>
+  			<h3>Download</h3>
+  			<p>The history is downloaded and cached in its entirety. This may take some time for large repositories, depending on server load and network connection speed.</p>
+  			<p>Future history access will only download the latest log entries, resulting in the fastest browsing and query performance at the expense of the disk space required to cache the history data.</p>
+  			<p>This selection is permanent.</p>
+  		</li>
+  	</ul>
+  </div>
+  
+  <div class="note">
+	  <p>A repository&rsquo;s caching behavior can be changed at any time:</p>
+	  <div class="task">
+		  <ol>
+			  <li>Select a repository in the source list.</li>
+			  <li>Right click to display the repository&rsquo;s context menu.</li>
+			  <li>Select the <span class="uiref">Caching...</span> command.</li>
+			  <li>The repository&rsquo;s caching options are displayed.</li>
+			</ol>
+		</div>
+		<p>The <span class="uiref">Rebuild...</span> button can be used to rebuild a repository&rsquo;s log cache. This may be necessary if the server&rsquo;s log is changed using the <code>svnadmin</code> command line tool.</p>
+	</div>
+  
+	<h2>Cache Disk Usage</h2>
+	<p>On average, each revision will take between 1KB and 2.5KB of disk space, depending on the verbosity of the log messages and change set size (i.e. number of files committed with each revision).</p>
+	<p>Small repositories with up to 5,000 revisions generally require less than 10MB of space.</p>
+	<p>Larger repositories with tens of thousands of revisions can consume significant disk space. There is no upper limit on the size the cache may grow to.</p>
+	<div class="note">
+		<p>You can determine how must disk space a repository&rsquo;s cache is consuming using the <span class="uiref">Caching...</span> command.
+	</div>
+
+</body>
+</html>

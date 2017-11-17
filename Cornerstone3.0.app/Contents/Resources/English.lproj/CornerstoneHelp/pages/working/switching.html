@@ -1,0 +1,92 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Switching a Working Copy</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="relocating.html"></a>
+	</div>
+
+	<h1>Switching a Working Copy</h1>
+  <p>The <span class="uiref">Switch</span> command is used to change the repository location referred to by a working copy, i.e. the working copy is <span class="term">switched</span> to an alternate location, normally a different branch.</p>
+  <div class="note">
+  	<p>Switching is an advanced topic. See the <a href="../introduction/terminology/working-copies.html#switch">terminology</a> section for information on situations where switching is appropriate.</p>
+  </div>
+  <p>When performing a switch operation, Cornerstone will modify your working copy&rsquo;s contents to reflect the state of the repository at the new location.</p>
+  <p>Depending on the situation, you may need to switch all or just part of a working copy. It is also possible to switch individual files.</p>
+	<div class="note">
+		<p>Switching files and folders that contain changes can result in unnecessary conflicts and should be avoided. Consider committing or reverting the changes before switching.</p>
+	</div>
+  
+  <h2>Switching an Entire Working Copy</h2>
+  <p>To switch an entire working copy to a different branch:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>
+	  		<p>Select the working copy in the source list.</p>
+  		</li>
+  		<li>
+  			<p>Select <span class="uiref">Switch...</span> from the <span class="uiref">Working Copy</span> menu.</p>
+  			<p>Alternatively, select <span class="uiref">Switch...</span> from the working copy source list&rsquo;s action menu.</p>
+  		</li>
+  		<li>
+  			<p>The switch options window is displayed.</p>
+  		</li>
+  		<li>
+  			<p>Specify the URL of the folder to switch to in the <span class="uiref">URL</span> field. Click the browse button <img src="../../images/rev-picker-button.png" srcset="../../images/rev-picker-button@2x.png 2x"/> to select a folder from the open panel.</p>
+  		</li>
+  		<li>
+  			<p>By default, the working copy will be switched to the latest revision of the folder at the given URL. Use the <span class="uiref">Revision</span> field to specify a different revision if necessary.</p>
+  		</li>
+  		<li>
+  			<p>Click the <span class="uiref">Switch</span> button.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <p>Changes made to the working copy during a switch operation can be reviewed in the working copy&rsquo;s <a href="transcript/index.html">transcript</a>.</p>
+  
+  <h2>Switching an Individual File or Folder</h2>
+  <div class="note">
+  	<p>Switching individual files or folders can make working copy management significantly more complicated.</p>
+  	<p>Consider using an <a href="../introduction/terminology/externals.html">external definition</a> if you need to bring in items from other locations or repositories, particularly if you need to do so as part of the check out process.</p>
+  </div>
+  <p>To switch an individual file or folder to a different branch:</p>
+
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select an item in the working copy.</p>
+  		</li>
+  		<li>
+  			<p>Select <span class="uiref">Switch...</span> from the <span class="uiref">Working Copy</span> menu.</p>
+  			<p>Alternatively, select <span class="uiref">Switch...</span> from the working copy browser&rsquo;s right-click menu.</p>
+  		</li>
+  		<li>
+  			<p>The switch options window is displayed.</p>
+  		</li>
+  		<li>
+  			<p>Specify the URL of the item to switch to in the <span class="uiref">URL</span> field. Click the browse button <img src="../../images/rev-picker-button.png" srcset="../../images/rev-picker-button@2x.png 2x"/> to select a file or folder from the open panel.</p>
+  		</li>
+  		<li>
+  			<p>By default, the selected item will be switched to the latest revision of the item at the given URL. Use the <span class="uiref">Revision</span> field to specify a different revision if necessary.</p>
+  		</li>
+  		<li>
+  			<p>Click the <span class="uiref">Switch</span> button.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <div class="note">
+  	<p>Switched items are identified in the working copy browser by the switched marker <img src="../../images/marker-switched.png" srcset="../../images/marker-switched@2x.png 2x"/>.</p>
+  </div>
+
+</body>
+</html>

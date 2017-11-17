@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Editing Externals with the Property Text View</title>
+	<style type="text/css">
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="editor.html"></a>
+	</div>
+
+  <h1>Editing Externals with the Property Text View</h1>
+  <p>The property text view displays the contents of the <code>svn:externals</code> property in raw textual form.</p>
+  <p>This text can be edited directly if the user is familiar with the <a href="../../introduction/terminology/externals.html#svn:externals"><code>svn:externals</code> format</a>.</p>
+  
+  <p>The text view can be used together with the <a href="list-view.html">External Definition List View</a>. Changes made in one view are automatically reflected in the other.</p>
+  
+  <div class="note">
+  	<p>Cornerstone reformats your <code>svn:externals</code> property text definitions into more easily readable columns whenever changes are made in the <a href="list-view.html">list view</a>.</p>
+  </div>
+  
+  <p>The contents of the text view are validated for syntactical correctness before being saved. The source URLs, target paths and revisions are however not validated.</p>
+  
+  <div class="warning">
+  	<p>Incorrect URLs will cause errors during subsequent check out and update operations, so double-check that they are correct before saving any changes.</p>
+  </div>
+  
+</body>
+</html>

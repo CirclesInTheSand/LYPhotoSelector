@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Repository Browser Columns</title>
+	<style type="text/css">
+		table.status-markers {
+			border-collapse: collapse;
+			font-size: 9pt;
+		}
+		table.status-markers td {
+			border: 1px solid #dfdfdf;
+			vertical-align: top;
+			padding: 0.7em;
+		}
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="filtering.html"></a>
+	</div>
+
+  <h1>Repository Browser Columns</h1>
+  <ul class="plain">
+  	<li>
+  		<h2>Name</h2>
+  		<p>The name of the file or folder.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Recent Modification <img class="template" src="../../../images/age-today.png" srcset="../../../images/age-today@2x.png 2x"/></h2>
+  		<p>Recently-modified files and folders are displayed using one of the following indicators:</p>
+  		<table class="status-markers">
+  			<tr>
+  				<td><img class="template-light" src="../../../images/age-today.png" srcset="../../../images/age-today@2x.png 2x"/></td>
+  				<td>Modified today</td>
+  				<td>Modifications to the file or folder have been committed today.</td>
+  			</tr>
+  			<tr>
+  				<td><img class="template-light" src="../../../images/age-this-week.png" srcset="../../../images/age-this-week@2x.png 2x"/></td>
+  				<td>Modified this week</td>
+  				<td>Modifications to the file or folder have been committed since the start of the current calendar week.</td>
+  			</tr>
+  		</table>
+  		
+  	<li>
+  		<h2>Date Modified</h2>
+  		<p>The date at which the file or folder was last modified. This corresponds to the date at which changes to the file or folder were last committed.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Size</h2>
+  		<p>The size of the file.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Kind</h2>
+  		<p>Textual description of the type of the file.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Revision</h2>
+  		<p>The item&rsquo;s current revision, i.e. the revision at which changes were last committed to the repository. For folders this is also the revision at which changes were last committed to an item located in the folder or one of its sub-folders.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Property Indicator <img class="template" src="../../../images/property.png" srcset="../../../images/property@2x.png 2x"/></h2>
+  		<p>Items (files or folders) which have Subversion properties are marked with a <img class="template-light" src="../../../images/property.png" srcset="../../../images/property@2x.png 2x"/> icon.</p>
+  	</li>
+
+  	<li>
+  		<h2>Lock Status <img class="template" src="../../../images/lock-owned.png" srcset="../../../images/lock-owned@2x.png 2x"/></h2>
+  		<p>Files which are locked are marked with a <img class="template-light" src="../../../images/lock-owned.png" srcset="../../../images/lock-owned@2x.png 2x"/> icon.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Author</h2>
+  		<p>The name of the author that committed the item&rsquo;s latest revision to the repository.</p>
+  		<div class="note">
+  			The author will be empty for revisions committed to the repository using an anonymous <code>http://</code> connection.
+  		</div>
+  	</li>
+  </ul>
+</body>
+</html>

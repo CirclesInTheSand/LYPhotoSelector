@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Revisions</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="working-copies.html"></a>
+	</div>
+
+  <h1>Revisions</h1>
+  
+  <h2 class="term"><a id="revision">Revision</a></h2>
+	<div class="inset">
+		<p>A new <span class="term">revision</span> is created each time you make modifications to the repository.</p>
+		<div class="note">
+			<p>It doesn&rsquo;t matter whether you modify one or one hundred files. If you store them to the repository at the same time (using a single commit operation) then the repository&rsquo;s current revision number will only increase by one.</p>
+		</div>
+		<p>A revision is represented by a unique number (e.g. revision 29) and identifies the exact state of all the files in the repository at the time the changes were stored (or <span class="term">committed</span>) to the repository.</p>
+		<p>Large repositories can contain numerous revisions. It isn&rsquo;t unusual for active repositories for large projects to contain tens of thousands of revisions.</p>
+		<div class="note">
+			<p>Repositories manage all the changes made to the files they contain very efficiently. While Subversion enables you to access the complete state of the entire repository throughout its entire history, this doesn&rsquo;t mean that a copy of each and every file is stored for each revision.</p>
+		</div>
+  </div>
+  
+  <h2 class="term"><a id="base-revision">BASE Revision</a></h2>
+  <div class="inset">
+  	<p>The <span class="term">BASE</span> revision refers to the revision of a working copy file which was obtained with the last update to the working copy. Each file and folder in a working copy has its own BASE revision, as does the working copy as a whole. The BASE revision can only be altered by performing an update or commit.</p>
+  </div>
+  
+  <h2 class="term"><a id="head-revision">HEAD Revision</a></h2>
+  <div class="inset">
+  	<p>The <span class="term">HEAD</span> revision refers to the latest revision in the repository at any given point in time.</p>
+  </div>
+  
+  <h2 class="term"><a id="working-revision">WORKING Revision</a></h2>
+  <div class="inset">
+  	<p>The <span class="term">WORKING</span> revision refers to the version of a working copy file which contains any local modifications. This is distinct from BASE in that BASE always represents the version of the file without local modifications.</p>
+  </div>
+  
+  <h2 class="term"><a id="mine-revision">.mine</a></h2>
+  <div class="inset">
+  	<p>Subversion creates a set of files for each conflicted file. Each of these files is related to a revision relevant to resolution of the conflict.</p>
+  	<p>Chief among these are the BASE and HEAD revisions. But Subversion also stores a copy of your local changes before merging them with HEAD in a file with the <code>.mine</code> file extension.</p>
+  	<p>This is referred to in the Cornerstone user interface as the <span class="term">.mine</span> version and represents the local changes made in the working copy before the conflict arose.</p>
+  </div>
+  
+</body>
+</html>

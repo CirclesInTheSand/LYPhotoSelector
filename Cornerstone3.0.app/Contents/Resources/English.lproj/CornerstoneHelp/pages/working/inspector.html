@@ -1,0 +1,319 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+			border: 1px solid #dfdfdf;
+			vertical-align: top;
+			padding: 0.4em;
+		}
+		td {
+			vertical-align: top;
+			border: 1px solid #dfdfdf;
+			padding: 1em;
+		}
+		h3 {
+			margin-bottom: 0em;
+		}
+		h3 + p {
+			margin-top: 0.3em;
+		}
+		img#toolbar-image {
+			vertical-align: -4px;
+		}
+		img.modified-property,
+		img.modified-property-button {
+			vertical-align: baseline;
+		}
+		h2.section {
+			text-transform: uppercase;
+		}
+		h3.property {
+			text-transform: lowercase;
+		}
+	</style>
+	<title>The Inspector</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+  <h1>The Inspector</h1>
+  <p>The inspector is displayed by selecting <span class="uiref">View &gt; Show Inspector</span> (key equivalent <span class="key">⌘I</span>) or clicking <img class="template" id="toolbar-image" src="../../images/toolbar-right-panel.png" srcset="../../images/toolbar-right-panel@2x.png 2x"/> in the toolbar.</p>
+  <p>The inspector groups information into sections such as <span class="uiref">General</span>, <span class="uiref">Working Copy</span> and <span class="uiref">Properties</span>. Each section can be collapsed and expanded as needed to maximize the available screen space for your current task.</p>
+  
+  <h2 class="section">General</h2>
+  <h3 class="property">Name</h3>
+  <p>The name of the selected item, or the number of items if multiple items are selected.</p>
+  
+  <h3 class="property">Size/Total Size</h3>
+  <p>The size of the file. A size is not displayed for folders. If multiple items are selected then this equals their total size.</p>
+  
+  <h3 class="property">Revision</h3>
+  <p>The item&rsquo;s revision. A revision is not shown for unversioned items.</p>
+  
+  <h3 class="property">Where</h3>
+  <p>The location of the item on your Mac. Paths within your home folder are shown as a relative path prefixed with a tilde character (~).</p>
+  
+  <h3 class="property">Modified</h3>
+  <p>The date this item was last modified.</p>
+  <p>For modified items this date is the item&rsquo;s last modification date in the file system. For unmodified items this is the date in the repository, i.e. when the item&rsquo;s BASE revision was committed.</p>
+  
+  <h3 class="property">Committed</h3>
+  <p>The date at which the item&rsquo;s BASE revision was committed. A date is not shown if the item is unversioned or scheduled for addition.</p>
+  
+  <h3 class="property">Author</h3>
+  <p>The name of the person who committed the item&rsquo;s BASE revision. An author may not be shown if the repository permits users to connect anonymously.</p>
+  
+  <h3 class="property">Depth</h3>
+  <p>The currently configured depth of the folder. One of:</p>
+  <table>
+  	<tr>
+  		<td><span class="uiref">All files and folders at all levels</span></td>
+  		<td><img class="template" src="../../images/depth-infinity.png" srcset="../../images/depth-infinity@2x.png 2x"/></td>
+  		<td>The folder will automatically retrieve all files and folders at all levels when updated.</td>
+  	</tr>
+  	<tr>
+  		<td><span class="uiref">Immediate files and folders only</span></td>
+  		<td><img class="template" src="../../images/depth-immediates.png" srcset="../../images/depth-immediates@2x.png 2x"/></td>
+  		<td>Changes to files and folders located immediately within the selected folder will be obtained during updates. New folders will be retrieved but their contents will not.</td>
+  	</tr>
+  	<tr>
+  		<td><span class="uiref">Immediate files only</span></td>
+  		<td><img class="template" src="../../images/depth-files.png" srcset="../../images/depth-files@2x.png 2x"/></td>
+  		<td>Only new and changed files located immediately within the folder will be retrieved.</td>
+  	</tr>
+  	<tr>
+  		<td><span class="uiref">Folder only</span></td>
+  		<td><img class="template" src="../../images/depth-empty.png" srcset="../../images/depth-empty@2x.png 2x"/></td>
+  		<td>The folder is an empty placeholder. No contents will be retrieved on update until the folder&rsquo;s depth is changed.</td>
+  	</tr>
+  </table>
+  	
+  <h2 class="section">Status</h2>
+  <h3 class="property">Text</h3>
+  <p>The status of the file&rsquo;s contents. No value is shown for folders or unmodified files.</p>
+  
+  <h3 class="property">Properties</h3>
+  <p>The status of the item&rsquo;s properties. No value is shown if the properties are unmodified. </p>
+  
+  <h3 class="property">Tree</h3>
+  <p>The tree conflict status of the item. No value is shown if the item does not have a tree conflict.</p>
+  
+  <h3 class="property">Switched</h3>
+  <p>The switched status of the folder. No value is shown if the item is a file or has not been switched.</p>
+
+	<h2 class="section">Working Copy</h2>
+	<h3 class="property">Format</h3>
+	<p>The file format version of the working copy. This value corresponds to the version of Subversion that was used to check out the working copy.</p>
+  <p>This value applies to the working copy as a whole.</p>
+	
+  <h3 id="externals-update-option" class="property">By Default (Update Contents of Externals)</h3>
+  <p>This checkbox controls whether the contents of the working copy&rsquo;s <a href="../introduction/terminology/externals.html">externals</a> are updated when the working copy itself is updated. Unchecking this value will shorten the time it takes to update the working copy but may leave externals out of date.</p>
+  <p>This value applies to the <span class="uiref">Update to Latest Revision</span> command. It also serves as the default for the equivalent option displayed by the <span class="uiref">Update...</span> command.</p>
+  <p>This value applies to the working copy as a whole.</p>
+  <div class="note">
+  	<p>Your working copy may depend on a particular version of an external to function or build correctly. If you do not include externals by default in your updates then you can introduce inconsistencies into your project.</p>
+  	<p>Exercise care when disabling <span class="uiref">Update contents of externals</span>. Be sure to monitor the changes made to your project&rsquo;s external dependencies and manually update your working copy&rsquo;s externals as necessary.</p>
+  </div>
+  
+  <h2 class="section">Repository</h2>
+  <p>This section displays the status of the item in the repository. Only part of this information is available if the repository status is not shown for the working copy (see <span class="uiref">View &gt; Show Repository Status</span>).</p>
+  <p>The repository status values (<span class="uiref">text</span>, <span class="uiref">properties</span>, <span class="uiref">revision</span>, <span class="uiref">date</span> and <span class="uiref">author</span>) describe the state of the latest version in the repository when compared against the working copy. No values are shown if the working copy&rsquo;s revision is the same as the repository&rsquo;s.</p>
+  
+  <h3 class="property">Repository</h3>
+  <p>The URL of the repository the working copy was checked out from.</p>
+  
+  <h3 class="property">Name</h3>
+  <p>The name of the item in the repository. This may differ from the name of the working copy, e.g. &ldquo;trunk&rdquo; is often checked out to a folder with a more meaningful name.</p>
+  <p>A value is not shown for unversioned items.</p>
+  
+  <h3 class="property">Where</h3>
+  <p>The location of the item in the repository displayed as a path relative to the repository. A value is not shown for unversioned items.</p>
+
+  <h3 class="property">Text</h3>
+  <p>The status of the file&rsquo;s contents.</p>
+  
+  <h3 class="property">Properties</h3>
+  <p>The status of the item&rsquo;s properties.</p>
+
+	<h3 class="property">Revision</h3>
+	<p>The item&rsquo;s latest revision in the repository.</p>
+	
+	<h3 class="property">Date</h3>
+	<p>The date when the item&rsquo;s latest revision was committed.</p>
+	
+	<h3 class="property">Author</h3>
+	<p>The name of the author who committed the latest revision to this item.</p>
+  
+  <h2 class="section">Lock</h2>
+  <p>This section shows information about the item&rsquo;s lock. The lock&rsquo;s details are not shown when the status is <span class="uiref">Not locked</span>.</p>
+  <h3 class="property">Status</h3>
+  <p>The status of the file&rsquo;s lock. One of:</p>
+	<table>
+		<tr>
+			<td><span class="uiref">Not locked</span></td>
+			<td>The file is not locked.</td>
+		</tr>
+		<tr>
+			<td><span class="uiref">Locked</span></td>
+			<td>The file is locked by another user.</td>
+		</tr>
+		<tr>
+			<td><span class="uiref">Owned</span></td>
+			<td>The file is locked and the lock is owned by this working copy.</td>
+		</tr>
+		<tr>
+			<td><span class="uiref">Broken</span></td>
+			<td>The file was locked by this working copy but has since been unlocked by another user. The file is currently unlocked.</td>
+		</tr>
+		<tr>
+			<td><span class="uiref">Stolen</span></td>
+			<td>The file was locked by this working copy but has since been locked by another user. The file is currently locked.</td>
+		</tr>
+	</table>
+	
+  <h3 class="property">Created</h3>
+  <p>The date when the lock was created, i.e. when the file was locked.</p>
+  
+  <h3 class="property">Expires</h3>
+  <p>The date when the lock will expire.</p>
+  <p>While Subversion supports locks with expiry dates, as of version 1.8 it is not possible to specify an expiry date when creating a lock with Cornerstone or the <code>svn</code> command line tool. A value will therefore never be shown.</p>
+  <p>This field is provided to accommodate expiry date support in future versions of Subversion.</p>
+  
+  <h3 class="property">Comment</h3>
+  <p>The comment given by the user that created the lock.</p>
+    
+  <h2 class="section">Properties</h2>
+  <p>The fields in the inspector&rsquo;s <span class="uiref">Properties</span> section show item&rsquo;s standard Subversion properties. You can edit the properties of multiple items when those items are all the same type (i.e. files or folders).</p>
+  
+  <div class="note">
+	  <p>The set of properties displayed depends on the type of item: <span class="uiref">keywords</span>, <span class="uiref">line breaks</span>, <span class="uiref">mime type</span>, <span class="uiref">needs lock</span> and <span class="uiref">executable</span> are shown for files; <span class="uiref">ignore</span> and <span class="uiref">externals</span> are shown for folders.</p>
+	</div>
+  
+  <h3 class="property">Keywords</h3>
+  <p>The keyword names are displayed as tokens similar to e-mail addresses in Apple&rsquo;s Mail app.</p>
+  <p>To add a keyword:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Click in the field to activate it and start typing the name of the keyword. An auto-complete list will be displayed. To accept the suggestion press the <span class="key">Return</span> (⏎) key or type to the end of the word and press the <span class="key">Space</span> key.</p>
+  		</li>
+  		<li>
+  			<p>Once accepted, the keyword is displayed as a blue button.</p>
+  		</li>
+  		<li>
+  			<p>Continue typing to enter the next keyword.</p>
+  		</li>
+  	</ol>
+  </div>
+  <p>To delete a keyword, either select the keyword button with the mouse or place the insertion point to the right of the button and press the <span class="key">Delete</span> (⌫) key.</p>
+  <p>You can also use the keyword menu (<img class="template" src="../../images/button-key-arrow.png" srcset="../../images/button-key-arrow@2x.png 2x"/>) located next to the field to select from the list of available keywords. The selected keyword will be inserted at the current cursor location.</p>
+  <p>This value is stored in the <code class="prop">svn:keywords</code> property.</p>
+  
+  <h3 class="property">Line Breaks</h3>
+  <p>Select how line breaks are processed when transmitting the file to or from the repository.</p>
+  <p>If you are sharing the file with team members working on Windows then you should consider setting this property to <span class="uiref">Convert to system</span>. If all team members are working on a Mac (or other Unix-like operating system such as Linux, FreeBSD or OpenBSD) then you can leave this property set to the default value of <span class="uiref">Do nothing</span>.</p>
+  <p>This value is stored as the <code class="prop">svn:eol-style</code> property.</p>
+  
+  <h3 class="property">MIME Type</h3>
+  <p>Select the file&rsquo;s MIME type from the popup list. If file&rsquo;s MIME type is not available in the list then type the value into the field.</p>
+  <p>This value is stored as the <code class="prop">svn:mime-type</code> property.</p>
+  
+  <h3 class="property">Executable</h3>
+  <p>Set this field to <span class="uiref">Yes</span> for scripts that should be marked as executable in the file system whenever the file is checked out or updated. Subversion will automatically set this property to <span class="uiref">Yes</span> for executable files when they are added to the working copy.</p>
+  <p>This value is stored as the <code class="prop">svn:executable</code> property.</p>
+  
+  <h3 class="property">Needs Lock</h3>
+  <p>Set this field to <span class="uiref">Yes</span> if the file should be marked as read-only in the file system until locked.</p>
+  <p>See the <a href="../introduction/terminology/locks.html">Locking</a> entry in the terminology section for more information.</p>
+  <p>This value is stored as the <code class="prop">svn:needs-lock</code> property.</p>
+  
+  <h3 class="property">Ignore</h3>
+  <p>The ignore patterns are displayed as tokens similar to e-mail addresses in Apple&rsquo;s Mail app.</p>
+  <p>To add a pattern:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Click in the field to activate it and start typing the pattern. You may include wildcard characters such as <code>*</code> and <code>?</code>. To accept the suggestion press the <span class="key">Return</span> (⏎) key.</p>
+  		</li>
+  		<li>
+  			<p>Once accepted, the pattern is displayed as a blue button.</p>
+  		</li>
+  	</ol>
+  </div>
+	<p>Note that ignore patterns are case-sensitive.</p>
+  <p>To delete a pattern, either select the pattern button with the mouse or place the insertion point to the right of the button and press the <span class="key">Delete</span> (⌫) key.</p>
+
+	<div class="note">
+  	<p>Individual items can be ignored using the <span class="uiref">Ignore</span> command on the items&rsquo; context menu.</p>
+	</div>
+	
+	<p>It is only possible to ignore unversioned files, i.e. files which are under version control (including those scheduled to be added) can no longer be ignored.</p>
+	<p>To ignore a file scheduled to be added:</p>
+	<div class="task">
+		<ol>
+			<li>Unschedule addition of the file using the <span class="uiref">Revert</span> command.</li>
+			<li>The file will be shown as unversioned.</li>
+			<li>Use the <span class="uiref">Ignore</span> command to ignore the file.</li>
+		</ol>
+	</div>
+  
+  <div class="note">
+  	<p>Wildcard patterns are not inherited by a folder&rsquo;s sub-folders. If you want to ignore items across an entire folder hierarchy then you will have to</p>
+  	<ol>
+  		<li>
+  			<p>add the ignore pattern to each sub-folder; or</p>
+  		</li>
+  		<li>add the ignore pattern to your global ignore list.
+  		<p>You can do this in the Cornerstone&rsquo;s preferences or by editing your Subversion configuration (see <span class="uiref">Help > Subversion Documentation</span> for information on how to do this).</p>
+  		</li>
+  	</ol>
+  </div>
+  <p>This value is stored as the <code class="prop">svn:ignore</code> property.</p>
+
+  <h3 class="property">Externals</h3>
+  <p>The externals table displays the entries from the folder&rsquo;s <code>svn:externals</code> properties.</p>
+  <p>Click the <span class="uiref">Open Externals</span> button to open an editor for the folder&rsquo;s externals or select <span class="uiref">Open Externals</span> from the <span class="uiref">File</span> menu (key equivalent <span class="key">⇧⌘X</span>).</p>
+  <p>This value is stored as the <code class="prop">svn:externals</code> property.</p>
+  
+  <h2 class="section">User Properties</h2>
+  <p>The inspector can be extended to show additional fields for user properties. See the <a href="../integration/user-properties/index.html">User Properties</a> section for more information.</p>
+    
+  <h2 class="section">Options</h2>	
+	<h3 class="property">Open With</h3>
+	<p>Select the app which should be used as the external editor for the selected item. The external editor is opened when an item is double-clicked in the working copy browser view.</p>
+	<p>Click the <span class="uiref">Change All...</span> button to use the app as the default external editor for all items of the selected type.</p>
+  
+  <h2>Reverting Properties</h2>
+  <p>A property which has been changed since the last update or commit is described as <span class="term">modified</span> and is indicated by <img class="modified-property" src="../../images/modified-property.png" srcset="../../images/modified-property@2x.png 2x"/>.</p>
+  <p>To revert a modified property to a pristine copy of it&rsquo;s BASE revision:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>When the mouse is over the inspector the <img class="modified-property" src="../../images/modified-property.png" srcset="../../images/modified-property@2x.png 2x"/> indicator will be displayed as a button <img class="modified-property-button" src="../../images/modified-property-button.png" srcset="../../images/modified-property-button@2x.png 2x"/>.</p>
+  			</p>
+  		</li>
+  		<li>
+  			<p>Click the button to display a menu.</p>
+  		</li>
+  		<li>
+  			<p>Select the <span class="uiref">Revert to Last Update</span> command.</p>
+  		</li>
+  		<li>
+  			<p>The property&rsquo;s modified value is replaced with the property&rsquo;s BASE value.</p>
+  		</li>
+  		<li>
+  			<p>Click <span class="uiref">Save Changes</span>.</p>
+  		</li>
+  	</ol>
+  </div>
+
+</body>
+</html>

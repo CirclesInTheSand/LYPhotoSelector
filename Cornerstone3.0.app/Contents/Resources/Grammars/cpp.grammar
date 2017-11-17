@@ -1,0 +1,121 @@
+{
+	name											: 'cpp';
+	title											: 'C++';
+	import										: [ 'c' ];
+	superset-of								: [ 'c' ];
+	
+	match:
+	[ 
+		import									: 'c:regex',
+		uti											: 'public.c-header',
+		uti											: 'public.c-plus-plus-header', 
+		uti											: 'public.c-plus-plus-source',
+		extension								: 'pch',
+		
+		# Common C++ symbols
+		regex										: @'\*this\b|&this\b|\bthis->',
+
+		# C++-specific cast keywords
+		regex										: @'\b(dynamic_cast|static_cast|reinterpret_cast)\b',
+	
+		# Visibility specifiers in class declarations
+		regex										: @'\b(public|protected|private):',
+
+		# reference type
+		regex										: @'(\bconst\s*)?([:alpha:]\w*::)?[:alpha:]\w*\s&\s*([:alpha:]\w*|,|\))',
+	
+		# Namespace declaration (including unnamed)
+		regex										: @'\bnamespace(\s*|(\s+[:alpha:]\w*\s*))?\{',
+	
+		# Using namespace
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\busing\s*namespace(\s*[:alpha:]\w*)(::[:alpha:]\w*)*;';
+		},
+		
+		# Member function definition
+		regex										: @'[:alpha:]\w*::[:alpha:]\w*\(',
+
+		# Template definition
+		regex										: @'\btemplate\s*<\s*(class|typename)\s*[:alpha:]\w*\s*>',
+	
+		# Template instantiation
+		regex										: @'\btemplate\s*<\s*([:alpha:]\w*\s*)?>',
+
+		# Class declaration (without inheritance)
+		regex										: @'\bclass\s+[:alpha:]\w*\s*\{',
+
+		# Class declaration (with inheritance)
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bclass\s+[:alpha:]\w*\s*:\s*((public|protected|private)\s+)?[:alpha:]\w*\s*\{';
+		},
+	
+		# Pure virtual function
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bvirtual\s*.*\(.*\)\s*=\s*0\s*;';
+		},
+	
+		# Destructor definition
+		regex:
+		{
+			score									: 2;
+			pattern								: @'[:alpha:]\w*\s*::\s*~\s*[:alpha:]\w*\s*\(\s*\)';
+		},
+		
+		# Method call
+		regex										: @'[[:alpha:]_]\w*\s*(\.|->)\s*[:alpha:]\w*\s*\(',
+
+		# cout usage
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bcout\s*<<';
+		},
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		ref										: 'comment.multiline.c',
+		ref										: 'comment.singleline.c',
+		ref										: 'keyword.c',
+		
+		# C++ keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.cpp';
+			case-insensitive      : no;
+			words:                [ 
+															'catch', 'class', 'const_cast',
+															'delete', 'dynamic_cast', 'explicit', 'export',
+															'friend', 'mutable',
+															'namespace', 'new', 'operator', 'private', 'protected', 'public', 'reinterpret_cast',
+															'static_cast', 'template',
+															'this', 'throw', 'try', 'typeid', 'typename', 'using',
+															'virtual', 'volatile'
+														];
+		},
+		
+		ref										: 'keyword.preprocessor.c',
+		ref										: 'symbol.preprocessor.c',
+		ref										: 'keyword.preprocessor.include.c',
+		ref										: 'keyword.preprocessor.pragma.c',
+		
+		ref										: 'literal.string.c',
+		ref										: 'literal.char.c',
+		ref										: 'literal.number.c',
+
+		default-rule:
+		{
+		}
+	];
+};

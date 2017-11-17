@@ -1,0 +1,233 @@
+{
+	name                      : 'xml';
+	title                     : 'XML';
+	
+	match:
+	[ 
+		uti											: 'public.xml',
+		
+		# XML processing statement
+		regex:
+		{
+			score									: 1000;
+			pattern								: @'\A<\?xml';
+		},
+
+		# DOCTYPE
+		regex										: @'<\!DOCTYPE',
+
+		# Opening tag
+		regex										: @'<([\w\.\-]+:)?[\w\.\-]+(/?>)?',
+
+		# Attribute
+		regex										: '([\\w\\.\\-]+:)?[\\w\\.\\-]+\\s*=\\s*(("[^"]*")|(\\\'[^\\\']*\\\'))',
+
+		# Closing tag
+		regex										: @'</([\w\.\-]+:)?[\w\.\-]+>',
+
+		# CDATA start
+		regex:
+		{
+			score									: 2;
+			pattern								: @'<!\[CDATA\[';
+		},
+
+		# CDATA end
+		regex										: @'\]\]>',
+
+		# Comment
+		regex										: @'<!--',
+
+		# End comment
+		regex										: @'-->		',
+	];
+	
+	ignore:
+	[
+		# let the HTML grammar handle XHTML
+		
+		uti											: 'public.xhtml',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+    regex-rule:
+    {
+      name                  : 'symbol.xml.element.open';
+      pattern               : @'<([\w\.-]+?\s*:\s*)?([\w\.-]+\s*)?/?>';
+      multi-line            : no;
+    },
+
+    regex-rule:
+    {
+      name                  : 'symbol.xml.element.close';
+      pattern               : @'</([\w\.-]+\s*:\s*)?[\w\.-]+>';
+    }
+		
+    regex-rule:
+    {
+      name                  : 'symbol.xml.element.open.start';
+      multiline             : yes;
+      pattern               : @'<\??([\w\.-]+?\s*:\s*)?[\w\.-]+';
+      until                 : @'symbol.xml.element.open.end';
+      skip-boundary         : yes;
+      
+      rules:
+      [
+        whitespace-rule:
+        {
+        },
+      
+        regex-rule:
+        {
+          name              : 'default.xml.attribute';
+          case-insensitive  : no;
+          pattern           : '(?<name>[\\w\\.-]+)\\s*=\\s*(?<value>("[^"]*")|(\'[^\']*\'))';
+          groups:
+          {
+            name            : 'symbol.xml.attribute.name';
+            value           : 'literal.string.xml.attribute.value';
+          };
+        },
+      
+        regex-rule:
+        {
+          name              : 'symbol.xml.element.open.end';
+          pattern           : @'[/\?]?>';
+        }
+      
+        default-rule:
+        {
+        },
+      ];
+    },
+
+		# Multi-line comment partition which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.xml';
+			open-sequence     		: @'<!--';
+			close-sequence    		: @'-->';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.xml';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.xml';
+						value           : 'comment.keyword.scm.value.xml';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		regex-rule:
+		{
+			name									: 'keyword.xml.entity';
+			pattern								: @'&\w+;';
+		},
+
+    regex-rule:
+    {
+      name                  : 'symbol.xml.processing-instruction.start';
+      pattern               : @'<\?[\w\.-]+';
+      multi-line            : no;
+    },
+
+    regex-rule:
+    {
+      name                  : 'symbol.xml.processing-instruction.end';
+      pattern               : @'\?>';
+      multi-line            : no;
+    },
+
+		text-literal-rule:
+		{
+			name                  : 'literal.string.xml.cdata';
+			open-sequence         : @'<![CDATA[';
+			close-sequence        : @']]>';
+			multiline							: yes;
+			quoted-tokens         : yes;
+		},
+
+		multiline-rule:
+		{
+			name              		: 'xml.doctype';
+			open-sequence     		: @'<!DOCTYPE';
+			close-sequence    		: @'>';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				text-literal-rule:
+				{
+					name                  : 'literal.string.xml.doctype';
+					open-sequence         : @'"';
+					close-sequence        : @'"';
+					escape-char           : @'\';
+					multiline							: no;
+					quoted-tokens         : yes;
+				},
+
+				text-literal-rule:
+				{
+					name                  : 'literal.char.xml.doctype';
+					open-sequence         : '\'';
+					close-sequence        : '\'';
+					escape-char           : @'\';
+					multi-line            : no;
+					quoted-tokens         : yes;
+				},
+				
+				word-rule:
+				{
+					name                  : 'keyword.xml.doctype';
+					case-insensitive      : yes;
+					words:                [ 'PUBLIC', ];
+				},
+				
+				regex-rule:
+				{
+					name							: 'symbol.xml.doctype.open';
+					pattern						: @'<!DOCTYPE';
+				},
+				
+				regex-rule:
+				{
+					name							: 'symbol.xml.doctype.close';
+					pattern						: '>';
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		default-rule:
+		{
+		}
+	];
+};

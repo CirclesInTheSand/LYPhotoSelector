@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Reverting Changes</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="resolving-conflicts.html"></a>
+	</div>
+
+  <h1>Reverting Changes</h1>
+  <p>In many instances, changes made to a working copy file may not be suitable for committing to the repository.</p>
+  
+  <p>This may be the case with modifications made for the sake of testing. Or you may have decided on an alternative course of action and wish to start over. Or perhaps you have realized that you have insufficient time available to complete the changes you have started.</p>
+  
+  <p>Whatever the reason, Subversion allows you to roll back any changes made to files under version control by <span class="term">reverting</span> the file back to the initial state it had after the last commit or update (which is known as the file&rsquo;s <span class="term">BASE</span> revision).</p>
+  
+  <h2>Reverting a File or Folder to BASE</h2>  
+  <p>To revert a modified file to a pristine copy of its BASE revision:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select the files or folders in the working copy browser which you wish to revert. Use the <span class="key">Command</span> (⌘) and <span class="key">Shift</span> (⇧) keys to select multiple items.</li>
+  		<li>Select <span class="uiref">Working Copy &gt; Revert to Last Update&hellip;</span> (key equivalent <span class="key">⌘L</span>) or click <span class="uiref">Revert </span><img class="template button" src="../../images/toolbar-revert.png" srcset="../../images/toolbar-revert@2x.png 2x"/> in the app&rsquo;s toolbar.
+  		</li>
+  		<li>
+  			Once reverted, all modifications made to your working copy files will be irrevocably lost.
+  			<p>Cornerstone therefore prompts you to confirm that the files should be reverted before continuing.</p>
+  			<p>Click <span class="uiref">Copy to Trash First</span> to make a backup copy in the Trash if you think you may need the modified files in the future.</p>
+  			<p>Click <span class="uiref">Discard Changes</span> to revert the selected files without making a backup first.</p>
+  		</li>
+  	</ol>
+  </div>
+
+	<p>Files which scheduled to be added, moved or copied at the next commit are reverted to their previous unversioned status.</p>
+	<p>Files scheduled for deletion are undeleted and restored to the working copy.</p>
+
+	<div class="note">
+		<p>The revert function will also discard changes to a file or folder&rsquo;s Subversion properties.</p>
+	</div>
+	
+	<h2>Reverting to an Arbitrary Revision</h2>
+	<p>In some situations it may be necessary to undo committed changes and roll back to a previous revision of the file.</p>
+  <p>While Subversion specifically only supports reverting files back to their BASE revision, Cornerstone extends Subversion&rsquo;s revert functionality to also allow you to revert a file back to any previous revision.</p>
+  <p>To roll back to a previous revision:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select the files or folders in the working copy browser which you wish to revert. Use the <span class="key">Command</span> (⌘) and <span class="key">Shift</span> (⇧) keys to select multiple items.</li>
+  		<li>Select <span class="uiref">Working Copy &gt; Revert...</span></li>
+  		<li>The revision sheet is displayed.</li>
+  		<li>Specify the number of the revision to revert to in the <span class="uiref">Revision</span> field. You may also specify a date or select a revision from the picker.</li>
+  		<li>Click the <span class="uiref">Revert</span> button.</li>
+  		<li>If the selected files contain local modifications then Cornerstone will ask whether the modifications should be kept or discarded.</li>
+  		<li>Select <span class="uiref">Discard Changes</span> to discard local modifications before reverting to the selected revision.
+  		<p>Selecting <span class="uiref">Copy to Trash</span> will discard the local modifications before reverting but only after placing a copy of the modified files in the Trash.</p>
+  		<p>Selecting <span class="uiref">Keep Changes</span> will cause the local modifications to be preserved and merged with the differences between the current and selected revisions.</p>
+  		<div class="note">
+  			<p>Note that local modifications may cause conflicts with differences between the current and selected revisions, so it is normally best to discard changes (copying them to the trash if necessary) before reverting.</p>
+  		</div>
+  		</li>
+  	</ol>
+  </div>
+  
+  <p>When reverting, the differences between the current and selected revision are merged (or <em>reverse-merged</em> to be precise) into the selected working copy items. These changes are like any other working copy modifications and can be reviewed and edited as required before being committed to the repository.</p>
+  <p>In fact, if you are not happy with the results of the revert then you can undo them by reverting the working copy items back to their BASE revision (but note that any local modifications made prior to the original revert will be lost.)</p>
+  
+  <div class="note">
+  	<p>Before reverting to a previous revision, it is generally best to:</p>
+  	<ul>
+  		<li>Remove or commit all local modifications.</li>
+  		<li>Update the working copy to the latest revision.</li>
+  	</ul>
+  	<p>Updating the working copy is particularly important as it ensures that a consistent working copy state is used as the basis of the reverse merge.</p>
+  	<p>Reverting a mixed-revision working copy can result in differences not being consistently applied across the working copy.</p>
+  	<p>For example, If a working copy is at revision 541 but contains newer modifications up to 545 then reverting to 540 will only reverse merge the changes between 540 and 541 into the working copy, and not all changes between 545 and 540.</p>
+  	<p>Updating the working before reverting will bring the working copy up to revision 545 therefore ensuring that all changes will be correctly reverted to 540.</p>
+  </div>
+    
+</body>
+</html>

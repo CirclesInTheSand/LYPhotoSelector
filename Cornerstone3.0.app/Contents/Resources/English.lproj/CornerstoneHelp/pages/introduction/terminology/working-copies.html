@@ -1,0 +1,142 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Working Copies</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="tags-and-branches.html"></a>
+	</div>
+
+  <h1>Working Copies</h1>
+  
+  <h2 class="term"><a id="working-copy">Working Copy</a></h2>
+	<div class="inset">
+		<p>You can&rsquo;t modify the files in the repository directly so you need to obtain your own copy of the files if you intend to work on them. This copy is located on your computer and is termed the <span class="term">working copy</span>.</p>
+		
+		<div class="note">
+			<p>Subversion and Cornerstone are designed to be used with working copies stored on your computer.</p>
+			<p>This means that working copies should be located on your Mac&rsquo;s local disk (although you may also store them on USB or Firewire-attached external disks.)</p>
+			<p>Attempting to use working copies on remote drives can result in performance and stability issues, especially with unreliable network connections.</p>
+			<p>In addition, working copies should <em>never</em> be accessed concurrently by multiple users. Attempting to do so will almost definitely result in file corruption and data loss.</p>
+		</div>
+		
+		<p>A working copy is linked to the original location of the folder in the repository which is then automatically reference during subsequent commit and update operations. This link is persistent and, in most cases, will not change during the course of the working copy&rsquo;s life.</p>
+		
+		<div class="note">
+			<p>A working copy need not (and indeed probably shouldn&rsquo;t) contain the entire contents of the repository. Working copies should probably only contain the files you need to work on at any given time.</p>
+			<p>The repository should be structured to facilitate this organization. For example, a new folder should be created for each project managed by the repository. You can then check out multiple working copies (one for each project) as and when you need them rather than maintaining a working copy with the entire contents of the repository.</p>
+		</div>
+		
+		<p>For the most part, working copy folders can be treated much like any other folders. You can modify the files using your favorite editor or build your projects using IDEs such as Xcode and Eclipse.</p>
+		<p>However, you generally shouldn&rsquo;t move and rename the working copy&rsquo;s files and folders using Terminal or Finder. Instead, you should use Cornerstone to manage the files in your working copies.</p>
+		
+		<div class="note">
+			<p>Don&rsquo;t rename, copy or move working copy files using apps such as Finder or Terminal. Doing so can confuse Subversion making it difficult to commit changes to the repository or update the working copy&rsquo;s contents.</p>
+		</div>
+	</div>
+	
+	<h2 class="term"><a id="path">Path</a></h2>
+	<div class="inset">
+		<p>Files in working copies are identified by the same paths as used by your Mac&rsquo;s file system.</p>
+	</div>
+	
+	<h2 class="term"><a id="checking-out">Checking Out a Working Copy</a></h2>
+	<div class="inset">
+		<p>Getting a copy of the files to work on is referred to as <span class="term">checking out</span> a working copy. </p>
+		
+		<div class="note">
+			<p>In some version control systems (such as Microsoft Visual SourceSafe and IBM Rational ClearCase the term <span class="term">checking out</span> refers to exclusively locking a file for editing.</p>
+			<p>Note that checking out a folder from a Subversion repository does not lock the folder or the files that it contains but simply obtains a local copy of the files for you to work on. Other team members can still check out their own working copies and work on their copies of the repository&rsquo;s files.</p>
+		</div>
+	</div>
+	
+	<h2 class="term"><a id="commit">Committing Changes</a></h2>
+	<div class="inset">
+		<p>Changes made to working copy files are not immediately stored in the repository, instead requiring an explicit step known as a <span class="term">commit</span>. This allows you to work in parallel to others in your team, only pushing changes back upstream to them when they are in a state suitable for sharing.</p>
+	</div>
+	
+	<h2 class="term"><a id="ignore">Ignored Files</a></h2>
+	<div class="inset">
+		<p>By default, all files in a working copy are expected to be placed under version control. As a result, all <span class="term">unversioned</span> files (i.e. those not yet placed under version control by being added to the working copy) are displayed with a special status which is designed to attract your attention.</p>
+		<p>However you may not want to place some files under version control at all. Typically, such files include the products of build processes such as object files emitted by compilers and executables created by linkers.</p>
+		<p>By default, these files will be continuously brought to your attention by being marked as unversioned. This is distracting and makes it more difficult to isolate the interesting changes made to your working copy.</p>
+		<p>The solution is to tell Cornerstone that you want to <span class="term">ignore</span> these items. As a result the items are not displayed by default in the working copy.</p>
+		
+		<div class="note">
+			<p>Cornerstone can only ignore unversioned files. Once a file has been added to a working copy it can no longer be ignored.</p>
+		</div>
+	</div>
+	
+	<h2 class="term"><a id="ignore">Global Ignore List</a></h2>
+	<div class="inset">
+		<p>The <span class="term">global ignore list</span> is a Subversion option which defines files and file types that should automatically be ignored. The list can contain both filenames such as <code>.DS_Store</code> and patterns (or <span class="term">globs</span>) such as <code>*.o</code> and <code>*.pbxuser</code>.</p>
+		<p>Files and folders which match items in this list will automatically be ignored when encountered in a working copy.</p>
+		<p>The global ignore list can be edited in the <span class="uiref">Subversion</span> section of Cornerstone&rsquo;s preferences window.</p>
+		<div class="note">
+			<p>The global ignore list is a global preference which will affect all Subversion apps.</p>
+		</div>
+	</div>
+
+	<h2 class="term"><a id="update">Updating a Working Copy</a></h2>
+	<div class="inset">
+		<p>You pull other people&rsquo;s changes from the repository to your working copy by <span class="term">updating</span> your working copy.</p>
+	</div>
+	
+	<h2 class="term"><a id="unversioned">Unversioned Files</a></h2>
+	<div class="inset">
+		<p>Files and folders present in a working copy which have not yet been place under version control are described as <span class="term">unversioned</span>.</p>
+		<p>Generally, files should only be left unversioned until the next commit, at which point they should either be added to the working copy (i.e. <span class="term">placed under version control</span>) or <span class="term">ignored</span>.</p>
+		
+		<div class="note">
+			<p>A very common error in team environments is to forget to add files to version control before committing, resulting in an inconsistent state in the repository which potentially prevents other team members from continuing their work when they next update their working copies.</p>
+			<p>By default, Cornerstone will prompt you to deal with unversioned files before performing a commit in an attempt to reduce the risk that such mistakes will be made (this behavior can be disabled in the app&rsquo;s preferences).</p>
+		</div>
+	</div>
+  
+	<h2 class="term"><a id="switch">Switching a Working Copy</a></h2>
+	<div class="inset">
+		<p><span class="term">Switching</span> refers to changing a working copy (or a part of its contents) to refer to <em>a different folder in the same repository</em>. There are a number of situations where switching a working copy is appropriate:</p>
+		<p>
+			<ul>
+				<li>Switching an entire working copy between branches as a faster alternative to checking out a second working copy.</li>
+				<li>Switching an individual file or folder to point to a version from a different branch.</li>
+			</ul>
+		</p>
+		<div class="note">
+			<p>It is not possible to switch a working copy (or part of it) to a location in a different repository.</p>
+			<p>Consider using an <span class="term"><a href="externals.html#external">external definition</a></span> to pull content from a separate repository into a working copy. Use <span class="term"><a href="#relocate">relocate</a></span> to point a working copy at the same repository via a different URL.</span></p>
+		</div>
+		<p>A switch operation is generally faster than a check out for the same files. The initial working copy and target location are frequently descended from a common ancestor, so Subversion will retrieve only the changes which are necessary to convert the working copy to the state of the new location.</p>
+	</div>
+	
+	<h2 class="term"><a id="relocate">Relocating a Working Copy</a></h2>
+	<div class="inset">
+		<p><span class="term">Relocating</span> a working copy refers to changing a working copy to point at <em>the same location in the same repository via a different URL</em>. Relocation is appropriate when:</p>
+		<p>
+			<ul>
+				<li>The server name has changed, e.g. when a repository is moved to a new server.</li>
+				<li>The protocol used to access a repository has changed, e.g. when a project migrates from HTTP to HTTPS.</li>
+				<li>The repository&rsquo;s URL changes due to a server configuration change, e.g. a server that previously hosted a single repository is charged with hosting a second, necessitating a change in repository path.</li>
+			</ul>
+		</p>
+		<p>A working copy&rsquo;s contents are not modified during relocation&mdash;only the working copy&rsquo;s metadata is rewritten to point to a different URL. Cornerstone will however verify that the new URL is valid by attempting to contact the repository.</p>
+		<div class="note">
+			<p>Subversion expects the new location to identify the <em>same folder in the same repository</em> that the working copy originated from, but via a different URL.</p>
+			<p>Consider <span class="term"><a href="#switch">switching</a></span> if you need to point a working copy at a different location in the same repository.</p>
+		</div>
+	</div>
+	
+	<h2 class="term"><a id="tree-conflict">Tree Conflict</a></h2>
+	<div class="inset">
+		<p>A <span class="term">tree conflict</span> occurs when one user makes a change to a file or folder that has already been moved or deleted by another user.</p>
+		<p>Like textual and property conflicts, tree conflicts must be resolved before any further changes to the conflicted item can be committed to the repository.</p>
+	</div>
+  
+</body>
+</html>

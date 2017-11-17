@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Post-Commit Scripts</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+  <h1>Post-Commit Scripts</h1>
+  <p>Post-commit scripts are run after the items selected in the <a href="../../working/commit-view.html">commit view</a> have been successfully committed to the repository (see <a href="index.html#commit-process">the commit process</a> for more information).</p>
+  <p>A post-commit script can be run in one of two ways:</p>
+  <ol>
+  	<li>
+  		<p><strong>Once for the entire working copy</strong></p>
+  		<p>The script is run once. The POSIX path of the working copy&rsquo;s top folder is passed to the script as its only parameter.</p>
+  	</li>
+  	<li>
+  		<p><strong>Once for each checked item in the commit view&rsquo;s <span class="uiref">Changes</span> list</strong></p>
+  		<p>The script is run multiple times, once for each checked item in the commit view&rsquo;s <span class="uiref">Changes</span> list. The POSIX path of the changed item is passed to the script as its only parameter.</p>
+  		<p>Cornerstone will abort script execution as soon as the first error is encountered.</p>
+  	</li>
+  </ol>
+  <div class="note">
+		<p>Post-commit scripts are only run when the commit operation results in a new revision in the repository, i.e. scripts are not run when <span class="uiref">Commit Changes</span> is pressed with no items selected in the <span class="uiref">Changes</span> list.</p>
+  </div>
+    
+  <h2>Selecting a Script for Execution</h2>
+  <p>Post-commit scripts are defined for each working copy:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Start a commit operation by selecting one or more changed items and choosing the <span class="uiref">Commit</span> command from the <span class="uiref">Working Copy</span> menu (key equivalent <span class="key">⌘T</span>).</p>
+  		</li>
+  		<li>
+  			<p>Expand the <span class="uiref">Options</span> section at the bottom of the commit view.</p>
+  		</li>
+  		<li>
+  			<p>Locate the <span class="uiref">After committing</span> options in the <span class="uiref">Actions</span> section.</p>
+  		</li>
+  		<li>
+  			<p>Check the <span class="uiref">Run script</span> button.</p>
+  		</li>
+  		<li>
+  			<p>Use the pop-up to choose the script to run.</p>
+  		</li>
+  		<li>
+  			<p>Specify whether the script should be run once for the entire working copy or once for each item.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Possible Uses for Post-Commit Actions</h2>
+  <ul>
+  	<li>Exporting the latest revision from the repository and <code>rsync</code>-ing to a web server for deployment.</li>
+  	<li>Copying the commit&rsquo;s log message to the clipboard to be pasted into an issue tracking system.</li>
+  	<li>Scanning the commit&rsquo;s log message for an issue tracking number and closing the issue in the issue tracking system.</li>
+  	<li>Writing the commit&rsquo;s log entry to a personal log file for use as a reference when making out a customer invoice or completing a status report.</li>
+  	<li>Sending other team members a mail when changes are made to particular files or folders.</li>
+  	<li>Kick-starting a continuous build system.</li>
+  </ul>
+  
+  <h2>Example Script</h2>
+  <table class="summary">
+  	<tr>
+  		<td>Purpose</td>
+  		<td>Obtain the last log item from the working copy&rsquo;s history (i.e. log) and copy it to the clipboard</td>
+  	</tr>
+  	<tr>
+  		<td>Type</td>
+  		<td>Working copy</td>
+  	</tr>
+  	<tr>
+  		<td>Argument</td>
+  		<td>Path to a working copy</td>
+  	</tr>
+  </table>
+  
+  <div class="script">
+  	<pre>#!/usr/bin/env bash
+
+# Copies the contents of the last log item for the working copy to
+# the clipboard.
+#
+# Usage:
+#   CopyLogToClipboard working-copy
+#
+# Arguments:
+#   $1 path to a working copy
+
+svn log "$1" -r HEAD --limit 1 --verbose | pbcopy
+		</pre>
+  </div>
+  
+	<p><code>$1</code> is used to reference the path of the working copy that was committed. It is supplied as the script&rsquo;s single argument.</p>
+	
+	<div class="note">
+		<p>It is recommended that <code>$1</code> be placed in quotation marks in order that the script functions correctly with paths containing space characters.</p>
+	</div>
+
+</body>
+</html>

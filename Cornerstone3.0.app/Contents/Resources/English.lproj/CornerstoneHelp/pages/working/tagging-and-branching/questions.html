@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Creating Tags and Branches</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+  <h1>Q & A</h1>
+  <div class="qanda">
+  	<p class="question">If a tag is just a copy of my project&rsquo;s trunk folder at a particular point in time, why create a tag folder rather than just noting down the repository&rsquo;s current revision at that moment?</p>
+  	<p class="answer">The primary motivation for creating tags in the repository is to capture your project&rsquo;s state at a given time and make that available as a browsable folder to your team&rsquo;s members for future reference.</p>
+  	<p>Tag folders can also be given descriptive names (e.g. <code>1.2.0-beta1</code>) that are easier to identify and remember than their equivalent revision numbers.</p>
+  </div>
+  
+  <div class="qanda">
+  	<p class="question">Do the <code>branches</code>, <code>tags</code> and <code>trunk</code> folders have to be located in the root of my repository?</p>
+  	<p class="answer">No. A single repository may contain any number of top-level projects (usually located in the repository&rsquo;s top-level folder) with each of these project&rsquo;s containing their own <code>branches</code>, <code>tags</code> and <code>trunk</code> folders.</p>
+  </div>
+  
+  <div class="qanda">
+  	<p class="question">Tags and branches sound very similar. What&rsquo;s the difference?</p>
+  	<p class="answer">Subversion implements tags and branches in exactly the same way, so technically there&rsquo;s little difference.</p>
+  	<p>The primary difference lies in the way tags and branches are used.</p>
+  	<p>Tags are intended to mark the state of your project at a given point in time and not be modified thereafter. Indeed some repositories even enforce this by explicitly disallowing commits against tag folders.</p>
+  	<p>While branches are also based on your project at a specific point in time, the general purpose of branches is to support continued development separate from the branch source (or <span class="term">ancestor</span>).</p>
+  </div>
+  
+  <div class="qanda">
+  	<p class="question">Can tags and branches be renamed and deleted?</p>
+  	<p class="answer">Yes. Tags and branches are just folders and can be deleted and renamed in just the same way as any other folder located in your repository.</p>
+  	<p>In fact, tags and branches are often deleted when no longer required. Examples include deleting interim tags to reduce clutter and deleting feature branches once development is complete.</p>
+  </div>
+  
+  <div class="qanda">
+  	<p class="question">Should I check out working copies for my tags and branches?</p>
+  	<p class="answer">Generally, there is no need to check out working copies for your tags as you will not be making and committing modifications to the tag&rsquo;s contents.</p>
+  	<p>Some members of your team (such as release managers) as well as automated build processes may need to have local access to a tag&rsquo;s files, but this can be achieved by exporting a copy of the tag&rsquo;s contents to the local disk.</p>
+  	<p>Branches are a different matter.</p>
+  	<p>Anyone working on a branch will need to check out a working copy to their Mac in order to make changes and commit those changes back to the repository. However, only those working on a branch will need to check out a working copy, and the files and folders can be deleted when work on the branch has completed and the working copy is no longer needed.</p>
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Integrating with Issue Tracking Systems</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="user-properties/index.html"></a>
+	</div>
+
+  <h1>Integrating with Issue Tracking Systems</h1>
+  <p>Cornerstone&rsquo;s issue tracking integration enables issue tracking numbers in log messages to be displayed as links, linking to the issues&rsquo; pages in your issue tracking system.</p>
+
+	<h2>Issue Number Rules</h2>  
+	<p>A set of rules can be defined which control how issue numbers are identified in log messages and the URLs in the issue tracking system which they should link to.</p>
+	<p>Each rule describes two things:</p>
+	<ol>
+		<li>
+			<h3>The Issue Number Pattern</h3>
+			<p>You can choose from a set of pre-defined patterns using a simplified syntax (e.g. <code>#number</code>, <code>[number]</code> etc.) or specify a custom regular expression.</p>
+		</li>
+		<li>
+			<h3>The URL Format</h3>
+			<p>The URL format is used to generate URLs for issue numbers. <code>{number}</code> is used as a placeholder for the issue number matched by the pre-defined patterns.</p>
+		</li>
+	</ol>
+	<p>Matching issue numbers found in log messages are then displayed as links, linking to the URL generated using the URL format associated with the pattern used to match the issue number.</p>
+	<p>The user can define any number of rules. This enables use of the feature in environments where:</p>
+	<ul>
+		<li>The format used for issue numbers has changed over time.</li>
+		<li>Issue numbers are formatted inconsistently by team members.</li>
+		<li>Multiple issue tracking systems are used, e.g.
+			<ol class="alphabetical">
+				<li>
+					<p>an internal system for unit and integration testing; and</p>
+				</li>
+				<li>a public support request ticketing system.</li>
+			</ol>
+	</ul>
+	<div class="note">
+  	<p>You can define different rule sets for different repositories.</p>
+	</div>
+		
+  <h2>Configuring Issue Tracking Integration</h2>
+  <div class="task">
+  	<ol>
+  		<li>Select your repository in the source list.</li>
+  		<li>
+  			<p>Select <span class="uiref">Issue Tracking&hellip;</span> The issue tracking window is displayed.</p>
+  		</li>
+  		<li>
+  			<p>Click the add button <span class="add-button"></span> to add a new rule.</p>
+  		</li>
+  		<li>Select a number pattern from the popup menu in the <span class="uiref">Issue # Pattern</span> column.</li>
+  		<li>Enter the URL for the issue tracking system into the column labeled <span class="uiref">URL Format</span>. Use <code>{number}</code> as a placeholder for issue numbers matched by the pre-defined patterns.</li>
+  		<li>Click the <span class="uiref">Save</span> button to save the changes and close the window.</li>
+  	</ol>
+  </div>
+  
+  <h2>Custom Number Patterns</h2>
+  <p>Custom number patterns are defined using Perl-compatible regular expressions. Ruby extensions such as named groups are also supported. Detailed information on the supported regular expression syntax can be found in the <a href="../appendix/regex-syntax.html">Regular Expression Syntax</a> page of the <a href="../appendix/index.html">Appendix</a>.</p>
+  <p>When groups are used, the URL placeholder should specify the group&rsquo;s index or name in the format <code>{index}</code> or <code>{name}</code>.</p>
+  <p>For example, <code>{0}</code> is used to reference the entire matched text for custom regular expressions. <code>{1}</code> to <code>{n}</code> can be used to reference groups in the regular expression. Named groups are referenced using <code>{name}</code> where <span class="term">name</span> is the name of the group.</p>
+</body>
+</html>

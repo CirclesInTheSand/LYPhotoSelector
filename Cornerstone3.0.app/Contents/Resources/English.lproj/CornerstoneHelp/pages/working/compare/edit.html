@@ -1,0 +1,148 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Editing Files</title>
+	<style type="text/css">
+		table {
+			border-collapse: collapse;
+			font-size: 9pt;
+		}
+		td {
+			border: 1px solid #dfdfdf;
+			vertical-align: top;
+			padding: 0.8em;
+		}
+		td+td+td {
+			width: 100%;
+		}
+		
+		.hatched-fill  {
+			display: inline-block;
+			width:40px;
+			height: 1em;
+			background:url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScvPgogIDxwYXRoIGQ9J00tMSwxIGwyLC0yCiAgICAgICAgICAgTTAsMTAgbDEwLC0xMAogICAgICAgICAgIE05LDExIGwyLC0yJyBzdHJva2U9J2JsYWNrJyBzdHJva2Utd2lkdGg9JzEnLz4KPC9zdmc+Cg==);
+			background-repeat: repeat;			
+			opacity: 0.5;
+			border: 1px solid #a6a6a6;
+			vertical-align: middle;
+		}
+			
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+	</div>
+
+  <h1>Editing Files</h1>
+   <p>When reviewing changes, either before committing changes or as part of a code-review process with other team members, you may decide not to keep individual changes.</p>
+  <p>Examples of such changes include:</p>
+  <ul>
+  	<li>Code commented out for test purposes.</li>
+  	<li>Logging code added to aid debugging that should not be included in production code, such as Javascript&rsquo;s <code>console.log()</code> or Cocoa&rsquo;s <code>NSLog()</code>.</li>
+  	<li>Changes that did not achieve the desired affect,</li>
+  </ul>
+  <p>Cornerstone not only enables you to compare text files side-by-side, but it also provides you with tools to reject individual changes within those files.</p>
+  <div class="note">
+  	<p>You can only edit changes made to your working files. It is not possible to edit differences when comparing non-WORKING revisions.</p>
+  </div>
+ 
+  <h2>Opening a File for Editing</h2>
+  <p>To open a file for editing:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select the modified file you want to edit in the working copy file browser.</p>
+  		</li>
+  		<li>
+  			<p>Press the <span class="uiref">Compare With BASE</span> button in the view&rsquo;s toolbar to display the compare view (key equivalent <span class="key">⌘⏎</span>).</p>
+  			<div class="view-button">
+	  			<img src="../../../images/toolbar-compare-base-view.png" srcset="../../../images/toolbar-compare-base-view@2x.png 2x"/>
+	  			<p>Compare with BASE</p>
+	  		</div>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Reviewing Changes</h2>
+  <p>In the following example, the <code>mouseDown:</code> method has been changed to add support for a new delegate method. The developer would like to remove the call to <code>NSLog()</code> on line 240 before committing the changes to the repository.</p>
+  <img class="comp" src="../../../images/compare-edit-1.png" srcset="../../../images/compare-edit-1@2x.png 2x"/>
+  
+  <h2>Disabling Whitespace Comparison</h2>
+  <p>By default, the compare view compares differences in whitespace. This is great for visually grouping related lines but can reduce the granularity for editing.</p>
+  <p>If whitespace comparison is disabled then lines 240-241 are shown as a single change:</p>
+  <p><img class="comp" src="../../../images/compare-edit-2.png" srcset="../../../images/compare-edit-2@2x.png 2x"/></p>
+  <p>To disable whitespace comparison:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+				<p>Uncheck <span class="uiref">Compare &gt; Show Differences in Whitespace</span> (key equivalent <span class="key">⌘&apos;</span>).</p>
+				<p>or</p>
+  		</li>
+  		<li>
+  			<p>Click the whitespace button <img class="template" src="../../../images/button-whitespace.png" srcset="../../../images/button-whitespace@2x.png 2x"/> at the bottom of the compare view.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Rejecting Changes</h2>
+  <p>To reject a change:</p>
+  <div class="task">
+  	<ol>
+  		<li><p>Navigate to the change that should be rejected by using the the <span class="uiref">Previous Difference</span> (<span class="key">⌘↑</span>) and <span class="uiref">Next Difference</span> (<span class="key">⌘↓</span>) functions in the <span class="uiref">Compare</span> menu.</p></li>
+  		<li>
+  			<p>Select <span class="uiref">Revert to Original Text</span> from the <span class="uiref">Compare</span> menu (key equivalent <span class="key">⌘⇧⌫</span>)</p>
+  			<p>or</p>
+			<p>click the change&rsquo;s arrow button <img src="../../../images/right-arrow-green.png" srcset="../../../images/right-arrow-green@2x.png 2x"/>.</p>
+  		</li>
+  		<li>
+  			<p>The text is copied from left to right. Deleted edits are shown using a hatched fill <span class="hatched-fill"></span>.</p>
+  		</li>
+  	</ol>
+  </div>
+  <p><img class="comp" src="../../../images/compare-edit-3.png" srcset="../../../images/compare-edit-3@2x.png 2x"/></p>
+  
+  <h2>Undoing Edits</h2>
+  <p>To undo an edit and revert to the original text:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select <span class="uiref">Restore Modified Text</span> from the <span class="uiref">Compare</span> menu (key equivalent <span class="key">⌘⇧⌫</span>)</p></span>
+  			<p>or</p>
+  			<p>click the change&rsquo;s undo button <img src="../../../images/undo-edit.png" srcset="../../../images/undo-edit@2x.png 2x"/>.</p>
+  			<p>or</p>
+  			<p>Select <span class="uiref">Undo</span> from the <span class="uiref">Edit</span> menu (key equivalent <span class="key">⌘Z</span>).</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Saving Edits</h2>
+  <p>To save edits to the file:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select <span class="uiref">Save</span> from the <span class="uiref">File</span> menu (key equivalent <span class="key">⌘S</span>).</p>
+  		</li>
+  	</ol>
+  </div>
+  <p>The changes are saved to the file and the comparison is updated to reflect the file&rsquo;s contents:</p>
+  <p><img class="comp" src="../../../images/compare-edit-4.png" srcset="../../../images/compare-edit-4@2x.png 2x"/></p>
+  
+  <h2>Discarding Edits</h2>
+  <p>To revert to the file&rsquo;s original state:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select <span class="uiref">Revert to Saved</span> from the <span class="uiref">File</span> menu.</p>
+  			<p>or</p>
+  			<p>Exit the compare view by clicking the <span class="uiref">Files</span> button in the navigation bar. You will be prompted to confirm that edits should be discarded.</p>
+  		</li>
+  	</ol>
+  </div>
+</body>
+</html>

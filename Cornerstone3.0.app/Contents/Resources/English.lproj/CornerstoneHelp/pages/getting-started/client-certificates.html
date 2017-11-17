@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Configuring Certificate-Based Authentication</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+  <h1>Configuring Certificate-Based Authentication</h1>
+  <p>The following sections provide an introduction to certificate-based authentication and describe how to configure Cornerstone to authenticate using a certificate.</p>
+  
+  <h2>Introduction</h2>
+  <p>Subversion repositories commonly require a username and password to be provided by the user to verify their identity. The SSL/TLS protocol (upon which HTTPS is based) provides a more secure and flexible alternative: certificate-based authentication.</p>
+  
+  <p>Certificate-based authentication provides several advantages over traditional password-based authentication, but the primary difference is that while password-based authentication relies on secrets defined and managed by the user, certificate-based authentication utilizes secrets issued and managed by the <em>server</em> or, more accurately, the certificate issuer or <span class="term">authority</span>.</p>
+  
+  <p>Other advantages of certificates include:</p>
+  <ul>
+  	<li>Certificates automatically expire at a given time.</li>
+  	<li>Certificates convey additional information about the holder, such as organizational unit, contact information etc.</li>
+  	<li>Certificates can&rsquo;t be forgotten, as is the case with passwords (although they can be misplaced).</li>
+  	<li>The private key contained within a certificate is of high cryptographic strength. This is not generally the case with user-defined passwords, which can often be guessed.</li>
+  	<li>Passwords can be defeated using various techniques such as dictionary attacks that cannot be used with certificates.</li>
+  </ul>
+  
+  <p>Certificates are not without their disadvantages:</p>
+  <ul>
+  	<li>Infrastructure is required to manage the issuing of certificates.</li>
+  	<li>Certificates require installation and management. Certificate-based authentication is often more complicated than password-based authentication.</li>
+  	<li>Anyone in possession of the certificate&rsquo;s private key is automatically granted access to the server. Certificates should therefore be distributed with care.</li>
+  </ul>
+  
+  <h2>Authentication and Authorization</h2>
+  <p>If an HTTPS server is configured to require a certificate then a client app such as Cornerstone will be unable to connect to the server unless the user can present a certificate that meets the server&rsquo;s requirements. The enforcement of the requirement for a certificate serves two purposes:</p>
+  
+  <ul>
+  	<li>Only users with a valid certificate (i.e. server-issued proof of identity) can connect to the server.</li>
+  	<li>The user&rsquo;s identity is given by or can be derived from the certificate&rsquo;s contents.</li>
+  </ul>
+  
+  <p>Thus certificates can be used for <span class="term">authentication</span>, i.e. verifying (or <span class="term">authenticating</span>) the identity of the user.</p>
+  
+  <p>Additional requirements can be placed on the client certificates to restrict access to those users authorized to access the server.</p>
+  
+  <p>Examples of requirements commonly placed on client certificates include:</p>
+  <ul>
+  	<li>The certificate was issued by a certificate authority known to and trusted by the server.</li>
+  	<li>The certificate has not expired.</li>
+  	<li>The organization (or organizational unit) to which the user belongs (as defined by the certificate) is permitted access to the server or repository.</li>
+  </ul>
+  
+  <p>Thus certificates can also be used for <span class="term">authorization</span>, i.e. to verify that the user is authorized to access the server.</p>
+  
+  <h2>Certificate Storage</h2>
+  <p>A certificate used for the purpose of authentication must contain a private key&mdash;a secret known only by the issuer and the user&mdash;so the same care should be afforded the storage of certificates as passwords.</p>
+  
+  <p>As with passwords, Cornerstone does not store certificates directly. Instead, the app delegates this task to the keychain, the standard system component responsible for managing the user&rsquo;s credentials such as passwords and certificates.</p>
+  
+  <div class="note">
+  	<p>Subversion is traditionally configured to use PKCS#12 certificate files stored at a location in the file system of the user&rsquo;s choosing. Cornerstone ignores these settings, instead favoring use of the more secure and standardized keychain.</p>
+  	<p>Unfortunately other Subversion apps such as the <code>svn</code> command-line tool, Xcode, Coda etc. do not provide support for the keychain and will need to be configured using the traditional Subversion configuration files.</p>
+  </div>
+  
+	<p>Cornerstone needs to provide the certificate to Subversion whenever it connects to the HTTPS server. It therefore requires permanent permission to access not only the certificate, but also the secret it contains (its <span class="term">private key</span>).</p>
+	<div class="note">
+		<p>Cornerstone cannot use a certificate if it is not granted access to the certificate&rsquo;s private key.</p>
+	</div>
+  
+  <h2>The Security Preference Pane</h2>
+  <p>Cornerstone maintains a list of certificates for use with Subversion. This list is accessed through the <span class="uiref">Secure Sockets (SSL)</span> tab located in the <span class="uiref">Security</span> pane of the app&rsquo;s <span class="uiref">Preferences</span> window.</p>
+  
+  <img class="screenshot" src="../../images/cert-prefs.png" srcset="../../images/cert-prefs@2x.png 2x"/>
+  
+  <h2><a id="add">Adding a Certificate</a></h2>
+  <p>Cornerstone can reference certificates stored in any of the keychains displayed in the <span class="uiref">Keychain Access</span> app.</p>
+  <p>To add a reference to a certificate already present in the keychain:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Open the <span class="uiref">Preferences</span> window by selecting <span class="uiref">Preferences…</span> from the <span class="uiref">Cornerstone</span> menu.</li>
+  		<li>Switch to the <span class="uiref">Security</span> pane by clicking the associated toolbar item.</li>
+  		<li>Activate the <span class="uiref">Secure Sockets (SSL)</span> tab.</li>
+  		<li>Click the add button <img src="../../images/button-add-arrow.png" srcset="../../images/button-add-arrow@2x.png 2x"/> under the certificate list and select <span class="uiref">Add Certificate from Keychain…</span> from the popup menu.</li>
+  		<li>Select a certificate from list of certificates available in the keychain.</li>
+  		<li>Click <span class="uiref">Choose</span>.</li>
+  		<li>The keychain will ask to allow Cornerstone to access the certificate&rsquo;s private key.
+  			<p>Click <span class="uiref">Allow</span> to grant Cornerstone permission to access the certificate&rsquo;s private key.</p>
+  		</li>
+  		<li>The certificate is added to Cornerstone&rsquo;s certificate list.</li>
+  	</ol>
+  </div>
+  
+  <h2><a id="import">Importing a Certificate from a File</a></h2>
+  <p>To import a certificate from a certificate file:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Open the <span class="uiref">Preferences</span> window by selecting <span class="uiref">Preferences…</span> from the <span class="uiref">Cornerstone</span> menu.</li>
+  		<li>Switch to the <span class="uiref">Security</span> pane by clicking the associated toolbar item.</li>
+  		<li>Activate the <span class="uiref">Secure Sockets (SSL)</span> tab.</li>
+  		<li>Click the add button <img src="../../images/button-add-arrow.png" srcset="../../images/button-add-arrow@2x.png 2x"/> under the certificate list and select <span class="uiref">Import Certificate from File…</span></li>
+  		<li>
+  			A standard file panel is displayed. Select a certificate file and click <span class="uiref">Import</span>.
+  			<div class="= =note">
+  				<p>Cornerstone can only use certificates that contain private keys for the purpose of authentication.</p>
+  				<p>The most common file format for the distribution of certificates with private keys is the <span class="term">PKCS#12</span> format, commonly identified by the <span class="term">.p12</span> filename extension.</p>
+  			</div>
+  		</li>
+  		<li>If the certificate file is password-protected (as is generally the case) then you will be prompted to enter the password to allow the certificate&rsquo;s contents to be decrypted.</li>
+  		<li>
+  			The certificate and its private key are imported into the keychain.
+  			<div class="note">
+  				<p>Cornerstone imports the certificate into the user&rsquo;s <span class="uiref">login</span> keychain.</p>
+  				<p>If you wish to store your certificate in a separate keychain then you will need to import your certificate using the <span class="uiref">Keychain Access</span> app.</p>
+  			</div>
+  		</li>
+  		<li>The keychain will prompt to allow Cornerstone to access the certificate&rsquo;s private key.
+  			<p>Click <span class="uiref">Allow</span> to grant Cornerstone permission to access the certificate&rsquo;s private key.</p>
+  		</li>
+  		<li>The certificate is added to Cornerstone&rsquo;s certificate list.</li>
+  	</ol>
+  </div>
+  
+  <h2>Certificate Selection</h2>
+  <p>When Cornerstone receives a request for a client certificate it must select the appropriate certificate for that server.</p>
+  <p>If no certificates have been added to the app&rsquo;s list then a message is displayed, along with a link to the app&rsquo;s <span class="uiref">Security</span> preference pane.</p>
+  <p>If only one certificate has been added then Cornerstone will always attempt to use it and no additional configuration is necessary. For the majority of users a single certificate is sufficient.</p>
+  <p>However, some users will need to access multiple servers with separate certificates. In such cases Cornerstone will ask which certificate to use when connecting to a server for the first time:</p>
+  <p>Cornerstone will remember which certificate to use for the server and will not prompt again.</p>
+
+  <h2>Changing the Certificate Used for a Server</h2>
+  <p>Under certain conditions it may be necessary to change the certificate used for a server. For example:</p>
+  <ul>
+  	<li>The wrong certificate was selected.</li>
+  	<li>The certificate expires.</li>
+  	<li>A change in server policy necessitates the use of a different certificate.</li>
+  </ul>
+  
+  <p>Perform the following steps to change the certificate used with a particular server:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Open the <span class="uiref">Preferences</span> window by selecting <span class="uiref">Preferences…</span> from the <span class="uiref">Cornerstone</span> menu.</li>
+  		<li>Switch to the <span class="uiref">Security</span> pane by clicking the associated toolbar item.</li>
+  		<li>Activate the <span class="uiref">Secure Sockets (SSL)</span> tab.</li>
+  		<li>Select the certificate marked as currently used for the server.</li>
+  		<li>If the certificate has expired:
+  			<p>Click the remove button <span class="remove-button"></span> to remove the certificate from the list. The keychain will prompt to remove Cornerstone&rsquo;s permissions for accessing the certificate&rsquo;s private key. Click <span class="uiref">Allow</span>.</p>
+  		</li>
+  		<li>If the wrong certificate is used for the server:
+  			<p>Click the action button <img src="../../images/button-action-arrow.png" srcset="../../images/button-action-arrow@2x.png 2x"/> and select <span class="uiref">Forget Server Usage</span> from the popup menu. The certificate is marked as <span class="uiref">Not currently used</span>.</p>
+  		</li>
+  		<li><a href="#add">Add</a> or <a href="#import">import</a> an alternative certificate as required.</li>
+  		<li>Re-attempt the connection to the server. Cornerstone will ask which certificate to use for the server.</li>
+  	</ol>
+  </div>
+    
+</body>
+</html>

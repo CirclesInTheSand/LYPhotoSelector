@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Cherry Picking Changes</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="advanced.html"></a>
+	</div>
+
+  <h1>
+  	<img src="../../../images/toolbar-merge-cherrypick.png" srcset="../../../images/toolbar-merge-cherrypick@2x.png 2x"/>
+  	Cherry Picking Changes
+  </h1>
+  <p><a href="../../introduction/terminology/merging.html#cherry-picking">Cherry picking</a> is appropriate when individual change sets (i.e. revisions) need to be copied from one branch to another.</p>
+  
+  <p>For example, small, localized changes such as bug fixes can be &apos;cherry picked&apos; from the main trunk of development and individually merged into a maintenance branch for release in a maintenance update.</p>
+  
+  <p>This contrasts with <a href="synchronize.html">synchronization merging</a>, which synchronizes a branch with its ancestor by merging <em>all</em> changes made to date.</p>
+    
+  <p>To merge cherry picked changes:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Click the <span class="uiref">Cherry Pick Changes</span> button:</p>
+  			<div class="view-button">
+	  			<img src="../../../images/toolbar-merge-cherrypick.png" srcset="../../../images/toolbar-merge-cherrypick@2x.png 2x"/>
+	  			<p>Cherry Pick Changes</p>
+	  		</div>
+  		</li>
+  		<li>
+  			<p>Verify that the selected working copy does not contain any uncommitted modifications.</p>
+  			<div class="warning">
+  				<p>Merging into a working copy which contains uncommitted modifications can result in unnecessary conflicts and is not recommended.</p>
+  			</div>
+  			<p>Cornerstone will display a warning in the <span class="uiref">Working Copy Checklist</span> if modifications are detected. If necessary, click the <span class="uiref">Revert...</span> or <span class="uiref">Commit...</span> button as required.</p>
+  		</li>
+  		<li>
+  			<p>Verify that the selected working copy is up-to-date.</p>
+  			<div class="warning">
+  				<p>Merging into a working copy which is not up-to-date can result in unnecessary conflicts and is not recommended.</p>
+  			</div>
+  			<p>Cornerstone will display a warning in the <span class="uiref">Working Copy Checklist</span> if the working is not up-to-date. If necessary, click the <span class="uiref">Update to Latest Revision</span> button to bring the working copy up to date.</p>
+  		</li>
+  		<li>
+  			<p>Specify the branch to merge from in the <span class="uiref">Merge from</span> field.</p>
+  		</li>
+  		<li>
+  			<p>Specify the revisions to merge in the <span class="uiref">Revisions</span> field provided.</p>
+  			<div class="links">
+  				<p>See <a href="#selecting-revisions">Selecting Revisions</a> below for more information.</p>
+  			</div>
+  		</li>
+  		<li>
+	  		<p>If required, change the <a href="index.html#options">merge options</a> by clicking on the <span class="uiref">Options</span> popup button.</p>
+  		</li>
+  		<li>
+  			<p>Cornerstone will display a preview of the changes to be merged.</p>
+  		</li>
+  		<li>
+  			<p>Click the <span class="uiref">Merge Changes</span> button to merge the changes into the working copy.</p>
+  		</li>
+  		<li>
+  			<p>Changes made in the branch are merged into the selected working copy.</p>
+  		</li>
+  		<li>
+  			<p><a href="index.html#review">Verify the changes</a> and resolve any conflicts.</p>
+  		</li>
+  		<li>
+  			<p><a href="index.html#commit">Commit the changes</a> to the repository to complete the merge operation.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2 id="selecting-revisions">Selecting Revisions</h2>
+	<p>The <span class="uiref">Revisions</span> field accepts both single revisions (e.g. &rdquo;<code>141</code>&ldquo;) and ranges. Ranges should be entered in the form <code><em>start</em>-<em>end</em></code>, e.g. &ldquo;<code>144-149</code>&rdquo;.</p>
+	<p>Individual revisions and ranges can be combined, such as &ldquo;<code>141, 144-149, 153</code>&rdquo;. Revisions and ranges should be separated by commas.</p>
+	<p>Revisions and ranges can also be selected by opening the picker by clicking the picker button <img src="../../../images/rev-picker-button.png" srcset="../../../images/rev-picker-button@2x.png 2x"/>. The revision picker also indicates which revisions have already been merged:</p>
+	<p><img class="comp" src="../../../images/merge-revision-picker.png" srcset="../../../images/merge-revision-picker@2x.png 2x"/></p>
+</body>
+</html>

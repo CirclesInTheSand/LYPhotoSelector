@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Checking Out a Working Copy</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+  <h1>Checking Out a Working Copy</h1>
+  <p>You will need to add your repository to Cornerstone before you can check out a working copy.</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select the repository in the source list that contains the files you want to check out.</li>
+  		<li>Browse the repository and locate the top-level folder which contains your project&rsquo;s files. This may be the project&rsquo;s trunk or a folder on a branch.</li>
+  		<li>Select <span class="uiref">Working Copy &gt; Check Out Working Copy&hellip;</span> or select <span class="uiref">Check Out Working Copy&hellip;</span> from the folder&rsquo;s right-click menu.
+  			<p>You can also click the <span class="uiref">Check Out</span> button <img class="template" src="../../images/toolbar-check-out.png" srcset="../../images/toolbar-check-out@2x.png 2x"alt="Check Out Toolbar Icon"/> in the toolbar.</p>
+  		</li>
+  		<li>Use the field labelled <span class="uiref">Save As</span> to specify the name of the working copy directory.</li>
+  		<li>Select the folder in which the working copy will be located.</li>
+  		<li>Click <span class="uiref">Check Out</span> to check out the working copy.</li>
+  	</ol>
+  </div>
+  
+  <p>The check out panel also contains a set of more advanced options:</p>
+  
+  <div class="task">
+  	<ul>
+  		<li>Use the <span class="uiref">Revision</span> field to select the revision to check out. This field defaults to HEAD, i.e. the latest revision in the repository.</li>
+  		<li>
+  			<p>Use the <span class="uiref">Format</span> field to select the working copy format.</p>
+  		</li>
+  		<li>
+				<p>The check out depth may be selected using the <span class="uiref">Depth</span> field.</p>
+  		</li>
+  		<li>Uncheck <span class="uiref">Check out content from external definitions</span> if you want to exclude the content of externals from the check out.</li>
+  	</ul>
+  </div>
+  
+  <div class="note">
+  	<p>If you encounter the error message <em>Unable to contact repository at &lt;server&gt;</em> when checking out a project even though the check out process appeared to complete successfully, check that repositories referenced by <code>svn:externals</code> can be reached and that the URLs are correct.</p>
+  	<p>This error is particularly likely if you are using a local repository and then attempt to check out a project with external references to a public repository on the Internet when you do not have Internet access.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>External Definitions</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="list.html"></a>
+	</div>
+	
+  <h1>External Definitions</h1>
+
+	<h2 class="term"><a id="external">External Definition</a></h2>
+	<div class="inset">
+		<p>Subversion allows a working copy to be constructed from folders checked out of several locations in one or more repositories through the use of <span class="term">external definitions</span>.</p>
+		<p>An external definition specifies that when a folder is checked out of a repository, a sub-folder is checked out of another location. In this way, a working copy can be comprised of content from several unrelated locations.</p>
+		<p>This can be useful in a number of situations:</p>
+		<ul>
+			<li>
+				An organization&rsquo;s app may be dependent on a library shared between several projects.
+				<p>Although the shared library is not located within the project&rsquo;s folder in the repository, it can be checked out from the shared location into the working copy using an external definition.</p></li>
+			<li>
+				A project is dependent on an open source project which is managed in a publicly accessible Subversion repository.
+				<p>An external definition can be used to automatically obtain the open source code into the project&rsquo;s working copy when checked out.</p>
+			</li>
+		</ul>
+		<p>External definitions are defined using the <a href="#svn:externals"><code>svn:externals</code></a> property. As such, they are subject to the same versioning as the folders they are defined on.</p>
+		<p>Each external definition defines the following information:</p>
+		<ul>
+			<li>The source URL from which the external dependency will be checked out.</li>
+			<li>The revision which should be checked out.</li>
+			<li>The working copy folder (relative to the folder defining the <code>svn:externals</code> property) into which the external dependency will be checked out.</li>
+		</ul>
+	</div>
+	
+	<h2 class="term"><a id="svn:externals">svn:externals</a></h2>
+	<div class="inset">
+		<p>The <code>svn:externals</code> property is a simple text value which contains a list of <a href="#external"><span class="term">external definitions.</span></a></p>
+		<p>Each definition is specified on its own line in the form:</p>
+		<pre>[revision] URL folder</pre>
+		<p>where:</p>
+		<ul>
+			<li><span class="term">revision</span> (optional) specifies the revision to check out. The latest revision (i.e. HEAD) will be checked out if <span class="term">revision</span> is not specified.</li>
+			<li><span class="term">URL</span> specifies the URL of the folder to check out.
+			<div class="note">
+				<p>Several URL formats are accepted by Subversion, including both absolute and relative URLs. See the <a href="../../working/url-formats.html">External Definition URL Formats</a> help topic or Subversion documentation included with Cornerstone (<span class="uiref">Help &gt; Subversion Documentation</span>) for more information.</p>
+			</div></li>
+			<li><span class="term">folder</span> specifies the path of a folder, relative to the folder which declares the <code>svn:externals</code> property into which the contents of <span class="term">URL</span> should be checked out.</li>
+		</ul>
+		<p>For example the following definition:</p>
+		<pre>-r32849 http://svn.webkit.org/trunk dependencies/webkit</pre>
+		<p>will check out revision 32,849 of <code>http://svn.webkit.org/trunk</code> into the <code>dependencies/webkit</code> sub-folder of the folder which is declaring the property.</p>
+		<p>See the Subversion documentation included with Cornerstone (<span class="uiref">Help &gt; Subversion Documentation</span>) for more detailed information on the format of the <code>svn:externals</code> property.</p>
+	</div>
+	  
+</body>
+</html>

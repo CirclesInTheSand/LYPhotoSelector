@@ -1,0 +1,102 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Creating Tags and Branches</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="questions.html"></a>
+	</div>
+
+  <h1>Tags and Branches</h1>
+  <p>Fundamentally, a tag or branch is nothing other than a copy of a specific revision of your project folder located in a known location in the repository.</p>
+  <p>See the <a href="../../introduction/terminology/tags-and-branches.html">Terminology</a> section for definitions of the terms <span class="term">tag</span> and <span class="term">branch</span>.</p>
+  
+  <h2 id="conventions">Conventions</h2>
+  <p>Subversion repositories are generally structured in a standard way, with each project having at least the following top-level folders:</p>
+  <ul>
+  	<li><code>branches</code></li>
+  	<li><code>tags</code></li>
+  	<li><code>trunk</code></li>
+  </ul>
+  <p>Projects which import assets from other projects may also have a top-level <code>vendor</code> folder, which is used to manage copies of imported files although this is much less common than the folders described above.</p>
+  <div class="note">
+  	<p>While creating the above folder structure for your project is a standard convention with Subversion repositories, neither Cornerstone nor Subversion enforce this structure.</p>
+  	<p>If you would rather define your own repository layout then you are free to do so.</p>
+  </div>
+  
+  <p>See <a href="questions.html">Q & A</a> for answers to common tagging- and branching-related questions.</p>
+  
+  <h2>Creating a Tag</h2>
+  <p>While Cornerstone provides full support for <a href="#create-by-copy">creating tags and branching by copying</a>, the dedicated <span class="uiref">Tag...</span> and <span class="uiref">Branch...</span> functions in the <span class="uiref">File</span> menu make it even easier, especially if your project follows the <a href="#conventions">conventions</a> described above.</p>
+  <p>To create a tag:</p>
+  <div class="task">
+  	<ol>
+  		<li><p>Select the folder you wish to create a tag for in the repository browser.</p></li>
+  		<li>
+  			<p>Select <span class="uiref">Tag...</span> from the <span class="uiref">File</span> menu or click the <span class="uiref">Tag</span> button<img class="template button" src="../../../images/toolbar-tag.png" srcset="../../../images/toolbar-tag@2x.png 2x"/>in the toolbar:</p>
+  		</li>
+  		<li>
+  			<p>The tag options window will appear next to the selected folder.</p>
+  			<p>If the selected folder is located in <code>trunk</code> or <code>branches</code> then Cornerstone will calculate the location of the related <code>tags</code> folder and suggest it as the location of the tag.</p>
+  		</li>
+  		<li><p>Specify the name of the tag in the field labelled <span class="uiref">Tag As</span>. This will be the name of the tag folder and must be unique in the <code>tags</code> folder.</p></li>
+  		<li>
+  			<p>Specify the URL of the folder that will contain the tag in the <span class="uiref">Where</span> field. Cornerstone will suggest a default location based on the URL of the folder to be tagged. The suggested value can be changed if it is not appropriate.</p>
+  			<div class="note">
+  				<p>The <span class="uiref">Where</span> field accepts <a href="../url-formats.html">relative URLs</a>, with values displayed in repository-relative format by default.</p>
+  			</div>
+  		</li>
+  		<li><p>Specify the revision to create the tag from in the <span class="uiref">Revision</span> field. The default value is <code>HEAD</code>, which is appropriate for most scenarios.</p></li>
+  	</ol>
+  </div>
+
+  <h2>Creating a Branch</h2>
+  <p>Creating a branch is similar to creating a tag:</p>
+  <div class="task">
+  	<ol>
+  		<li><p>Select the folder you wish to create a branch for in the repository browser.</p></li>
+  		<li>
+  			<p>Select <span class="uiref">Branch...</span> from the <span class="uiref">File</span> menu or click the <span class="uiref">Branch</span> button <img class="template button" src="../../../images/toolbar-branch.png" srcset="../../../images/toolbar-branch@2x.png 2x"/> in the toolbar:</p>
+  		</li>
+  		<li>
+  			<p>The branch options window will appear next to the selected folder.</p>
+  			<p>If the selected folder is located in <code>trunk</code> or <code>tags</code> then Cornerstone will calculate the location of the related <code>branches</code> folder and suggest it as the location of the branch.</p>
+  		</li>
+  		<li><p>Specify the name of the branch in the field labelled <span class="uiref">Branch As</span>. This will be the name of the branch folder and must be unique in the <code>branches</code> folder.</p></li>
+  		<li>
+  			<p>Specify the URL of the folder that will contain the branch in the <span class="uiref">Where</span> field. Cornerstone will suggest a default location based on the URL of the folder to be branched. The suggested value can be changed if it is not appropriate.</p>
+  			<div class="note">
+  				<p>As with the tag options window, the <span class="uiref">Where</span> field accepts <a href="../url-formats.html">relative URLs</a>, with values displayed in repository-relative format by default.</p>
+  			</div>
+  		</li>
+  		<li><p>Specify the revision to create the branch from in the <span class="uiref">Revision</span> field. The default value is <code>HEAD</code>, which is appropriate for most scenarios.</p></li>
+  	</ol>
+  </div>
+
+  <h2 id="create-by-copy">Creating a Tag or Branch by Copying</h2>
+  <p>To create a tag or branch:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li><p>Select your repository from the repository source list.</p></li>
+  		<li><p>Browse through the repository to find the folder you want to tag (or branch).</p></li>
+  		<li><p>Copy the folder to your <code>tags</code> or <code>branches</code> folder by holding down the <span class="key">Option</span> (⌥) key while dragging the folder.</p></li>
+  		<li>
+  			<p>An options window will appear when the folder is dropped.</p>
+  			<p>Specify the name of the tag or branch and the revision to copy from.</p>
+  		</li>
+  		<li>Click the <span class="uiref">Copy</span> button.</li>
+  	</ol>
+  </div>
+  
+  <p>Tags and branches can be renamed and deleted just like any other folder.</p>
+  <p>See <a href="../../introduction/terminology/tags-and-branches.html">Tags and Branches</a> in the <a href="../../introduction/terminology/index.html">Terminology</a> section for more information on the differences between tags and branches.</p>
+  
+</body>
+</html>

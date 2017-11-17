@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Annotations</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="legend.html"></a>
+	</div>
+
+  <h1>Annotations</h1>
+  <p>Annotations are a powerful way to inspect the contents of a text file to determine</p>
+  <ul>
+  	<li>who contributed a particular section of code;</li>
+  	<li>when a change was made and why;</li>
+  	<li>which sections of a file were contributed at the same time (i.e. with the same revision); and</li>
+  	<li>who has been working on a file recently.</li>
+  </ul>
+  
+  <p>Cornerstone&rsquo;s annotations are closely related to Subversion&rsquo;s <em>blame</em> functionality, but provide a more informative and intuitive method of displaying attribution information.</p>
+  
+  <h2>Showing Annotations</h2>
+  <p>Attributes are displayed along with files&rsquo; text in Cornerstone&rsquo;s compare view. Annotations are not enabled by default but can be shown by</p>
+
+	<div class="task">
+  	<ol>
+  		<li>
+  			<p>selecting <span class="uiref">Show Annotations</span> from the <span class="uiref">View</span> menu;</p>
+  			<p>or</p>
+  		</li>
+  		<li>
+  			<p>clicking the annotations button <img class="template" src="../../../images/button-annotations.png" srcset="../../../images/button-annotations@2x.png 2x"/> at the bottom of the compare view.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <p>An additional annotation gutter is displayed next to each file in the compare view.</p>
+  <p><img class="comp" src="../../../images/annotations.png" srcset="../../../images/annotations@2x.png 2x"/></p>
+  
+  <h2>Annotation Bars</h2>
+  <p>The annotation gutter is comprised of annotation bars. Each bar in the annotation gutter relates to a block of lines which were committed in the same revision. For example, in the above screenshot, lines 48&ndash;51 originated in the same revision.</p>
+    
+  <h2>Annotation Colors</h2>
+  <p>The color of an annotation bar indicates which <em>user</em> contributed the lines. The users represented by the bar colors are listed in the <a href="legend.html">legend window</a>. The use of color to identify users makes it easy to obtain a visual overview of</p>
+  <ul>
+  	<li>which areas of a file were contributed by which team members; and</li>
+  	<li>how many different users have contributed to the file&rsquo;s contents.</li>
+  </ul>
+  
+  <h2>Annotation Widths</h2>
+  <p>The width of an annotation bar indicates how <em>old</em> the lines are. Older sections are represented by wider bars, whereas more recently committed sections are represented by thinner bars.</p>
+  <p>You can think of older sections of code as having less history (or being less mature) and therefore as having thinner bars.</p>
+  
+  <h2>Annotation Callout</h2>
+  <p>Information about a section of lines can be displayed by moving the mouse over the lines&rsquo; annotation bar.</p>
+  <p>This will result in the section being highlighted and a callout being displayed beneath the section:</p>
+  <p><img class="comp" src="../../../images/annotations-callout.png" srcset="../../../images/annotations-callout@2x.png 2x"/></p>
+
+  <p>The callout displays the following information about the revision when the lines were committed:</p>
+  <ul>
+  	<li>Revision Number</li>
+  	<li>User</li>
+  	<li>Date</li>
+  	<li>Age</li>
+  </ul>
+  <p>Move the mouse out of an annotation bar to hide the callout.</p>
+  <div class="note">
+  	<p>Hold down the Shift key (<span class="key">⇧</span>) while moving the mouse over a file&rsquo;s text to display the callout for the section under the cursor.</p>
+  </div>
+  
+  <h2>Activating a Revision</h2>
+  <p>You can activate a revision by clicking an annotation bar. The annotation callout is displayed and is expanded to show the log message for the selected revision:</p>
+  <p><img class="comp" src="../../../images/annotations-callout-expanded.png" srcset="../../../images/annotations-callout-expanded@2x.png 2x"/></p>
+  <p>Once activated, all sections from the revision are highlighted and the <span class="uiref">Previous Lines</span> (<span class="key">⌘↑</span>) and <span class="uiref">Next Lines</span> (<span class="key">⌘↓</span>) functions in the <span class="uiref">Compare</span> menu can be used to navigate between the sections.</p>
+  <div class="note">
+  	<p>The sections committed in the active revision are also displayed as markers in the vertical scroller, replacing the difference markers if two files are being compared.</p>
+  	<p>The previous and next buttons below the scroller can be used to navigate between sections.</p>
+  </div>
+  
+  <h2>Deactivating a Revision</h2>
+  <p>To deactivate a revision</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>click on another section in the annotation gutter to activate that revision;</p>
+  			<p>or</p>
+  		</li>
+  		<li>
+  			<p>click in the text outside sections belonging to the revision.</p>
+  		</li>
+  	</ol>
+  </div>
+    
+</body>
+</html>

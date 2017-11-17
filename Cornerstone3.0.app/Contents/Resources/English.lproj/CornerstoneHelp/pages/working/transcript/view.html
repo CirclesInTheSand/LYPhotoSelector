@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>The Transcript View</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="selection.html"></a>
+	</div>
+	
+  <h1>The Transcript View</h1>
+  <p>The transcript is displayed as an outline of entries.</p>
+  <p>The columns in the outline view are described in a <a href="columns.html">separate topic</a>.</p>
+    
+  <h2>Entry Expiry</h2>
+  <p>Transcript entries are automatically discarded after a period to prevent the transcript from becoming too long. Select a discard period from the <span class="uiref">Transcript</span> menu or from the popup menu in the view&rsquo;s toolbar.</p>
+  <p>The available discard options are:</p>
+  <ul>
+  	<li>
+  		<h3>When a Newer Entry is Added</h3>
+  		<p>The last entry will be discarded before the next entry is added. The transcript will only ever contain a single entry.</p>
+  	</li>
+  	<li>
+  		<h3>After 15 Minutes</h3>
+  	</li>
+  	<li>
+  		<h3>After 1 Hour</h3>
+  	</li>
+  	<li>
+  		<h3>After 1 Day</h3>
+  	</li>
+  	<li>
+  		<h3>After 1 Week</h3>
+  	</li>
+  	<li>
+  		<h3>After 1 Month</h3>
+  	</li>
+  </ul>
+  <p>The discard option is set individually for each source&rsquo;s transcript and defaults to 1 day.</p>
+  <div class="note">
+  	<p>Long expiry times result in large transcripts, especially for busy working copies. Large transcripts cause higher memory utilization and in extreme cases can have an impact on startup and shutdown times as transcripts are read from and written to disk.</p>
+  </div>
+  
+	<h2>Removing Transcript Entries</h2>
+	<p>To remove entries from a transcript:</p>
+	<div class="task">
+		<ol>
+			<li>Select the entries to remove in the transcript view.</li>
+			<li>Select <span class="uiref">Delete</span> from the <span class="uiref">File</span> menu (key equivalent <span class="key">⌘⌫</span>) or press the delete button in the toolbar.
+			</li>
+		</ol>
+	</div>
+	
+	<h2>Clearing Transcript Entries</h2>
+	<p>To clear output in a transcript:</p>
+	<div class="task">
+		<ol>
+			<li>Select <span class="uiref">Clear Output</span> from the <span class="uiref">Transcript</span> menu (key equivalent <span class="key">⌥⌘⌫</span>) or press the <span class="uiref">Clear Output</span> button in the transcript view&rsquo;s toolbar:
+				<p>
+					<div class="view-button">
+	  				<img src="../../../images/toolbar-clear.png" srcset="../../../images/toolbar-clear@2x.png 2x"/>
+						<p>Clear Output</p>
+	  			</div>
+				</p>
+			</li>
+		</ol>
+	</div>
+	<p>Notes are not removed by the <span class="uiref">Transcript &gt; Clear Output</span> function.</p>
+	<p>To clear both output and user notes in a transcript:</p>
+	<div class="task">
+		<ol>
+			<li>Press and hold the <span class="uiref">Shift</span> (⇧) key.</li>
+			<li>Select <span class="uiref">Clear All</span> (key equivalent <span class="key">⇧⌥⌘⌫</span>) from the <span class="uiref">Transcript</span> menu or press the <span class="uiref">Clear All</span> button in the transcript view&rsquo;s toolbar.</li>
+		</ol>
+	</div>
+  
+</body>

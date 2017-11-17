@@ -1,0 +1,285 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Alternate Menu Functions</title>
+	<style type="text/css">
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			border: 1px solid #dfdfdf;
+			vertical-align: top;
+			padding: 0.4em;
+			font-size: 10pt;
+		}
+		th, td {
+			vertical-align: top;
+			border: 1px solid #dfdfdf;
+			padding: 0.6em;
+		}
+		td[colspan="3"] {
+			font-weight: 400;
+			background-color: #fbfbfb;
+		}
+		td span.key {
+			font-size: 9pt;
+			font-weight: normal;
+			color: #999;
+		}
+		small {
+			color: #999;
+			font-size: 9pt;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="url-formats.html"></a>
+	</div>
+
+  <h1>Alternate Menu Functions</h1>
+  <p>Cornerstone includes a number of functions which do not differ enough from the standard function to warrant a dedicated menu item or toolbar button.</p>
+  <p>Instead, the function is assigned a different key equivalent and is only displayed in the menu when the key equivalent&rsquo;s modifier is pressed.</p>
+  
+  <div class="note">
+		<p>Menu alternates are activated by holding down a key modifier such as <span class="uiref">Option</span> (⌥) or <span class="uiref">Shift</span> (⇧) with the menu displayed.</p>
+		<p>The alternate functions are always available via their key equivalents. For example, <span class="uiref">Working Copy &gt; Commit All Changes&hellip;</span> is always available using <span class="key">⌥⌘T</span>.</p>
+  </div>  
+  <h2>List of Alternate Menu Functions</h2>
+  <table>
+  	<tr>
+  		<th>Menu</th>
+  		<th>Standard Function</th>
+  		<th>Alternate Function</th>
+  	</tr>
+  	<tr>
+  		<td colspan="3">File</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Open Selection in Finder <span class="key">⇧⌘O</span>
+  		</td>
+  		<td>
+  			Open Working Copy in Finder <span class="key">⌥⇧⌘O</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Open Selection in Terminal <span class="key">⌃⌘O</span>
+  		</td>
+  		<td>
+  			Open Working Copy in Terminal <span class="key">⌥⌃⌘O</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			New Folder in Selection&hellip; <span class="key">⇧⌘N</span>
+  		</td>
+  		<td>
+  			New Folder in Working Copy&hellip; <span class="key">⌥⇧⌘N</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Close Window <span class="key">⌘W</span>
+  		</td>
+  		<td>
+  			Close All <span class="key">⌥⌘W</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">Edit</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Copy Paths <span class="key">⌘C</span>
+  		</td>
+  		<td>
+  			Copy URLs<span class="key">⌥⌘C</span><br/>
+  			<small>Copies URLs of selected working copy browser items.</small>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Copy URLs <span class="key">⌘C</span>
+  		</td>
+  		<td>
+  			Copy URLs of without User <span class="key">⌥⌘C</span><br/>
+  			<small>Copies URLs of selected repository browser items without the user component.</small><br/><br/>
+  			<small>The behavior of the default and alternate menu functions can be inverted using the <span class="uiref">Include user name when copying URLs</span> preference.</small>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Copy <span class="key">⌘C</span>
+  		</td>
+  		<td>
+  			Copy All Items <span class="key">⌥⌘C</span><br/>
+  			<small>Copies text for all visible items in the log view.</small>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Select All <span class="key">⌘A</span>
+  		</td>
+  		<td>
+  			Select All on Right Side <span class="key">⌥⌘A</span><br/>
+  			<small>Selects all text in the right-hand file displayed in the current compare view.</small>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Select All <span class="key">⌘A</span>
+  		</td>
+  		<td>
+  			Select All Matches <span class="key">⌥⌘A</span><br/>
+  			<small>Selects all browser items which match the current filter.</small>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">Working Copy</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Commit Changes&hellip; <span class="key">⌘T</span>
+  		</td>
+  		<td>
+  			Commit All Changes&hellip; <span class="key">⌥⌘T</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Update&hellip; <span class="key">⇧⌘U</span>
+  		</td>
+  		<td>
+  			Update All&hellip; <span class="key">⌥⇧⌘U</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Update to Latest Revision <span class="key">⌘U</span>
+  		</td>
+  		<td>
+  			Update All to Latest Revision <span class="key">⌥⌘U</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Revert to Last Update <span class="key">⌘L</span>
+  		</td>
+  		<td>
+  			Revert All to Last Update <span class="key">⌥⌘L</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Resolve Conflicts <span class="key">⌘K</span>
+  		</td>
+  		<td>
+  			Resolve All Conflicts <span class="key">⇧⌘K</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">Transcript</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Clear Output <span class="key">⌥⌘⌫</span>
+  		</td>
+  		<td>
+  			Clear All <span class="key">⇧⌥⌘⌫</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">Window</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Arrange in Front
+  		</td>
+  		<td>
+  			Bring All to Front <span class="key">+⌥</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td colspan="3">Working Copy Contextual Menu</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Open
+  		</td>
+  		<td>
+  			Open With <span class="key">+⌥</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Copy Paths
+  		</td>
+  		<td>
+  			Copy URLs <span class="key">+⌥</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Add to Working Copy
+  		</td>
+  		<td>
+  			Add to Working Copy with Contents <span class="key">+⇧</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Duplicate...
+  		</td>
+  		<td>
+  			Move... <span class="key">+⇧</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Update to Latest Revision
+  		</td>
+  		<td>
+  			Update... <span class="key">+⇧</span>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td></td>
+  		<td>
+  			Revert to Last Update...
+  		</td>
+  		<td>
+  			Revert... <span class="key">+⇧</span>
+  		</td>
+  	</tr>
+  </table>
+  
+</body>
+</html>

@@ -1,0 +1,327 @@
+{
+	name                      : 'ruby';
+	title                     : 'Ruby';
+	match:
+	[ 
+		extension								: 'rb',
+	
+		# Class variable
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?<=\W|^)@@[:alpha:]\w*';
+		},
+
+		# Exception handler
+		regex:
+		{
+			score									: 2;
+			pattern								: @'rescue\s+(([:alpha:]\w*\s*)?::\s*)?[:alpha:]\w*\s*=>\s*[:alpha:]\w*';
+		},
+
+		# Scoped type
+		regex										: @'([:alpha:]\w*)?::[:alpha:]\w*',
+
+		# Symbol
+		regex										: @'(?<=\W):[:alpha:]\w*',
+
+		# Symbol hash assignment
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?<=\W):[:alpha:]\w*\s*=>';
+		},
+
+		# String hash assignment
+		regex										: @'".*?(?<!\\)"\s*=>',
+
+		# String hash assignment
+		regex										: @"'.*?(?<!\\)'\s*=>",
+
+		# Local variable string expansion
+		regex										: @'#\{[:alpha:]\w*\}',
+
+		# Instance variable string expansion
+		regex:
+		{
+			score									: 2;
+			pattern								: @'#\{@[:alpha:]\w*\}';
+		},
+
+		# Class variable string expansion
+		regex:
+		{
+			score									: 2;
+			pattern								: @'#\{@@[:alpha:]\w*\}';
+		},
+
+		# Global variable string expansion
+		regex:
+		{
+			score									: 2;
+			pattern								: @'#\{\$[:alpha:]\w*\}';
+		},
+
+		# Method call
+		regex										: @'([[:alpha:]_]\w*\.)+[:alpha:]\w*\(.*\)',
+
+		# Instance variable method call
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(@[:alpha:]\w*\.)+[:alpha:]\w*\(.*\)';
+		},
+
+		# Class variable method call
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(@@[:alpha:]\w*\.)+[:alpha:]\w*\(.*\)';
+		},
+
+		# Global variable method call
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(\$[:alpha:]\w*\.)+[:alpha:]\w*\(.*\)';
+		},
+
+		# String concatenation
+		regex										: @'[:alpha:]\w*\s*<<\s*".*?(?<!\\)"',
+
+		# String concatenation (non-expanding)
+		regex										: @"[:alpha:]\w*\s*<<\s*'.*?(?<!\\)'",
+
+		# Doc comments
+		regex										: @'=(begin|end)',
+		
+		# Quote bracked string literal
+		regex										: @'%[qQ]?\(.*?\)',
+
+		# Shell command
+		regex										: @'`.*`',
+
+		# Shell command (alternative syntax)
+		regex:
+		{
+			score									: 2;
+			pattern								: @'%x\s*\{.*\}';
+		},
+
+		# Here doc
+		regex										: @'(?s)<<([:alpha:]\w*).*\1',
+
+		# Operators
+		regex										: @'<=>|=~',
+
+		# Class definition with inheritance
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bclass\s+[:alpha:]\w*\s*<\s*[:alpha:]\w*';
+		},
+
+		# Singleton object
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bclass\s*<<\s*[:alpha:]\w*';
+		},
+
+		# Definition check
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bdefined\?\s*\(.*\)';
+		},
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line comment partition which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.ruby';
+			open-sequence     		: @'=begin';
+			close-sequence    		: @'=end';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.ruby';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.ruby';
+						value           : 'comment.keyword.scm.value.ruby';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.ruby';
+			open-sequence					:	@'#';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				ref									: 'comment.keyword.scm.ruby',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Ruby keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.ruby';
+			case-insensitive      : no;
+			words:                [ 
+															'alias', 'and',
+															'BEGIN', 'begin', 'break',
+															'case', 'class', 'def', 'defined?', 'do',
+															'else', 'elsif', 'END', 'end', 'ensure',
+															'false', 'for', 'if', 'in',
+															'module',
+															'next', 'nil', 'not',
+															'or',
+															'redo', 'rescue', 'retry', 'return',
+															'self', 'super',
+															'then', 'true',
+															'undef', 'unless', 'until',
+															'when', 'while',
+															'yield',
+														];
+		},
+				
+		# Symbol rules for built-in symbols
+
+		word-rule:
+		{
+			name                  : 'symbol.ruby.predef.words';
+			case-insensitive      : no;
+			words:                [ 
+															'require', 'load',
+															'$DEBUG', '$FILENAME', '$LOAD_PATH', '$VERBOSE',
+															'$stderr', '$stdin', '$stdout',
+														];
+		},
+				
+		regex-rule:
+		{
+			name                  : 'symbol.ruby.global';
+			case-insensitive      : no;
+			pattern               : @'\$\w+';
+		},
+
+		regex-rule:
+		{
+			name                  : 'symbol.ruby.global.predef';
+			case-insensitive      : no;
+			pattern               : @'\$.';
+		},
+
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.ruby.double-quote';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.ruby.single-quote';
+			open-sequence         : @"'";
+			close-sequence        : @"'";
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		},
+
+		regex-rule:
+		{
+			name                  : 'literal.string.ruby.quote.bracket';
+			case-insensitive      : no;
+			pattern               : @'%[qQ]?\(.*?\)';
+		},
+
+		regex-rule:
+		{
+			name                  : 'literal.string.ruby.quote.square-bracket';
+			case-insensitive      : no;
+			pattern               : @'%[qQ]?[.*?]';
+		},
+
+		regex-rule:
+		{
+			name                  : 'literal.string.ruby.quote.curly-brace';
+			case-insensitive      : no;
+			pattern               : @'%[qQ]?{.*?}';
+		},
+
+		regex-rule:
+		{
+			name                  : 'literal.string.ruby.quote';
+			case-insensitive      : no;
+			pattern               : @'%[qQr]?(?<delimiter>\W).*?\k<delimiter>';
+		},
+
+		regex-rule:
+		{
+			name                  : 'literal.string.ruby.regex';
+			case-insensitive      : no;
+			pattern               : @'/.*?(?<!\\)/\w?';
+		},
+
+		regex-rule:
+		{
+			name                  : 'literal.char.ruby';
+			case-insensitive      : no;
+			pattern               : @'\?\w';
+		},
+
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.ruby';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|(-?(\d+)?\.(\d+)([eE]\d+)?[fF]?)|(-?\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\b)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

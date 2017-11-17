@@ -1,0 +1,290 @@
+{
+	name                      : 'javascript';
+	title                     : 'JavaScript';
+	match:
+	[ 
+		extension								: 'js',
+	
+		# Single-line comment
+		regex										: @'//.*',
+
+		# Multi line comment
+		regex										: @'(?s)(?s)/\*.*?\*/',
+
+		# Function expression
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?s)\bfunction\s+\w+\s*\((\s*\w+\s*,)*\s*\w+\s*\)\s*\{';
+		},
+
+		# Function variable expression
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\b((var\s+)?\w+\s*:\s*)?function(\s+\w+)?\s*\(((\s*\w+\s*,)*\s*\w+\s*)?\)\s*\{';
+		},
+
+		# Variable declaration
+		regex										: @'\b(var\s+|this\.)[\$\w]+\s*[=;]',
+
+		# Class member function using prototype
+		regex										: @'\w+\.prototype\.\w+\s*=',
+
+		# Class member definition using object notation
+		regex										: '(?<=[\\^\\s;])\\w+\\s*:\\s*(\\d+(?=\\b)|("[^"]*")|(\\\'[^\\\']*\\\')|\\{)',
+
+		# Class member function using object notation
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\w+\s*:\s*function\s*\(';
+		},
+
+		# Object notation key/value pair
+		regex										: '((?<=[\\^\\s;])\\w+|("[^"]*")|(\'[^\']*\'))\\s*:\\s*([:alpha:]\\w*|\\d+(?=\\b)|("[^"]*")|(\\\'[^\\\']*\\\')|\\[|\\{)',
+
+		# Semi-colon at end of the line
+		regex										: @'(?m);$',
+
+		# Method call
+		regex										: @'[\$\w]+\s*\.\s*\w+\s*\(',
+
+		# jQuery expression
+		regex:
+		{
+			score									: 2;
+			pattern								: '\\$\\((("[^"]*")|(\\\'[^\\\']*\\\'))\\)';
+		},
+
+		# Underscore call
+		regex:
+		{
+			score									: 2;
+			pattern								: @'_+\.\w+\(';
+		},
+
+		# Strongly-typed comparison operators
+		regex										: @'(?<!=)(===|\!==)(?!=)',
+
+		# Comparison against undefined value
+		regex:
+		{
+			score									: 2;
+			pattern								: '(==|!=)\\s*(\'undefined\'|"undefined"|undefined)';
+		},
+
+		# typeof operator
+		regex										: @'\btypeof\s*\(',
+
+		# Regex literal
+		regex										: @'(?<=[({=,\?:\!\|&])/.*?(?<!\\)/(?=\s*[gim\.,);}])',
+
+		# String exceptions
+		regex										: '\\bthrow\\s+(("[^"]*")|(\\\'[^\\\']*\\\'))',
+
+		# This function call
+		regex										: @'\bthis\.\w+\s*\(',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Comment partitions which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name									: 'comment.multiline.js';
+			open-sequence					:	@'/*';
+			close-sequence				: @'*/';
+			capture-unclosed			: yes;
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.js';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.js';
+						value           : 'comment.keyword.scm.value.js';
+					};
+				},
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		eol-rule:
+		{
+			name									: 'comment.singleline.js';
+			open-sequence					:	@'//';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				ref									: 'comment.keyword.scm.js',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# JavaScript keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.js';
+			case-insensitive      : no;
+			words:                [ 
+															'break',
+															'case', 'catch', 'continue', 
+															'default', 'delete', 'do',
+															'else',
+															'finally', 'for', 'function',
+															'if', 'in', 'instanceof',
+															'new', 
+															'return',
+															'switch',
+															'this', 'throw', 'try', 'typeof',
+															'var', 'void',
+															'while', 'with',
+														];
+		},
+				
+		word-rule:
+		{
+			name                  : 'keyword.js.reserved';
+			case-insensitive      : no;
+			words:                [ 
+															'abstract', 
+															'boolean', 'byte', 
+															'char', 'class', 'const',
+															'debugger', 'double',
+															'enum', 'export', 'extends',
+															'final', 'float',
+															'goto',
+															'implements', 'import', 'int', 'interface', 
+															'long',
+															'native',
+															'package', 'private', 'protected', 'public',
+															'short', 'static', 'super', 'synchronized', 
+															'throws', 'transient', 
+															'volatile',
+														];
+		},
+
+		# Symbol rules for built-in symbols
+
+		word-rule:
+		{
+			name                  : 'symbol.js';
+			case-insensitive      : no;
+			words:                [ 
+															'null', 'true', 'false',
+														];
+		},
+		
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.js.double-quote';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'symbol.js.escaped.backslash';
+					case-insensitive  : no;
+					pattern           : @'\\\\';
+				},
+
+				regex-rule:
+				{
+					name              : 'symbol.js.escaped.character';
+					case-insensitive  : no;
+					pattern           : @'\\\w';
+				},
+
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.js.single-quote';
+			open-sequence         : '\'';
+			close-sequence        : '\'';
+			escape-char           : @'\';
+			multi-line            : no;
+			quoted-tokens         : yes;
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'symbol.js.escaped.backslash',
+				ref	                : 'symbol.js.escaped.character',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.js';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|(-?(\d+)?\.(\d+)([eE]\d+)?[fF]?)|(-?\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		# Regex rule for regular expression literals
+		
+		regex-rule:
+		{
+			name                  : 'default.string.regex.js';
+			case-insensitive			: no;
+			pattern								: @'[({=,\?:!|&]\s*(?<regex>/((\\.)|.)+?/[gim]{,3}(?=\s*[\.,);}]))';
+			groups:
+			{
+				regex								: 'literal.string.regex.js';
+			};
+		},
+
+		default-rule:
+		{
+		}
+	];
+};

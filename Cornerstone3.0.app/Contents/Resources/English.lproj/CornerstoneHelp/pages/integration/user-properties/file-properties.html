@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>File Properties</title>
+</head>
+<style>
+	#drop-area {
+		font-size: 7pt;
+		width: 70px;
+		height: 70px;
+		border: 1px solid #e5e5e5;
+		text-align: center;
+		display: table;
+		color:#a5a5a5;
+	}
+	
+	#drop-area:after {
+		content:"Drop file or folder here";
+		display: table-cell;
+    vertical-align: middle;
+	}
+	
+</style>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+ 	<h1>File Properties</h1>
+ 	<h2>Setting a File Property</h2>
+ 	<p>To assign the contents of a file to a property:</p>
+ 	<div class="task">
+ 		<ol>
+ 			<li>
+ 				<p>Use Finder to locate the required file.</p>
+ 			</li>
+ 			<li>
+ 				<p>Drag the file from Finder to Cornerstone. Drop the file on the property&rsquo;s drop area:</p>
+ 				<div id="drop-area"></div>
+ 			</li>
+ 			<li>
+ 				<p>The contents of the file are read and assigned to the property:</p>
+ 			</li>
+ 			<li>
+ 				<p>Click the <span class="uiref">Save Changes</span> button.</p>
+ 			</li>
+ 		</ol>
+ 	</div>
+ 	
+ 	<h2>Extracting A File Property</h2>
+ 	<p>To extract the contents of a property to a file:</p>
+ 	<div class="task">
+ 		<ol>
+ 			<li>
+ 				<p>Click the file thumbnail from the property&rsquo;s drop area:</p>
+ 			</li>
+ 			<li>
+ 				<p>Drag the thumbnail to Finder. Drop the thumbnail in the location where the file should be saved.</p>
+ 			</li>
+ 			<li>
+ 				<p>The contents of the property are extracted and stored as a file in the chosen location:</p>
+ 			</li>
+ 		</ol>
+ 	</div>
+ 	
+ 	<h2>Removing a File Property</h2>
+ 	<p>To remove a file property:</p>
+ 	<div class="task">
+ 		<ol>
+ 			<li>
+ 				<p>Select the thumbnail by clicking in the property&rsquo;s drop area</p>
+ 			</li>
+ 			<li>
+ 				<p>Press the <span class="uiref">Delete</span>.</p>
+ 			</li>
+ 			<li>
+ 				<p>The thumbnail is removed from the property&rsquo;s drop area:</p>
+ 			</li>
+ 			<li>
+ 				<p>Click the <span class="uiref">Save Changes</span> button .</p>
+ 			</li>
+ 		</ol>
+ 	</div>
+ 	
+ 	<h2><a id="sidecar-properties">Sidecar Properties</a></h2>
+	<p>Cornerstone stores additional information about a file property&rsquo;s contents in a <span class="term">sidecar</span> property. This information includes: the original file name, file type, UTI, size, Unix permissions, thumbnail image, dimensions (if applicable) etc.</p>
+	<p>The name of the sidecar property is the same name as the file property itself with an &ldquo;<code>:attributes</code>&rdquo; suffix. For example, the sidecar property for a <code>thumbnail</code> property would be named <code>thumbnail:attributes</code>.</p>
+	<p>You can prevent Cornerstone from creating sidecar properties by unchecking the <span class="uiref">Save information about file contents in sidecar properties</span> option in the <span class="uiref">User Properties</span> preference pane.</p>
+	
+	<h2>Packages</h2>
+	<p>Package-format documents (i.e. files that are actually stored on disk as folders) are compressed in .zip format before being stored as a property.</p>
+	
+
+</body>
+</html>

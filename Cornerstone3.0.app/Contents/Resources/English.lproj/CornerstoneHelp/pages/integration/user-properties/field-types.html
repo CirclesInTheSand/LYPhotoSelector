@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>User Property Field Types</title>
+	<style type="text/css">
+		
+		table.field-info {
+			border-collapse: collapse;
+			font-size: 9pt;
+			width: 100%;
+			border: 1px solid #dfdfdf;
+		}
+		table.field-info td:first-child {
+			text-align: right;
+			font-weight: bold;
+			width: 120px;
+			border-right: 1px solid #dfdfdf;
+ 			background-color: #fcfcfc;
+		}
+		table.field-info td {
+			vertical-align: top;
+			padding: 0.6em;
+			padding-left: 0.8em;
+			padding-right: 0.8em;
+		}
+		table.field-info img.screenshot {
+			border-radius: 4px;
+			padding: 1px;
+		}
+		td h3 {
+			font-size: inherit;
+			margin-top: 0px;
+			margin-bottom: 0px;
+		}
+		td p {
+			margin-bottom: 0px;
+			margin-top: 0.5em;
+		}
+		td p+h3 {
+			margin-top: 1em;
+		}
+
+	</style>	
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="file-properties.html"></a>
+	</div>
+
+ 	<h1>User Property Field Types</h1>
+ 	<p>A user property can be configured for display as one of the following field types:</p>
+ 	
+ 	<h2>Text Fields</h2>
+ 	<table class="field-info">
+ 		<tr>
+ 			<td>Suitable for</td>
+ 			<td>Single- and multi-line free-form text.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>For example</td>
+ 			<td>The descriptive text to be displayed when the associated image file is displayed in a slideshow.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Default value</td>
+ 			<td>None, i.e. the field is displayed empty.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Saved as</td>
+ 			<td>UTF-8 encoded text.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Removed when</td>
+ 			<td>The field is empty.</td>
+ 		</tr>
+ 	</table>
+ 	
+ 	<h2>Checkboxes</h2>
+ 	<table class="field-info">
+ 		<tr>
+ 			<td>Suitable for</td>
+ 			<td>Boolean values, with presence of the property indicating <code>TRUE</code> or <code>YES</code>.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>For example</td>
+ 			<td>A boolean property indicating whether the associated file should be marked as writable when copied to the deployment environment.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Default value</td>
+ 			<td>Unchecked, indicating <code>FALSE</code> or <code>NO</code>.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Saved as</td>
+ 			<td>UTF-8 encoded text as specified in the preference pane&rsquo;s <span class="uiref">Checked value</span> field.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Removed when</td>
+ 			<td>Checkbox is unchecked.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Additional options</td>
+ 			<td>
+ 				<h3>Checked value</h3>
+ 				<p>The value assigned to the property when the checkbox is checked.</p>
+ 				<p>This defaults to &ldquo;<code>*</code>&rdquo;, which is the convention for boolean Subversion properties, although you can use any text value you want. You can even leave the value empty if appropriate.</p>
+ 			</td>
+ 		</tr>
+ 	</table>
+ 	
+ 	<h2>Pop-Up Lists</h2>
+ 	<table class="field-info">
+ 		<tr>
+ 			<td>Suitable for</td>
+ 			<td>Discrete sets of possible text choices.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>For example</td>
+ 			<td>A pop-up list property might be used to control how the associated file or folder is deployed, with choices such as &ldquo;<code>production</code>&rdquo; (the default), &ldquo;<code>stage</code>&rdquo; and &ldquo;<code>dev</code>&rdquo;. A deployment script would inspect the value of the property and restrict deployment as appropriate.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Default value</td>
+ 			<td>The choice configured as the default in the preference pane&rsquo;s <span class="uiref">Choices</span> list.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Saved as</td>
+ 			<td>UTF-8 encoded text as specified in <span class="uiref">Value</span> column for the selected choice in the preference pane&rsquo;s <span class="uiref">Choices</span> list.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Removed when</td>
+ 			<td>The default value is selected.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Additional options</td>
+ 			<td>
+ 				<h3>Choices</h3>
+ 				<p>The possible choices for the property. One choice can be specified as the default. The property will be removed when the default choice is selected.</p>
+ 				<p>An optional label can be specified for each choice. The choice&rsquo;s value is displayed if a label is not specified.</p>
+ 			</td>
+ 		</tr>
+ 	</table>
+ 	
+ 	<h2>Files</h2>
+ 	<table class="field-info">
+ 		<tr>
+ 			<td>Suitable for</td>
+ 			<td>Binary data or larger volumes of text.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>For example</td>
+ 			<td>A small thumbnail image might be stored for the associated large-format image file. A deployment script would extract the thumbnail contents from the properties before copying them to the deployment environment.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Default value</td>
+ 			<td>None, i.e. the field is displayed empty.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Saved as</td>
+ 			<td>Binary data or UTF-8 encoded text depending on the contents of the original file.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>Removed when</td>
+ 			<td>The field is empty.</td>
+ 		</tr>
+ 		<tr>
+ 			<td>See also</td>
+ 			<td><a href="file-properties.html">File Properties</a></td>
+ 		</tr>
+ 	</table>
+ 	
+</body>
+</html>

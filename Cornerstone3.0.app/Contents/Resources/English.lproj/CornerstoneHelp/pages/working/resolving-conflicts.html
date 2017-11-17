@@ -1,0 +1,107 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Resolving Conflicts</title>
+</head>
+<style>
+	
+	#conflict-button-group .view-button {
+		margin-left: 2em;
+		margin-right: 3em;
+	}
+	
+</style>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="committing.html"></a>
+	</div>
+
+  <h1>Resolving Conflicts</h1>
+  <p>Conflicts occur when a file that contains local modifications is updated with overlapping changes from the latest version in the repository.</p>
+  <p>Conflicted files can&rsquo;t be committed until the conflicts have been resolved.</p>
+  
+  <h2>Resolving Individual Conflicts</h2>
+  <p>A conflicted text file contains markers inserted by Subversion that identify the local and remote changes:</p>    
+  <div class="note">
+	  <pre>
+<span class="preprocessor">#import</span><span class="string"> "ActivityLog.h"</span>
+<span class="preprocessor">#import</span><span class="string"> "Database.h"</span>
+<<<<<<< .mine
+<span class="keyword">static</span> ActivityLog * sharedInstance = <span class="keyword">nil</span>;
+=======
+<span class="keyword">extern</span> ActivityLog * defaultActivityLog;
+>>>>>>> .r2839</pre>
+  </div>
+  
+  <p>In this example, the section beginning with <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt; .mine</code> on line 23 contains the local change from the working version. The code on line 25 is the change from the latest version in the repository (marked as revision <code>.r2839</code>).</p>
+  <p>To resolve the conflict:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Accept or reject each modification, conferring with the team member responsible for the conflicting change. Non-trivial conflicts may require significant re-implementation of the local changes to resolve.</li>
+  		<li>Mark the conflict as resolved using <span class="uiref">Working Copy &gt; Resolve Conflicts</span> (key equivalent <span class="key">⌘K</span>) or click the <span class="uiref">Resolve</span> button in the view&rsquo;s toolbar:
+  		<p>
+  			<div class="view-button">
+					<img src="../../images/toolbar-resolve.png" srcset="../../images/toolbar-resolve@2x.png 2x"/>
+					<p>Resolve</p>
+				</div>
+  		</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <p>Once resolved, the file is marked as modified and the changes can be committed like any other modification.</p>
+  
+  <h2>Opening Conflicted Files</h2>
+  <p>When a conflicted file is selected in the browser, the following toolbar buttons are displayed in the view&rsquo;s toolbar:</p>
+
+	<div id="conflict-button-group">	
+		<div class="view-button">
+			<img src="../../images/toolbar-compare-base-view.png" srcset="../../images/toolbar-compare-base-view@2x.png 2x"/>
+			<p>Compare with BASE</p>
+		</div>
+		
+			<div class="view-button">
+			<img src="../../images/toolbar-compare-head-view.png" srcset="../../images/toolbar-compare-head-view@2x.png 2x"/>
+			<p>Compare with HEAD</p>
+		</div>
+		
+			<div class="view-button">
+			<img src="../../images/toolbar-compare-mine-view.png" srcset="../../images/toolbar-compare-mine-view@2x.png 2x"/>
+			<p>Compare with MINE</p>
+		</div>
+	</div>
+	  
+  <p>These buttons can be used to compare the various file versions relevant to the conflict against the merged working version.</p>
+  
+  <p>The <span class="uiref">Open</span> button in the view&rsquo;s toolbar also gains a popup menu:</p>
+  <p>
+	  <div class="view-button">
+		  <img src="../../images/toolbar-open.png" srcset="../../images/toolbar-open@2x.png 2x"/>
+		  <p>Open</p>
+		</div>
+	 </p>
+  <p>Clicking and holding the <span class="uiref">Open</span> button will display a popup menu allowing you to select which of the HEAD, BASE, .mine and merged (i.e. working) versions should be opened.</p>
+  
+  <h2>Resolving Conflicts on a File-by-File Basis</h2>
+  <p>Sometimes you may be able to resolve all the conflicts in a file given the knowledge, for example, that the changes implemented by one team member will take precedence over another&rsquo;s.</p>
+  <p>The conflict bar makes it easy to resolve a file to a particular revision:</p>
+  	
+  <div class="task">
+  	<ol>
+  		<li>Select the version of the file you wish to resolve to from the popup menu on the right-hand side of the bar.</li>
+  		<li>Click and hold the <span class="uiref">Resolve</span> button in the view&rsquo;s toolbar.</li>
+  		<li>Select a revision to resolve to (HEAD, BASE, .mine or working/merged) from the popup menu displayed.</li>
+  	</ol>
+  </div>
+  
+  <h2>Resolving Conflicts with an External Compare Tool</h2>
+  <p>Cornerstone also provides support for using external compare tools to resolve conflicts. See the dedicated <a href="../integration/external-compare-tools.html#resolving-conflicts">topic</a> in the <a href="../integration/index.html">Integration</a> section for more information.</p>
+  
+</body>
+</html>

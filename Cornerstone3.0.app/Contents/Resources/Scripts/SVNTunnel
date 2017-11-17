@@ -1,0 +1,58 @@
+#!/bin/bash
+#
+# SVNTunnel (c) Zennaware GmbH 2012
+#
+# This script wraps svn:// tunnels. It receives additional context information
+# from Cornerstone and makes this information available to SSHAskPass such that
+# it can obtain and store SSH passwords correctly in the macOS keychain.
+#
+# Usage:
+#
+# SVNTunnel
+#		--zennaware-sshaskpass-service <service>
+#		[--zennaware-sshaskpass-user <username>]
+#		[--zennaware-sshaskpass-knownhostsfile <knownhostsfile>]
+#		[--zennaware-sshaskpass-serverkeybehavior ask|accept] ...
+#
+# Any other arguments will be passed on verbatim to the underlying tunnel.
+
+declare service=""
+declare user=""
+declare knownhostsfile=""
+declare keybehavior="ask"
+
+while :; do
+	case $1 in
+		--zennaware-sshaskpass-service)
+			service="$2"
+			shift 2
+		;;
+
+		--zennaware-sshaskpass-user)
+			user="$2"
+			shift 2
+		;;
+
+		--zennaware-sshaskpass-knownhostsfile)
+			knownhostsfile="$2"
+			shift 2
+		;;
+
+		--zennaware-sshaskpass-serverkeybehavior)
+			keybehavior="$2"
+			shift 2
+		;;
+
+		*)
+			break
+	esac
+done
+
+export ZENNAWARE_SSHASKPASS_KNOWNHOSTSFILE="$knownhostsfile"
+export ZENNAWARE_SSHASKPASS_SERVICE="$service"
+export ZENNAWARE_SSHASKPASS_USER="$user"
+export ZENNAWARE_SSHASKPASS_SERVERKEYBEHAVIOR="$keybehavior"
+
+# Run the tunnel with its arguments verbatim
+
+exec "$@"

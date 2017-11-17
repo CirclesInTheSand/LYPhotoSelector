@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Team-Based Web Development Workflow</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+  <h1>Team-Based Web Development Workflow</h1>
+  
+  <h2>Infrastructure</h2>
+  <p>For teams working in a single location, the repository should probably be located on a server on the local network. For many organizations, network security may not be an issue, in which case the SVN network protocol (<code>svn://</code>) will provide the best performance. If network security is an issue then the <code>svn+ssh://</code> or <code>https://</code> protocols may be a better choice.</p>
+  <p>If members of your project (such as external contractors) work off-site then you will probably need to serve your repository using HTTP with Apache. Whether you use <code>http://</code> or <code>https://</code> will depend on the sensitivity of your project. If you are working on a commercial project then <code>https://</code> will probably be a requirement.</p>
+  <p>Most web development projects cascade their development process across development, staging and production servers. In such projects the development server may be a good candidate for repository server.</p>
+  <p>Smaller web consultancies may find hosting an attractive alternative. Numerous providers (such as <a href="http://www.beanstalkapp.com">Beanstalk</a>) provide inexpensive hosting plans to organizations which may meet your needs. Hosting may be of particular interest to small, loosely-knit organizations which do not have or can&rsquo;t afford a shared IT infrastructure.</p>
+  
+  <h2>Organizaton</h2>
+  <p>It may be useful to define the roles played by the members of your team. You can use these roles to define authorization policies for your repository. Candidate roles may include:</p>
+  <ul>
+  	<li>
+			<h3>Release Manager</h3>
+			<p>Has read/write access to the entire repository including the tags and branches folders. Is responsible for creating tags and branches.</p>
+  	</li>
+  	<li>
+			<h3>Contributor (or Committer)</h3>
+			<p>Has read and write access to the project&rsquo;s trunk folder and read access to everything else. Most development and design staff will be granted this role.</p>
+  	</li>
+  	<li>
+  		<h3>Consumer</h3>
+  		<p>Members of non-development parts of the organization (such as marketing, testing) may require read-only access to areas of the repository. Some clients or customers may even be able to access the repository anonymously, depending on the security policies in place.</p>
+  	</li>
+  </ul>
+  
+  <h2>Workflow</h2>
+  <div>
+  	<ol>
+  		<li>The release manager checks out a working copy to the staging server. This will not be used for active development, but using a working copy will simplify synchronization with the repository.</li>
+  		<li>Each web developer checks out all or part of the website/app to their Mac. They use a local development server using their Mac&rsquo;s built-in Apache instance. <a href="http://www.mamp.info">MAMP</a> is also a great way to run Apache and MySQL on a developer&rsquo;s Mac.</li>
+  		<li>Contributors make local modifications to their working copy as they work on the site.</li>
+  		<li>
+  			Once a task has been completed, changes which have been made by other team-members are obtained by updating the working copy. The web developer can inspect other&rsquo;s changes and decide to update as much or as little of his working copy as is required.
+  			<div class="note">
+  				<p>While it may seem counter-intuitive to pull changes before pushing them upstream with a commit, this workflow helps minimize conflicts and decrease merge effort.</p>
+  			</div>
+  		</li>
+  		<li>The committer resolves any ensuing conflicts and verifies that the result of the merge of the HEAD (i.e. latest in the repository) and local changes works as expected.</li>
+  		<li>The committer then commits the merged changes back to the repository.</li>
+  		<li>Server hooks (or Cornerstone post-commit scripts) can be used to notify other team members if necessary that new code has been committed to the repository.</li>
+  		<li>Once the project is ready for publication to the staging server, the release manager manually creates a tag in the repository. The frequency with which this step is performed will depend on the size and phase of the project. For example, during prototyping, the client may request that the staging server be updated daily, whereas during development it may be done on a weekly basis.</li>
+  		<li>The release manager then synchronizes the staging server with the repository by updating the staging server&rsquo;s working copy.</li>
+  		<li>
+  			Any issues which are isolated by clients or users on the staging server can be fixed in-situ if necessary by modifying the staging server&rsquo;s working copy. Once approved, these changes are then committed back to the repository.
+  			<div class="note">
+  				<p>Developers should not attempt to access the working copy on the staging server remotely from their development computers. Instead they should use a remote shell (e.g. using SSH) or establish a remote desktop connection (e.g. using VNC) to work on the staging server. The svn command-line tool can then be used to commit changes back to the repository if the server is not running macOS Server.</p>
+  				<p>If larger modifications are required then they should be assigned to developers for implementation in their standard development environment.</p>
+  			</div>
+  		</li>
+  		<li>Once the website/app is ready for publication to the production server, the release manager creates a tag in the repository for that version. For major releases, she also creates a branch.</li>
+  		<li>
+  			The release manager then exports the project from the repository onto her computer and then either uploads the site to the production server in its entirety or uses <code>rsync</code> (or similar tool) to synchronize the production server with the exported project.
+  			<div class="note">
+  				<p>It is very important that the release manager publish files exported from the repository rather than from a working copy. Working copies contain hidden .svn directories which contain duplicate copies of all files. These files do not need to be published to the production server and will have a negative impact on upload/synchronization times.</p>
+  				<p>Furthermore, working copies may contain additional files which, for security reasons, should not be deployed into a production environment where they are at risk of exposure on a public network.</p>
+  			</div>
+  		</li>
+  	</ol>
+  </div>
+    
+</body>
+</html>

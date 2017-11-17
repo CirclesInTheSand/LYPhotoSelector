@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Individual Software Development Workflow</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="software-team.html"></a>
+	</div>
+
+  <h1>Individual Software Development Workflow</h1>
+  
+  <h2>Infrastructure</h2>
+  <p>Working on your own, you will predominantly be using Subversion as a backup and logging solution, providing you with the full history of all the files in your project. The provides you with great flexibility to rollback to previous versions as necessary and ensures that you always have at least two versions of the code at hand: the repository and your working copy.</p>
+  <p>If you work primarily on a Mac Pro or iMac then a local repository with direct file access may be best for you. However, if you split your work across two computers (for example mainly using a desktop Mac but occasionally using a laptop when on the road) then you will need to serve a repository from your desktop Mac.</p>
+  <p>The easiest way to do this is using svnserve. See the section on <a href="../../appendix/svnserve.html">Setting up an SVN Server</a> for information on how to do this.</p>
+  <p>Alternatively, if you find yourself frequently on the move then you might consider a hosted repository. Numerous providers (such as <a href="http://www.beanstalkapp.com">Beanstalk</a>) provide inexpensive (or even free) hosting plans to individuals and organizations which may meet your needs.</p>
+  
+  <h2>Workflow</h2>
+  <div>
+  	<ol>
+  		<li>Check out a working copy to your local Mac.</li>
+  		<li>Make modifications to the files in your working copy
+  			<div class="note">
+  				<p>Undo local modifications by reverting the modified files back to the BASE revision (i.e. last update).</p>
+  			</div>
+  		</li>
+  		<li>Commit changes back to the repository
+  			<div class="note">
+  				<p>With little (or no) potential for conflicts, you can commit changes to the repository with a granularity which best suits you. If you like to infrequently commit back to the repository then do that. This may mean going for days (or even weeks) without committing. This will work but will limit your flexibility to rollback modifications without affecting other changes that you might perhaps want to keep. However it will make your history less granular (perhaps being feature or bug-fix based) and therefore easier to follow.</p>
+  				<p>If you want to be able try out modifications and use Subversion to rollback the changes then you will need to keep your working copy relatively free of modifications. Concentrate on small units of work and commit them to the repository as often as possible. There is no disadvantage to making numerous commits per day if that suits you best.</p>
+  			</div>
+  		</li>
+  		<li>Before leaving on a trip, ensure that all code you need to take with you is committed to the repository and check out a working copy onto your laptop. If you already had a working copy on your laptop then you should update the working copy to the latest revision (HEAD).</li>
+  		<li>When you return from your trip, commit the changes back to the repository and then update the working copy on your desktop Mac to pull the newest changes back into your normal working environment.</li>
+  		<li>When you have reached a milestone, tag your project in the repository in order that you can identify that exact state again in the future. You should do this for both internal milestones and external pre-release and final versions. If you accumulate too many tags over time you can always delete them as necessary.</li>
+  		<li>When you release a major version of your project or product, create a branch in the repository. This will allow you to work on your next version (e.g. 1.1) while still being able to fix bugs and make maintenance releases in previous versions (e.g. 1.0.x).</li>
+  	</ol>
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Updating a Working Copy</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="reverting-changes.html"></a>
+	</div>
+
+  <h1>Updating a Working Copy</h1>
+  
+  <h2>Updating the Selection</h2>
+  <p>To update individual items in a working copy to their latest revisions:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select one or more items in the working copy. Use the <span class="uiref">Cmd</span> key to select multiple items. The <span class="key">Shift</span> (⇧) key can be used to select ranges of items.</li>
+  		<li>
+  			<p>Select <span class="uiref">Working Copy &gt; Update to Latest Revision</span> (key equivalent <span class="key">⌘U</span>) to pull the items&rsquo; latest revisions from the repository to the working copy.</p>
+  			<p>Alternatively, select <span class="uiref">Update to Latest Revision</span> from the items&rsquo; right-click menu or click the <span class="uiref">Update</span> button <img class="template button" src="../../images/toolbar-update.png" srcset="../../images/toolbar-update@2x.png 2x"/> in the toolbar:</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Updating the Entire Working Copy</h2>
+  <p>To update the entire working copy to the latest revision in the repository:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select the working copy in the source list.</li>
+  		<li>
+  			<p>Select <span class="uiref">Working Copy &gt; Update to Latest Revision</span>.</p>
+  			<p>Alternatively, select <span class="uiref">Update to Latest Revision</span> from the working copy&rsquo;s action menu (or right-click menu).</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <p>The <span class="uiref">Working Copy</span> menu also contains an alternate item to force update of the entire working copy regardless of the selection and active view.</p>
+  <p>Access this alternate menu item (<span class="uiref">Working Copy &gt; Update All to Latest Revision</span>, key equivalent <span class="key">⌥⌘U</span>)  by pulling fown the <span class="uiref">Working Copy</span> menu and then pressing the <span class="uiref">Option</span> button.</p>
+  <div class="note">
+		<p>The alternate menu item can also be accessed by holding down the <span class="uiref">Option</span> key while pressing the <span class="uiref">Update</span> toolbar item.</p>
+  </div>
+  <p>See <a href="menu-alternates.html">Alternate Menu Functions</a> for more information on Cornerstone&rsquo;s alternate menu functions.</p>
+  
+  <h2>Updating to a Specific Revision</h2>
+  <p>Update the selected items to a specific revision or date by performing the following steps:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select the items to update in the working copy browser.</li>
+  		<li>Select <span class="uiref">Working Copy &gt; Update&hellip;</span> (key equivalent <span class="key">⇧⌘U</span>).</li>
+  		<li>Use the <span class="uiref">Revision</span> field to specify the revision to update to.</li>
+  		<li>Click the <span class="uiref">Update</span> button.</li>
+  	</ol>
+  </div>
+  
+  <h2>Updating Externals</h2>
+  <p>By default, updating your working copy will also update any referenced externals. This may not be appropriate for working copies with externals which change infrequently or which contain a large number of externals.</p>
+  
+  <p>To perform a single update without including externals:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select the working copy in the source list.</li>
+  		<li>Select <span class="uiref">Working Copy &gt; Update...</span> (key equivalent <span class="key">⇧⌘U</span>).</li>
+  		<li>Uncheck <span class="uiref">Update contents of externals</span>.</li>
+  		<li>Click the <span class="uiref">Update</span> button.</li>
+  	</ol>
+  </div>
+  
+  <p>You can also control whether externals are included in update operations using the <span class="uiref">Update contents of externals</span> option in the <span class="uiref">Working Copy</span> section of the <a href="inspector.html#externals-update-option">inspector</a>.</p>
+  
+  <div class="note">
+  	<p>Your working copy may depend on a particular version of an external to function or build correctly. If you do not include externals by default in your updates then you can introduce inconsistencies into your project.</p>
+  	<p>Exercise care when disabling <span class="uiref">Update contents of externals</span>. Be sure to monitor the changes made to your project&rsquo;s external dependencies and manually update your working copy&rsquo;s externals as necessary.</p>
+  </div>
+      
+  <h2>Extending a Sparse Working Copy</h2>
+  <p>A sparse working copy does not contain all items present in the repository. Instead, the user elects to only check out portions of the folder in the repository as needed.</p>
+  
+  <p>To extend a working copy with previously-excluded files and sub-folders:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select the folders in the working copy you wish to update.</li>
+  		<li>Select <span class="uiref">Working Copy &gt; Update&hellip;</span> (key equivalent <span class="key">⇧⌘U</span>).</li>
+  		<li>Select the required depth from the <span class="uiref">Depth</span> popup menu.</li>
+  		<li>Check <span class="uiref">Permanently extend folder to this depth</span>.</li>
+  		<li>Click the <span class="uiref">Update</span> button.</li>
+  	</ol>
+  </div>
+   
+</body>
+</html>

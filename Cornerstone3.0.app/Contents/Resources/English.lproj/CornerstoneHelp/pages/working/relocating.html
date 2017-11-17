@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Relocating a Working Copy</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="cleaning.html"></a>
+	</div>
+
+	<h1>Relocating a Working Copy</h1>
+  <p>The <span class="uiref">Relocate To</span> command is used to change the URL that a working copy uses to locate the corresponding folder in the repository.</p>
+  
+  <div class="note">
+  	<p>Cornerstone tries to keep working copies&rsquo; URLs in sync with the originating repository, and will prompt to automatically relocate working copies after their repository&rsquo;s settings are edited.</p>
+  	<p>Using the <span class="uiref">Relocate To</span> function to manually relocate a working copy is an advanced topic. See the <a href="../introduction/terminology/working-copies.html#relocate">terminology</a> section for information on situations where relocation is appropriate.</p>
+  </div>
+  
+  <p>To relocate a working copy:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select the working copy to relocate in the source list.</p>
+  			<div class="note">
+  				<p>It is not possible to relocate individual items in a working copy.</p>
+  			</div>
+  		</li>
+  		<li>
+  			<p>Select the <span class="uiref">Relocate To</span> command from the <span class="uiref">Working Copy</span> menu.</p>
+  		</li>
+  		<li>
+  			<p>Select the repository you wish to relocate to from list in the displayed submenu.</p>
+  			<div class="note">
+  				<p>You will need to <a href="../getting-started/index.html">add a new repository</a> if the required repository is not listed.</p>
+  			</div>
+  		</li>
+  	</ol>
+  </div>
+
+	<p>Cornerstone relocates the working copy to the new repository by rewriting the working copy&rsquo;s metadata. The contents of the working copy are not otherwise modified.</p>
+	<div class="note">
+		<p>The new URL is calculated from the working copy&rsquo;s location relative to the previous repository.</p>
+		<p>It is not possible to relocate a working copy to refer to a different location in the repository. Consider <a href="switching.html">switching</a> if you need to do this.</p>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,376 @@
+{
+	name                      : 'perl';
+	title                     : 'Perl';
+	match:
+	[ 
+		extension								: 'pl',
+	
+		# Shebang
+		regex:
+		{
+			score									: 1000;
+			pattern								: @'\A#\!(/[:alpha:]\w*)+(/|\s+)perl';
+		},
+
+		# Variable
+		regex										: @'(?<=\W)\$[:alpha:]\w*',
+
+		# Array count
+		regex										: @'(?<=\W)@\$[:alpha:]\w*',
+
+		# Array dereference
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?<=\W)\$([:alpha:]\w*|_)\s*->\{.*\}';
+		},
+
+		# Index of last item in array
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?<=\W)\$#[:alpha:]\w*';
+		},
+
+		# Array
+		regex										: @'(?<=\W)@[:alpha:]\w*',
+
+		# Array subset
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?<=\W)@[:alpha:]\w*\s*\[(\d+|\$#?[:alpha:]\w*)(\s*,\s*(\d+|\$#?[:alpha:]\w*))*\]';
+		},
+
+		# Array range
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?<=\W)@[:alpha:]\w*\s*\[(\d+|\$#?[:alpha:]\w*)\s*..\s*(\d+|\$#?[:alpha:]\w*)]';
+		},
+
+		# Hash
+		regex										: @'(?<=\W)%[:alpha:]\w*',
+
+		# Hash indexer
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?<=\W)\$[:alpha:]\w*\s*\{.*\}';
+		},
+
+		# Perl-specific keywords
+		regex										: @'\belsif\b',
+
+		# Post-fix unless
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bunless\s*\$[:alpha:]\w*';
+		},
+
+		# foreach loop
+		regex										: @'foreach\s*\(.*\)',
+
+		# $_ loop variable
+		regex										: @'(?<=\W)\$_\b',
+
+		# Subroutine definition
+		regex										: @'(?s)\bsub\s+[:alpha:]\w*\s*\{.*\}',
+
+		# Subroutine arguments
+		regex										: @'@_\b',
+
+		# String concatenation operator
+		regex										: @'\.=',
+
+		# Operators
+		regex										: @'=~',
+
+		# Multiline string literal
+		regex:
+		{
+			score									: 2;
+			pattern								: @"(?s)<<\s*'([:alpha:]\w*)';.*\1";
+		},
+
+		# Use statement
+		regex:
+		{
+			score									: 2;
+			pattern								: @"\buse\s+[:alpha:]\w*(\s*::\s*[:alpha:]\w*)*(\s*(\(\s*\)|'.*?(?<!\\)'))?\s*;";
+		},
+
+		# Read line operator
+		regex										: @'<(\$[:alpha:]\w*)?>',
+
+		# Semi-colon at end of the line
+		regex										: @'(?m);$',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+				
+		regex-rule:
+		{
+			name                  : 'literal.string.perl.pattern.match.m';
+			pattern               : @'m(?<delimiter>\W)((\\.)|.)+?\k<delimiter>[msixpogc]*(?=\s*[&);}\]|,+=%\$#])';
+		},
+		
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.perl';
+			open-sequence					:	@'#';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.perl';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.perl';
+						value           : 'comment.keyword.scm.value.perl';
+					};
+				},
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Perl keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.perl';
+			case-insensitive      : no;
+			words:                [ 
+															'break',
+															'constant', 'continue',
+															'do',
+															'else', 'elsif',
+															'for', 'foreach',
+															'goto',
+															'if',
+															'local',
+															'my',
+															'next',
+															'our',
+															'package', 'proto',
+															'return',
+															'say', 'state', 'sub',
+															'temp', 'tie', 
+															'undef', 'undefine', 'untie', 'use',
+															'while',
+														];
+		},
+						
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.perl.double-quote';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+
+				# Symbol rules for arrays, hashes and variables
+
+				regex-rule:
+				{
+					name							: 'symbol.variable.perl';
+					case-insensitive	: no;
+					pattern						: @'\$\w+';
+				},
+
+				regex-rule:
+				{
+					name							: 'symbol.variable.perl.array';
+					case-insensitive	: no;
+					pattern						: @'@\w+';
+				},
+
+				regex-rule:
+				{
+					name							: 'symbol.variable.perl.hash';
+					case-insensitive	: no;
+					pattern						: @'%\w+';
+				},
+
+				regex-rule:
+				{
+					name							: 'symbol.variable.predef.perl.1';
+					case-insensitive	: no;
+					pattern						: "\\$[_&`'+*./|,\\\";#%=-~^:?!@$<>()0\\[\\]]";
+				},
+
+				# Symbol rules for built-in symbols
+
+				regex-rule:
+				{
+					name							: 'symbol.variable.predef.perl.2';
+					case-insensitive	: no;
+					pattern						: @'\$\^\w';
+				},
+
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.perl.single-quote';
+			open-sequence         : "'";
+			close-sequence        : "'";
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+
+				ref									: 'symbol.variable.perl',
+				ref									: 'symbol.variable.perl.array',
+				ref									: 'symbol.variable.perl.hash',
+				ref									: 'symbol.variable.predef.perl.1',
+				ref									: 'symbol.variable.predef.perl.2',
+
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		regex-rule:
+		{
+			name                  : 'literal.string.perl.pattern.match';
+			pattern               : @'[qrxw]?[qrmxw]?/((\\.)|.)+?/[msixpogc]*(?=\s*[&);}\]|,+=%\$#])';
+		},
+
+		regex-rule:
+		{
+			name                  : 'literal.string.perl.pattern.replace';
+			pattern               : @'[stry]?[stry]?/((\\.)|.)+?/((\\.)|.)*?/[msixpogceds]*(?=\s*[&);}\]|,+=%\$#])';
+		},
+
+		regex-rule:
+		{
+			name                  : 'literal.string.perl.pattern.once';
+			pattern               : @'\?.*?(?<!\?)\?';
+		},
+
+		// rules to capture variables
+
+		regex-rule:
+		{	
+			name									: 'symbol.perl.variable';
+			pattern								: @'[\$@%]\w+';
+		},
+
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.perl';
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|(-?(\d+)?\.(\d+)([eE]\d+)?[fF]?)|(-?\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		# Multiline rules for text blocks
+
+		regex-rule:
+		{
+			name                  : 'literal.string.perl.block';
+			pattern               : '<<\\s*[\'"`]?(?<name>\\w+)[\'"`]?\\s*;.*?\\k<name>';
+			multiline							: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+
+				ref									: 'symbol.variable.perl',
+				ref									: 'symbol.variable.perl.array',
+				ref									: 'symbol.variable.perl.hash',
+				ref									: 'symbol.variable.predef.perl.1',
+				ref									: 'symbol.variable.predef.perl.2',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# POD comment block rule
+
+		regex-rule:
+		{
+			name                  : 'comment.multiline.perl.pod';
+			pattern               : @'=\w+.*?=cut';
+			multiline							: yes;
+		},
+		
+		# Symbol rule for built-in functions
+
+		word-rule:
+		{
+			name                  : 'keyword.function.perl';
+			case-insensitive      : no;
+			words:                [ 
+															'abs', 'accept', 'alarm', 'and', 'atan2',
+															'bind', 'binmode', 'bless',
+															'caller', 'chdir', 'chmod', 'chomp', 'chop', 'chown', 'chr', 'chroot', 'close', 'closedir', 'connect', 'cos', 'crypt',
+															'dbmclose', 'dbmopen', 'defined', 'delete', 'die', 'dump',
+															'each', 'endgrent', 'endhostent', 'endnetent', 'endprotoent', 'endpwent', 'endservent', 'eq', 'eof', 'eval', 'exec', 'exists', 'exit', 'exp',
+															'fail', 'fcntl', 'fileno', 'flock', 'fork', 'format', 'formline',
+															'getc', 'getgrent', 'getgrgid', 'getgrnam', 'gethostbyaddr', 'gethostbyname', 'gethostent', 'getlogin', 'getnetbyaddr', 'getnetbyname', 'getnetent', 'getpeername', 'getpgrp', 'getppid', 'getpriority', 'getprotobyname', 'getprotobynumber', 'getprotoent', 'getpwent', 'getpwnam', 'getpwuid', 'getservbyname', 'getservbyport', 'getservent', 'getsockname', 'getsockopt', 'glob', 'gmtime', 'grep',
+															'hex',
+															'import', 'index', 'int', 'ioctl',
+															'join',
+															'keys', 'kill',
+															'last', 'lc', 'lcfirst', 'length', 'link', 'listen', 'localtime', 'lock', 'log', 'lstat',
+															'm', 'map', 'mkdir', 'msgctl', 'msgget', 'msgrcv', 'msgsnd',
+															'ne', 'no', 'not',
+															'oct', 'open', 'opendir', 'or', 'ord',
+															'pack', 'pipe', 'pop', 'pos', 'print', 'printf', 'prototype', 'push',
+															'quotemeta',
+															'rand', 'read', 'readdir', 'readline', 'readlink', 'readpipe', 'recv', 'redo', 'ref', 'rename', 'require', 'reset', 'reverse', 'rewinddir', 'rindex', 'rmdir',
+															'scalar', 'seek', 'seekdir', 'select', 'semctl', 'semget', 'semop', 'send', 'setgrent', 'sethostent', 'setnetent', 'setpgrp', 'setpriority', 'setprotoent', 'setpwent', 'setservent', 'setsockopt', 'shift', 'shmctl', 'shmget', 'shmget', 'shmread', 'shmwrite', 'shutdown', 'sin', 'sleep', 'socket', 'socketpair', 'sort', 'splice', 'split', 'sprintf', 'sqrt', 'srand', 'stat', 'study', 'substr', 'symlink', 'syscall', 'sysopen', 'sysread', 'sysseek', 'system', 'syswrite',
+															'tell', 'telldir', 'tied', 'times', 'tr', 'truncate',
+															'uc', 'ucfirst', 'umask', 'unlink', 'unpack', 'unshift', 'utime',
+															'values', 'vec',
+															'wait', 'waitpid', 'wantarray', 'warn', 'write',
+														];
+		},
+
+		default-rule:
+		{
+		}
+	];
+};

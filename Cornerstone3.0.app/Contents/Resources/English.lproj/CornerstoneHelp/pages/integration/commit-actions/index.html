@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Running Commit Actions</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="prepare-scripts.html"></a>
+	</div>
+
+  <h1>Running Commit Actions</h1>
+  <p>You can extend the commit process with your own actions that are implemented through scripts. Cornerstone allows you to run scripts at three points during the commit process:</p>
+  <ol>
+  	<li>
+  		<p><strong>During commit preparation</strong></p>
+  		<p>Scripts run during commit preparation are termed <span class="term">Prepare Scripts</span>.</p>
+  	</li>
+  	<li>
+  		<p><strong>Before committing to the repository</strong></p>
+  		<p>Scripts run when the user presses <span class="uiref">Commit Changes</span> in the commit view (but before the commit is started) are termed <span class="term">Pre-Commit Scripts</span>.</p>
+  	</li>
+  	<li>
+  		<p><strong>After the commit completes</strong></p>
+  		<p>Scripts run after successful completion of the commit are termed <span class="term">Post-Commit Scripts</span>.</p>
+  	</li>
+  </ol>
+  <div class="note">
+  	<p>Cornerstone can run actions implemented as AppleScript, Automator actions, Perl scripts, Python scripts and Unix shell scripts.</p>
+  </div>
+  
+  <h2><a id="commit-process">The Commit Process</a></h2>
+  <p>The commit process is divided into several distinct phases that are described in the following flow diagram. The relevant phases for commit actions are the <span class="term">Preparation Phase</span>, <span class="term">Pre-Commit Phase</span> and <span class="term">Post-Commit Phase</span>.</p>
+  <p>
+  	<img src="../../../images/commit-process.svg" width="960"/>
+  </p>
+  
+  <h2>See Also</h2>
+  <p>For more information see:</p>
+  <div class="links">
+	  <ul class="plain">
+	    <li><a href="prepare-scripts.html">Prepare Scripts</a></li>
+	    <li><a href="pre-commit-scripts.html">Pre-Commit Scripts</a></li>
+	    <li><a href="post-commit-scripts.html">Post-Commit Scripts</a></li>
+	  </ul>
+  </div>
+  
+</body>
+</html>

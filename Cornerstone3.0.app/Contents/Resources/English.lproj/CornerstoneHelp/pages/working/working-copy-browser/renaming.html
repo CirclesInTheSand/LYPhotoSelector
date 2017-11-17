@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Renaming Working Copy Items</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="deleting.html"></a>
+	</div>
+
+  <h1>Renaming Working Copy Items</h1>
+  <p>Rename items in a working copy using one of the following methods:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select the item to rename and then single-click the item to start editing the name</li>
+  		<li>Select the item to rename and press the <span class="key">Return</span> (⏎) key.</li>
+  		<li>Confirm the pressing the <span class="key">Return</span> (⏎) key or clicking on another item in the browser.</li>
+  		<li>You can cancel the rename at any time by pressing the <span class="key">Escape</span> (⎋) key.</li>
+  	</ol>
+  </div>
+  <p>Subversion implements a rename as a move operation. As a result, the original file is marked for deletion and added to the working copy with the new name.</p>    
+  <h2>Undoing a Rename</h2>
+  <p>You can use the <span class="uiref">Revert</span> function to undo a rename using the following steps:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select the original file which was scheduled for deletion and revert it to the BASE version using the <span class="uiref">Revert</span> function. The file is restored to the BASE version and is no longer scheduled for deletion.</li>
+  		<li>Select the file that is scheduled for addition to the repository and remove the file using the <span class="uiref">Delete</span> function.</li>
+  	</ol>
+  </div>
+  
+  <h2>Committing a Rename</h2>
+  <div class="note">
+  <p>In order to preserve the rename operation correctly in the repository&rsquo;s history, it is recommended that you commit both the deleted and added items at the same time.</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<style type="text/css">
+		.reset-button {
+			vertical-align: 0px;
+		}
+	</style>
+	<title>Filtering The Timeline</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="inspector.html"></a>
+	</div>
+
+  <h1>Filtering the Timeline</h1>
+  <p>The history of individual files can quickly contain dozens or even hundreds of revisions. Cornerstone includes a set of pre-defined history filters to keep the information displayed in the history browser manageable and help you find the history information you&rsquo;re looking for.</p>
+  
+  <h2>Filter Bar</h2>
+  <p>The filter bar at the top of the timeline view is used to select from a list of pre-defined filters. A field is displayed in the bar for filters that require additional input.</p>
+  <p><img class="comp" src="../../../../images/timeline-filter-bar.png" srcset="../../../../images/timeline-filter-bar@2x.png 2x"/></p>
+  
+  <p>To filter the history:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select a filter from the filter menu.</li>
+  		<li>Enter information into the filter field if required and press the <span class="key">Return</span> (⏎) key to apply the filter.</li>
+  		<li>To reset the filter value press the <img class=" template reset-button" src="../../../../images/reset-button.png" srcset="../../../../images/reset-button@2x.png 2x"/> button.</li>
+  	</ol>
+  </div>
+	<p>The filters are as follows:</p>
+  
+	<h3 class="filter">All <span class="small-key">^A</span></h3>
+	<p>Removes the other filters to show all items.</p>
+
+	<h3 class="filter">Last 10 <span class="small-key">^L</span></h3>
+	<p>Shows the last 10 log items for each item shown in the timeline.</p>
+
+	<h3 class="filter">Today <span class="small-key">^T</span></h3>
+	<p>Shows only the log items committed during the current calendar day.</p>
+
+	<h3 class="filter">This Week <span class="small-key">^W</span></h3>
+	<p>Shows only the log items committed during the current calendar week.</p>
+
+	<h3 class="filter">This Month <span class="small-key">^M</span></h3>
+	<p>Shows only the log items committed during the current calendar month.</p>
+
+	<h3 class="filter">Starting at: <span class="small-key">^S</span></h3>
+	<p>Shows only the log items at or after the specified date or revision. See the subsequent section for more information on <a href="#date-formats">Date Formats</a>.</p>
+
+	<h3 class="filter">By Author: <span class="small-key">^B</span></h3>
+	<p>Shows only the log items committed by the specified author.</p>
+
+	<h3 class="filter">Containing Text: <span class="small-key">^C</span></h3>
+	<p>Shows only the log items that contain the specified text in the log message.</p>
+
+  <h2 id="date-formats">Date Formats</h2>
+  <p>The <span class="uiref filter">Starting at:</span> filter accepts dates and revision numbers. Dates should be entered using the format configured in the <span class="uiref">Format</span> tab of the <span class="uiref">International</span> pane of your Mac&rsquo;s <span class="uiref">System Preferences</span>.</p>
+  
+</body>
+</html>

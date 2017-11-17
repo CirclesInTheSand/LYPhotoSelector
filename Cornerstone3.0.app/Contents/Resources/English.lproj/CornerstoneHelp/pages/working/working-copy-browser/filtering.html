@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>The Working Copy Filter Bar</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="navigation.html"></a>
+	</div>
+
+	<h1>The Working Copy Filter Bar</h1>
+	<p>The filter bar allows you to quickly apply commonly-used filters to the contents of the browser. You can also filter the contents of the browser by name, author or revision.</p>
+	<p><img class="comp" src="../../../images/working-copy-filter-bar.png" srcset="../../../images/working-copy-filter-bar@2x.png 2x"/></p>
+	
+	<h2>Filter Buttons</h2>
+	<ul class="plain">
+		<li>
+			<h3 class="filter">All <span class="small-key">^A</span></h3>
+			<p>Shows all the files in the browser.</p>
+			<p>The browser&rsquo;s pre-filtered expansion status is restored. Use the <span class="uiref">Show File in All</span> function on the browser&rsquo;s right-click menu to remove the filter and reveal the current selection.</p>
+			<p>Clicking the <span class="uiref">All</span> button does not reset the text in the filter&rsquo;s search field. Use the <span class="uiref">View > Show All</span> (key equivalent <span class="key">⌘\</span>) function to do this.</p>
+		</li>
+		
+		<li>
+			<h3 class="filter">Changed <span class="small-key">^C</span></h3>
+			<p>Shows only files in the working copy which have changed since the last commit or update. This includes all added, conflicted, deleted, missing, modified, obstructed, replaced and unversioned files.</p>
+			<p>External and ignored files are not shown.</p>
+		</li>
+		
+		<li>
+			<h3 class="filter">Modified <span class="small-key">^O</span></h3>
+			<p>Shows only files which have been modified, including items with both content and property modifications.</p>
+		</li>
+		
+		<li>
+			<h3 class="filter">Conflicted <span class="small-key">^F</span></h3>
+			<p>Shows only conflicted files in the working copy.</p>
+		</li>
+		
+		<li>
+			<h3 class="filter">Missing <span class="small-key">^G</span></h3>
+			<p>Shows only files which are under version control but are not present in the working copy.</p>
+		</li>
+
+		<li>
+			<h3 class="filter">Unversioned <span class="small-key">^U</span></h3>
+			<p>Shows only unversioned files in the working copy.</p>
+		</li>
+		
+		<li>
+			<h3 class="filter">Switched <span class="small-key">^S</span></h3>
+			<p>Shows only switched files in the working copy.</p>
+		</li>
+
+		<li>
+			<h3 class="filter">Locked <span class="small-key">^L</span></h3>
+			<p>Shows only files in the working which are locked. This filter can be combined with <span class="uiref">Changed</span>, <span class="uiref">Modified</span>, <span class="uiref">Conflicted</span>, <span class="uiref">Unversioned</span> and <span class="uiref">Newer in Repository</span>.</p>
+		</li>
+
+		<li>
+			<h3 class="filter">Newer in Repository <span class="small-key">^N</span></h3>
+			<p>Shows all files in the working copy for which the HEAD revision in the repository is higher than the BASE revision in the working copy, i.e. which have been modified in the repository since being last updated or committed in the working copy.</p>
+			<p>Use this filter to gain a quick overview of changes which will be pulled to the working copy when updating. Items marked as modified both in the working copy and repository are possible candidates for merge conflicts. Care should therefore be exercised before updating these items.</p>
+			<div class="note">
+				<p>This filter is only available when <span class="uiref">View &gt; Show Repository Status</span> is enabled.</p>
+			</div>
+		</li>
+	</ul>
+
+	<h2>Search Field</h2>
+	<p>The search text box can be used to search for matching file (or folder) names as well as authors and revisions in the items that match the current filter.</p>
+	<p>The search field&rsquo;s text is reset by <span class="uiref">View &gt; Show All</span> (key equivalent <span class="key">⌘\</span>).</p>
+	<p>The search field automatically applies the filter a short period after the last keystroke. Pressing the <span class="key">Return ⏎</span> key while in the search field will result in the filter text being stored for quick access from the field&rsquo;s drop-down menu.</p>
+
+</body>
+</html>

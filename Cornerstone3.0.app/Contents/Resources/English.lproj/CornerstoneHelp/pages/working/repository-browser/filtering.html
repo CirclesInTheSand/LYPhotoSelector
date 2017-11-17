@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>The Repository Filter Bar</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="navigation.html"></a>
+	</div>
+
+	<h1>The Repository Filter Bar</h1>
+	<p>The filter bar allows you to quickly apply commonly-used filters to the contents of the browser. You can also specify the revision to browse as well as filter the contents of the browser by name, author or revision.</p>
+	<p><img class="comp" src="../../../images/repository-filter-bar.png" srcset="../../../images/repository-filter-bar@2x.png 2x"/></p>
+	
+	<h2>Revision Field</h2>
+	<p>Use the revision field to specify the revision displayed in the browser.</p>
+	<p>By default, the repository browser displays the <span class="term">HEAD</span> revision, i.e. the latest in the repository. As a result, changes made to the repository with the browser (such as copying or deleting items) will immediately be reflected in the view.</p>
+	<p>Alternatively, you can browse the contents of an older revision by entering the date or number of the revision into this field. This can be useful for finding older or deleted files for export or resurrection.</p>
+	<div class="note">
+		<p>It is not possible to modify existing revisions in a Subversion repository. Instead, it&rsquo;s only possible to affect changes by adding a <em>new</em> revision.</p>
+		<p>As a result, many browser functions are not available when browsing a specific revision. For example, it is not possible to move or rename an item in an existing revision.</p>
+		<p>Some functions however&mdash;such as <span class="uiref">Copy To</span>, <span class="uiref">New Folder</span> and <span class="uiref">Import</span>&mdash;are still available. Be aware that while these functions will result in the addition of a new revision.</p>
+		<p>Therefore such changes in the repository will not be shown until the browser is reverted to display <span class="uiref">Latest in Repository (HEAD)</span>.</p>
+	</div>
+		
+	<h2>Filter Buttons</h2>
+	<ul class="plain">
+		<li>
+			<h3 class="filter">All <span class="small-key">^A</span></h3>
+			<p>Shows all the files in the browser.</p>
+			<p>The browser&rsquo;s pre-filtered expansion status is restored. Use the <span class="uiref">Show File in All</span> function on the browser&rsquo;s right-click menu to remove the filter and reveal the current selection.</p>
+			<p>Clicking the <span class="uiref">All</span> button does not reset the text in the filter&rsquo;s search field. Use the <span class="uiref">View > Show All</span> (key equivalent <span class="key">⌘\</span>) function to do this.</p>
+		</li>
+		
+		<li>
+			<h3 class="filter">Most Recent <span class="small-key">^R</span></h3>
+			<p>Shows only files and folders that were committed to the repository in the most recent revision.</p>
+			<div class="note">
+				<p>This filter is replaced by <span class="uiref">This Revision</span> <span class="small-key">^R</span> when a revision other than <span class="uiref">Latest in Repository (HEAD)</span> is specified in the revision field, in which case enabling the filter results in only those items being shown that were modified in the given revision.</p>
+			</div>
+		</li>
+
+		<li>
+			<h3 class="filter">Today <span class="small-key">^T</span></h3>
+			<p>Shows only files and folders that have been modified today.</p>
+		</li>
+		
+		<li>
+			<h3 class="filter">This Week <span class="small-key">^W</span></h3>
+			<p>Shows only files and folders that have been modified during the current calendar week.</p>
+		</li>
+		
+		<li>
+			<h3 class="filter">This Month <span class="small-key">^M</span></h3>
+			<p>Shows only files and folders that have been modified during the current calendar month.</p>
+		</li>
+				
+		<li>
+			<h3 class="filter">Locked <span class="small-key">^L</span></h3>
+			<p>Shows only files that are locked. This filter can be combined with <span class="uiref">Today</span>, <span class="uiref">This Week</span> and <span class="uiref">This Month</span>.</p>
+		</li>
+	</ul>
+	
+	<div class="note">
+		<p>Cornerstone only applies the filter to the items currently displayed in the browser. For performance reasons it does not query the repository for all items which match the current filter criteria.</p>
+	</div>
+
+	<h2>Search Field</h2>
+	<p>The search text box can be used to search for matching file (or folder) names as well as authors and revisions in the items that match the current filter.</p>
+	<p>The search field&rsquo;s text is reset by <span class="uiref">View &gt; Show All</span> (key equivalent <span class="key">⌘\</span>).</p>
+	<p>The search field automatically applies the filter a short period after the last keystroke. Pressing the <span class="key">Return ⏎</span> key while in the search field will result in the filter text being stored for quick access from the field&rsquo;s drop-down menu.</p>
+
+</body>
+</html>

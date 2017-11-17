@@ -1,0 +1,346 @@
+{
+	name                      : 'jsp';
+	title                     : 'Java Server Page';
+	import:										[ 'java' ];
+	superset-of:							[ 'java' ];
+	default-token-class				: 'exterior';
+
+	match:
+	[ 
+		extension								: 'jsp',
+		extension								: 'jspx',
+		
+		import									: 'java:regex',
+		
+		# Scriptlet start
+		regex										: @'<%',
+
+		# Scriptlet end
+		regex										: @'%>',
+
+		# Script write
+		regex:
+		{
+			score									: 2;
+			pattern								: @'<%=';
+		},
+
+		# Directives
+		regex:
+		{
+			score									: 2;
+			pattern								: @'<%@ \w+';
+		},
+
+		# Declarations
+		regex:
+		{
+			score									: 2;
+			pattern								: @'<%!';
+		},
+
+		# JSP tag
+		regex:
+		{
+			score									: 10;
+			pattern								: @'<jsp:\w+';
+		},
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# rule for multi-line <%-- ... --%> comment block
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.jsp.block';
+			open-sequence     		: @'<%--';
+			close-sequence    		: @'--%>';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.jsp';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.jsp';
+						value           : 'comment.keyword.scm.value.jsp';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		# rule for directive blocks in the form <%@ ... %>
+		
+		regex-rule:
+		{
+			name									: 'default.jsp.block.directive';
+			multiline							: yes;
+			pattern								: @'<%@';
+			until									: @'default.jsp.block.directive.end';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name							: 'default.jsp.block.directive.end';
+					pattern						: @'%>';
+				},
+				
+				regex-rule:
+				{
+					name							: 'default.jsp.block.directive.attribute';
+					multiline					: yes;
+					pattern						: @'(?<name>[\w\-_:]+)\s*=\s*(?<value>".*?")';
+					groups:
+					{
+						name						: 'symbol.jsp.directive.name';
+						value						: 'literal.string.jsp.directive.value';
+					};
+				},
+				
+				regex-rule:
+				{
+					name							: 'keyword.preprocessor.jsp.directive';
+					pattern						: @'\w+';
+				},
+				
+				default-rule:
+				{
+				}
+			];
+		},
+		
+		# rule for the standard <% ... %> block
+		
+		regex-rule:
+		{
+			name									: 'default.jsp.block';
+			pattern								: '<%';
+			until									: 'default.jsp.block.end';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				regex-rule:
+				{
+					name							: 'default.jsp.block.end';
+					pattern						: @'%>';
+				},
+				
+				ref									: 'comment.multiline.doc.java',
+				ref									: 'comment.multiline.java',
+				ref									: 'comment.singleline.java',
+				ref									: 'keyword.java',
+				ref									: 'literal.string.java',
+				ref									: 'literal.char.java',
+				ref									: 'literal.number.java',
+				
+				default-rule:
+				{
+				}
+			];
+		},
+
+		# rule for <jsp:scriptlet> and <jsp:expression> tags
+		
+		regex-rule:
+		{
+			name									: 'default.jsp.scriptlet';
+			pattern								: '<jsp:(scriptlet|expression).*?>';
+			until									: 'default.jsp.scriptlet.end';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				regex-rule:
+				{
+					name							: 'default.jsp.scriptlet.end';
+					pattern						: @'</(?<tag>jsp:(scriptlet|expression))>';
+					groups:
+					{
+						tag							: 'symbol.jsp.scriptlet.end.tag';
+					};
+				},
+				
+				regex-rule:
+				{
+					name							: 'default.jsp.scriptlet.tag';
+					pattern						: @'<(?<tag>jsp:(scriptlet|expression)).*?>';
+					groups:
+					{
+						tag							: 'symbol.jsp.scriptlet.tag';
+					};
+				},
+				
+				ref									: 'comment.multiline.doc.java',
+				ref									: 'comment.multiline.java',
+				ref									: 'comment.singleline.java',
+				ref									: 'keyword.java',
+				ref									: 'literal.string.java',
+				ref									: 'literal.char.java',
+				ref									: 'literal.number.java',
+				
+				default-rule:
+				{
+				}
+			];
+		},
+		
+		# rule for LE expressions in the form ${ ... }
+		
+		regex-rule:
+		{
+			name									: 'default.jsp.expression';
+			pattern								: @'\${';
+			until									: 'default.jsp.expression.end';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+					
+				},
+				
+				ref									: 'literal.string.java',
+				ref									: 'literal.char.java',
+				ref									: 'literal.number.java',
+				
+				regex-rule:
+				{
+					name							: 'default.jsp.expression.end';
+					pattern						: '}';
+				},
+				
+				default-rule:
+				{
+					
+				},
+			];
+		},
+
+		# rule for JSP tags. will match any tag which uses an XML namespace-style prefix
+
+		regex-rule:
+		{
+			name									: 'default.jsp.tag';
+			pattern								: @'<(?<prefix>[\w\-_]+:(?<name>)[\w\-_]+)';
+			multiline							: yes;
+			until									: 'default.jsp.tag.end';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name							: 'default.jsp.tag.open';
+					pattern						: @'(?<prefix>[\w\-_]+:(?<name>)[\w\-_]+)';
+					groups:
+					{
+						prefix					: 'symbol.jsp.tag.prefix';
+						name						: 'symbol.jsp.tag.name';
+					};
+				},
+				
+				regex-rule:
+				{
+					name							: 'default.jsp.tag.attribute';
+					pattern						: @'\w+\s*=\s*".*?"';
+					
+					rules:
+					[	
+						whitespace-rule:
+						{
+						},
+
+						regex-rule:
+						{
+							name					: 'symbol.jsp.tag.attribute.name';
+							pattern				: @'\w+';
+						},
+						
+						regex-rule:
+						{
+							name					: 'literal.string.jsp.tag.attribute.value';
+							pattern				: @'".*?"';
+							
+							rules:
+							[
+								whitespace-rule:
+								{
+									
+								},
+								
+								ref					: 'default.jsp.block',
+								ref					: 'default.jsp.expression',
+								
+								default-rule:
+								{
+									
+								},
+							];
+						},
+						
+						default-rule:
+						{
+						},
+					];
+				},
+				
+				regex-rule:
+				{
+					name							: 'default.jsp.tag.end';
+					pattern						: @'/?>';
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		regex-rule:
+		{
+			name									: 'default.jsp.tag.close';
+			pattern								: @'</(?<prefix>[\w\-_]+:(?<name>)[\w\-_]+)>';
+			groups:
+			{
+				prefix							: 'symbol.jsp.tag.close.prefix';
+				name								: 'symbol.jsp.tag.close.name';
+			};
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Repositories, Servers and Protocols</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="revisions.html"></a>
+	</div>
+
+  <h1>Repositories, Servers and Protocols</h1>
+  
+  <h2 class="term"><a id="repository">Repository</a></h2>
+	<div class="inset">
+		<p>A repository is the central database shared by all members of a project. It contains the complete history of all files in the project.</p>
+		<p>A repository is structured much like the file system on a Mac or PC containing a hierarchy of nested files and folders.</p>
+		<div class="note">
+			<p>Repositories should always be located on the local disk of the server which is accessing it. Never attempt to share a repository between computers by placing it in a shared location on the network.</p>
+		</div>
+	</div>
+  
+  <h2 class="term"><a id="server">Server</a></h2>
+  <div class="inset">
+		<p>A Subversion server is exclusively concerned with managing access to the files in a repository.</p>
+		<p>Subversion servers basically come in two flavors: those based on the
+		Apache web server and those using the custom <code>svnserve</code> server.</p>
+	</div>
+  
+  <h2 class="term"><a id="protocol">Protocol</a></h2>
+  <div class="inset">
+		<p>Subversion clients (such as Cornerstone) generally access a repository by communicating with a server. The format of this communication is termed the <span class="term">protocol</span>.</p>
+		<p>Subversion supports a number of different protocols which suit a variety of needs: HTTP and HTTPS are best suited to access repositories available via public networks such as the Internet, while the custom SVN protocol is generally used to access repositories on a private network.</p>
+		<p>Some servers might provide access via multiple protocols, e.g. many open source projects provide HTTP for anonymous, read-only access and HTTPS for write access limited to project members.</p>
+		<p>The <span class="term">scheme</span> component of the URL (e.g. <code>http://</code>) is used to describe the protocol used to communicate with the server, with <code>http://</code>, <code>https://</code> and <code>svn://</code> used to access the three protocols mentioned above.</p>
+		<p>A fourth scheme, <code>svn+ssh://</code> specifies that the <code>svn://</code> protocol should be tunneled through the secure shell tool <span class="term">SSH</span> adding an industry-standard authentication and encryption layer, thus making the <code>svn://</code> protocol suitable for use over public networks. The configuration of SSH tunneling with Subversion is a relatively involved process and is not covered in further detail in this document.</p>
+	</div>
+  
+  <h2 class="term"><a id="url">URL</a></h2>
+  <div class="inset">
+		<p>A URL uniquely describes the location of a resource on the Internet. In a similar fashion, Subversion uses URLs to identify items in a repository, with the URL at once identifying the server, repository and path of the file or folder in question.</p>
+		<p>For example:</p>
+		<pre>http://svn.example.com/repos/project/file.txt</pre>
+		<p>might identify <code>file.txt</code> located in the project folder of the repos repository served by the server at <code>http://svn.example.com</code>. Not all repositories will follow this scheme (for example the <code>repos</code> component may not be present) but most URLs will look similar.</p>
+  </div>
+  
+  <h2 class="term"><a id="file-access">File-Based Repository Access</a></h2>
+  <div class="inset">
+		<p>You can directly access a repository on your Mac without requiring a server (and by extension, a communication protocol). However, you are still required to use a URL to identify files and folders. For example, you would use the following URL to identify <code>file.txt</code> in the <code>project</code> folder of the repository located at <code>/Users/zoe/Repository</code>:</p>
+		<pre>file:///Users/zoe/Repository/project/file.txt</pre>
+		<div class="note">
+			<p>Note the use of the third forward slash after <code>file://</code>. This identifies the root of the file system on your Mac. Think of this as the conjunction of <code>file://</code> and the path <code>/Users/zoe/Repository/project/file.txt</code>.</p>
+			<p>Remember that <code>file.txt</code> isn&rsquo;t actually located at this path. Instead, Subversion uses it to virtually identify the file in the repository.</p>
+		</div>	
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Configuring User Properties</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="field-types.html"></a>
+	</div>
+
+  <h1>Configuring User Properties</h1>
+  <p>You can extend Cornerstone&rsquo;s <a href="../../working/inspector.html">Inspector</a> with your own fields that provide a simple interface for viewing and changing the values of user properties.</p>
+  <p>The properties displayed by the Inspector are configured in Cornerstone&rsquo;s <span class="uiref">User Properties</span> preference pane.</p>
+ 	<div class="note">
+ 		<p>User properties apply to all files and folders in all repositories and working copies. It is not possible to define sets of user properties specific to either particular file types or locations.</p>
+ 	</div>
+ 	
+ 	<h2>Adding a User Property</h2>
+ 	<p>To add a user property:</p>
+ 	<div class="task">
+ 		<ol>
+ 			<li>
+ 				<p>Open the preferences window by selecting <span class="uiref">Preferences...</span> (key equivalent <span class="key">⌘,</span>) from the <span class="uiref">Cornerstone</span> menu.</p>
+ 			</li>
+ 			<li>
+ 				<p>Switch to the <span class="uiref">User Properties</span> pane.</p>
+ 			</li>
+ 			<li>
+ 				<p>Click the <span class="add-button"></span> button to add a new property.</p>
+ 			</li>
+ 			<li>
+ 				<p>Specify the name of the property in the <span class="uiref">Name</span> field. This is the name used to identify the property to Subversion.</p>
+ 				<p>Property names are subject to some restrictions. See the <a href="index.html#property-names">Property Names</a> section for more information.</p>
+ 			</li>
+ 			<li>
+ 				<p>Optionally, use the <span class="uiref">Label</span> field to specify the text that is used to represent the property in the Inspector.</p>
+ 				<p>The property&rsquo;s name will be used if you leave this field blank.</p>
+ 			</li>
+ 			<li>
+ 				<p>Use the <span class="uiref">Type</span> pop-up to select how the property is edited in the Inspector. Possible values are:</p>
+ 				<p>
+	 				<ul>
+	 					<li>Text Field</li>
+	 					<li>Checkbox</li>
+	 					<li>Pop-Up List</li>
+	 					<li>File</li>
+	 				</ul>
+ 				</p>
+ 				<p>See the <a href="field-types.html">Field Types</a> section for more information on these types.</p>
+ 			</li>
+ 			<li>
+ 				<p>The Inspector is immediately updated to include the added property.</p>
+ 			</li>
+ 		</ol>
+ 	</div>
+ 	 	
+ 	<h2>Disabling User Properties</h2>
+ 	<p>If you have no need for user properties then you can hide the related section in the Inspector by unchecking the <span class="uiref">Enable user properties</span> checkbox in the <span class="uiref">User Properties</span> preference pane.</p>
+
+</body>
+</html>

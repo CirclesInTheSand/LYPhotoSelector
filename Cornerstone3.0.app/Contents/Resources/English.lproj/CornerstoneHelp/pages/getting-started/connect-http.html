@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Connecting to an HTTP Server</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="connect-svn.html"></a>
+	</div>
+
+  <h1>Connecting to an HTTP Server</h1>
+  
+  <div>
+  	<ol>
+  		<li>Select <span class="uiref">File &gt; Add Repository&hellip;</span> (or click the <img class="template" src="../../images/statusbar-add.png" srcset="../../images/statusbar-add@2x.png 2x"/> button located at the bottom of the source list and select <span class="uiref">Add Repository&hellip;</span>)</li>
+  		<li>
+  			<p>Select the <span class="uiref">HTTP Server</span> button at the top of the displayed sheet:</p>
+  			<div class="view-button">
+	  			<img src="../../images/toolbar-http.png" srcset="../../images/toolbar-http@2x.png 2x"/>
+	  			<p>HTTP Server</p>
+	  		</div>
+  		</li>
+  		<li>Select the protocol to use (<code>http://</code> or <code>https://</code>).</li>
+  		<li>Use the <span class="uiref">Server</span> field to enter the name or IP address of the HTTP server. Do not include the scheme (i.e. <code>http://</code>) in this field.</li>
+  		<li>If your server is listening on a non-standard port (80 for <code>http://</code> and 443 for <code>https://</code>) then enter the port number into the <span class="uiref">Port</span> field. Leave this field blank if your server is using the standard port.</li>
+  		<li>Enter the relative path of the repository into the <span class="uiref">Repository Path</span> field. You may also specify the path to a folder in the repository.</li>
+  		<li>For example, for the URL:<pre>http://svn.myserver.org:8888/repos/project/trunk</pre> enter <code>svn.myserver.org</code> into the <span class="uiref">Server</span> field, 8888 into the <span class="uiref">Port</span> field and <code>repos/project/trunk</code> into the <span class="uiref">Repository Path</span> field.
+  		<div class="note">The path entered into the <span class="uiref">Repository Path</span> field should not be URL-encoded.</div>
+  		</li>
+  		<li>Use the <span class="uiref">Nickname</span> field to specify the name used to represent the repository in the source list.</li>
+  		<li>Specify the account name and password you use to access the repository. You can leave the <span class="uiref">Name</span> field blank if you only require anonymous access.
+  		<div class="note">The value entered into the <span class="uiref">Name</span> field should not be URL-encoded.</div>
+  		</li>
+  		<li>Click the <span class="uiref">Add</span> button to connect to the repository.</li>
+  	</ol>
+  </div>
+
+	<p>Cornerstone will attempt to contact the server and query information about the repository. The server must be reachable to successfully add a repository.</p>  
+	
+	<div class="note">
+		<p>The sheet will autofill if the pasteboard contains an <code>http://</code> or <code>https://</code> URL when the sheet is opened. You can click the <span class="uiref">Reset</span> button to clear the autofilled contents if required.</p>
+		<p>Your account information is stored in your login keychain.</p>
+	</div>
+	
+	<h2>Security Considerations</h2>
+	<p>The HTTP protocol&mdash;the same protocol used to access web servers on the Internet&mdash;provides no security when accessing a Subversion repository. Traffic sent to and from the server is transmitted in the clear and can be inspected (and potentially modified) by a third party.</p>
+	<p>Many Subversion repositories on the Web offer both secure (HTTPS) and non-secure access (HTTP). HTTPS is slightly slower than HTTP but is nonetheless recommended when connecting to a repository over a public network such as the Internet.</p>
+</body>
+</html>

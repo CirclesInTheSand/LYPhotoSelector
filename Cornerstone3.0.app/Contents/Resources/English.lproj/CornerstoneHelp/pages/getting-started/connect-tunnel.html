@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Connecting to an SVN Server via a Tunnel</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="client-certificates.html"></a>
+	</div>
+
+  <h1>Connecting to an SVN Server via a Tunnel</h1>
+  <p>This section describes how to connect to an SVN server using a tunneling protocol. For information on connecting without a tunnel see <a href="connect-svn.html">Connecting to an SVN Server</a>.</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select <span class="uiref">File &gt; Add Repository&hellip;</span> (or click the <img class="template" src="../../images/statusbar-add.png" srcset="../../images/statusbar-add@2x.png 2x"/> button located at the bottom of the source list and select <span class="uiref">Add Repository&hellip;</span>)</li>
+  		<li>
+  			<p>Select the <span class="uiref">SVN Server</span> button at the top of the displayed sheet:</p>
+  			<div class="view-button">
+	  			<img src="../../images/toolbar-svn.png" srcset="../../images/toolbar-svn@2x.png 2x"/>
+	  			<p>SVN Server</p>
+	  		</div>
+  		</li>
+  		<li>Select the tunnel to use. Both standard (SSH) and custom tunnels defined in <code>~/.subversion/config</code> are included in the popup menu labeled <span class="uiref">Tunnel</span>. The tunnel name should correspond to the second part of the repository&rsquo;s protocol scheme. For example, select <span class="uiref">SSH</span> if the URL&rsquo;s scheme is <code>svn+ssh://</code>.</li>
+  		<li>Use the <span class="uiref">Server</span> field to enter the name or IP address of the SVN server. Do not include the scheme (i.e. <code>svn+ssh://</code>) in this field.</li>
+  		<li>If your server is listening on a non-standard port (22 for <code>svn+ssh://</code>) then enter the port number into the <span class="uiref">Port</span> field. Leave this field blank if your server is using the standard port.</li>
+  		<li>Enter the relative path of the repository into the <span class="uiref">Repository Path</span> field. You may also specify the path to a folder in the repository.</li>
+  		<li>For example, for the URL <pre>svn+ssh://svn.myserver.org:1022/repos/project/trunk</pre> enter <code>svn.myserver.org</code> into the <span class="uiref">Server</span> field, <code>1022</code> into the <span class="uiref">Port</span> field and <code>repos/project/trunk</code> into the <span class="uiref">Repository Path</span> field.<div class="note">The path entered into the <span class="uiref">Repository Path</span> field should not be URL-encoded.</div></li>
+  		<li>Use the <span class="uiref">Nickname</span> field to specify the name used to represent the repository in the source list.</li>
+  		<li>Specify the name of the account name you use to access the repository.<div class="note">The value entered into the <span class="uiref">Name</span> field should not be URL-encoded.</div></li>
+  		<li>You can leave the <span class="uiref">Name</span> field blank if you only require anonymous access or are using a tunnel with private key authentication.</li>
+  		<li>A password is not required for all tunnel types. Cornerstone will prompt separately for your password when using SSH with password-only authentication.</li>
+  		<li>Your SSH agent will prompt separately for your passphrase when using private key authentication.</li>
+  		<li>Click the <span class="uiref">Add</span> button to connect to the repository.</li>
+  	</ol>
+  </div>
+  
+  <p>Cornerstone will attempt to contact the server and query information about the repository. The server must be reachable to successfully add a repository.</p>
+  <p>If you are contacting the repository for the first time from this computer then you will be prompted to accept the server&rsquo;s RSA fingerprint. Select <span class="uiref">Accept Permanently</span> if you do not want to be prompted again in the future.</p>
+  
+  <div class="note">
+  	<p>An unexpected prompt in the future to re-accept the server&rsquo;s RSA fingerprint will indicate that the server&rsquo;s identity has changed, in which case we recommend that you contact your administrator for clarification before permanently accepting the server&rsquo;s new identity.</p>
+  </div>
+  
+  <p>If you are unconcerned about the identities of the servers you are connecting to then you can configure Cornerstone to always accept server RSA fingerprints. Open the app&rsquo;s preferences (<span class="uiref">Cornerstone &gt; Preferences</span>), switch to the <span class="uiref">Advanced</span> tab and set <span class="uiref">When connecting to an SSH server</span> to <span class="uiref">Automatically accept RSA keys</span>.</p>
+  <p>This preference only affects Cornerstone. Other SSH-based apps (such as the ssh command-line tool) are unaffected.</p>
+
+	<div class="note">
+		<p>The sheet will autofill if the pasteboard contains an <code>svn://</code> URL when the sheet is opened. You can click the <span class="uiref">Reset</span> button to clear the autofilled contents if required.</p>
+		<p>Your SSH password is stored in your login keychain.</p>
+	</div>
+	
+	<h2>Security Considerations</h2>
+	<p>As described in <a href="connect-svn.html">Connecting to an SVN Server</a>, the SVN protocol is not secure. This limitation can be remedied through the use of a tunnel, in which case all network traffic passes through the tunnel on the way to and from the server.</p>
+	<p>Cornerstone provides integrated support for the standard <span class="term">Secure Shell</span> (i.e. SSH) tunnel which adds both authentication and encryption services to the SVN protocol.</p>
+	<p>You can also add your own custom tunnel by editing Subversion&rsquo;s configuration. See the Subversion documentation included with Cornerstone (<span class="uiref">Help &gt; Cornerstone Help)</span> for more information.</p>
+</body>
+</html>

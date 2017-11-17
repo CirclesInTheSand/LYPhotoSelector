@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Adding an Existing Local File Repository</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="connect-http.html"></a>
+	</div>
+
+  <h1>Adding an Existing Local File Repository</h1>
+  <p>To connect to a local file repository:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select <span class="uiref">File &gt; Add Repository&hellip;</span> (or click the <img src="../../images/statusbar-add.png" srcset="../../images/statusbar-add@2x.png 2x"/> button located at the bottom of the source list and select <span class="uiref">Add Repository&hellip;</span>)</li>
+  		<li>
+  			<p>Select the <span class="uiref">File Repository</span> button at the top of the displayed sheet:</p>
+  			<div class="view-button">
+	  			<img src="../../images/toolbar-folder.png" srcset="../../images/toolbar-folder@2x.png 2x"/>
+	  			<p>File Repository</p>
+	  		</div>
+  		</li>
+  		<li>Click on the switch button labelled <span class="uiref">Add Existing Repository</span>.</li>
+  		<li>Select the location of repository&rsquo;s folder using the <span class="uiref">Where</span> popup menu.</li>
+  		<li>Use the <span class="uiref">Nickname</span> field to specify the name used to represent the repository in the source list. The nickname does not have to correspond to the path or name of the repository.</li>
+  		<li>Click the <span class="uiref">Add</span> button to open the repository.</li>
+  	</ol>
+  </div>
+  
+  <p>Alternatively, you can drag a repository folder from the Finder onto Cornerstone&rsquo;s repository source list.</p>
+   	
+  <div class="note">
+  	<p>The sheet will autofill if the pasteboard contains a path or <code>file://</code> URL when the sheet is opened. You can click the <span class="uiref">Reset</span> button to clear the autofilled contents if required.</p>
+  	<p>You should never access a repository on a mounted network drive with the <code>file://</code> protocol. Instead you should setup an HTTP or SVN server if you need to share the repository between several team members. See <a href="../appendix/svnserve.html">Setting up an SVN Server</a> for information on setting up an SVN Server.</p>
+  </div>
+
+ 	<div class="note">
+ 		<p>Cornerstone can only connect to FSFS (i.e. <span class="term">File System file system</span>) repositories. Berkeley DB repositories are not supported.</p>
+ 	</div>
+
+</body>
+</html>

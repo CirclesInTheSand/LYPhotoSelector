@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Setting up an SVN Server</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="launchd.html"></a>
+	</div>
+
+  <h1>Setting up an SVN Server</h1>
+  
+  <h2>Introduction</h2>
+  <p>The simplest way to enable multiple users or computers to access a repository is to use the <code>svnserve</code> custom server in <span class="term">daemon mode</span> (i.e running in the background).</p>
+  <p><code>svnserve</code> uses the <code>svn://</code> protocol and is the most efficient (and consequently the fastest) of the various network protocols supported by Subversion.</p>
+  <div class="note">
+  	<p>Be aware that the <code>svn://</code> protocol provides no network security. This means that anyone eavesdropping on the traffic on your network can examine the contents of your commits, updates etc. While this may not be a concern for small organizations sharing a repository on a local network it would probably be unsuitable for publishing a repository within a large organization or on a public network such as the Internet.</p>
+  </div>
+  
+  <h2>Installation</h2>
+  <p><code>svnserve</code> is not included with Cornerstone but came pre-installed with your Mac.</p>
+  <p>The easiest way to obtain svnserve is by installing a Subversion binary package from <a href="https://subversion.apache.org/packages.html">here</a>.</p>
+  
+  <h2>Starting and Stopping svnserve</h2>
+  <p>To start <code>svnserve</code> in daemon mode, enter the following command into a Terminal window:</p>
+  <div class="task">
+  	<pre>svnserve -d</pre>
+  </div>
+  <p>To stop the server:</p>
+  <div class="task">
+		<ol>
+			<li>Open <span class="uiref">Activity Monitor</span></li>
+			<li>Select <code>svnserve</code></li>
+			<li>
+				Select <span class="uiref">Quit</span> from the toolbar
+				<div class="note">
+					<p>Activity Monitor will ask whether <code>svnserve</code> should be <span class="uiref">Quit</span> or <span class="uiref">Force Quit</span>. You should select <span class="uiref">Quit</span> to shut down <code>svnserve</code> correctly.</p>
+				</div>
+			</li>
+		</ol>
+	</div>
+  <p>Assuming your repository is located at <code>/Users/zoe/Documents/</code>Repository and your Mac&rsquo;s IP is address 192.168.1.3 then your repository can now be accessed at:<pre>svn://192.168.1.3/Users/zoe/Documents/Repository</pre></p>
+  <p>You can find your Mac&rsquo;s IP address by opening the <span class="uiref">Network</span> section of <span class="uiref">System Preferences</span> and selecting the active connection from the list. The IP address will be displayed on the right.</p>
+  <p>Always including the path to the repository (<code>/Users/zoe/Documents/Repository</code>) in the URL when referencing files and folders gets tedious fast. You can use the <code>--root</code> argument to <code>svnserve</code> to specify the path in the file system which is served as the root:</p>
+  <div class="task">
+		<pre>svnserve -d --root /Users/zoe/Documents/Repository</pre>
+  </div>
+  <p>You can now access the file at <code>/path/to/file.txt</code> in the repository using:<pre>svn://192.168.1.3/path/to/file.txt</pre></p>
+  <p>instead of<pre>svn://192.168.1.3/Users/zoe/Documents/Repository/path/to/file.txt</pre></p>
+  
+</body>
+</html>

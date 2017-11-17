@@ -1,0 +1,275 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Pre-Commit Scripts</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="post-commit-scripts.html"></a>
+	</div>
+
+  <h1>Pre-Commit Scripts</h1>
+  <p>Pre-commit scripts are run when the user clicks <span class="uiref">Commit Changes</span> in the <a href="../../working/commit-view.html">commit view</a>, but before the commit is started (see <a href="index.html#commit-process">the commit process</a> for more information).</p>
+  <p>A pre-commit script can be run in one of two ways:</p>
+  <ol>
+  	<li>
+  		<p><strong>Once for the entire working copy</strong></p>
+  		<p>The script is run once. The POSIX path of the working copy&rsquo;s top folder is passed to the script as its only parameter.</p>
+  		<p>Pre-commit scripts are run even if no items are checked in the commit view&rsquo;s <span class="uiref">Changes</span> list.</p>
+  	</li>
+  	<li>
+  		<p><strong>Once for each checked item in the commit view&rsquo;s <span class="uiref">Changes</span> list</strong></p>
+  		<p>The script is run multiple times, once for each checked item in the commit view&rsquo;s <span class="uiref">Changes</span> list. The POSIX path of the changed item is passed to the script as its only parameter.</p>
+  		<p>Cornerstone will abort script execution as soon as the first error is encountered.</p>
+  	</li>
+  </ol>
+  <div class="note">
+  	<p>The user is prompted when a pre-commit script raises an error&mdash;i.e. exits with a value other than zero&mdash;with the option to continue or cancel the commit.</p>
+  	<p>Pre-commit scripts can therefore be used to validate changes before a commit.</p>
+  </div>
+  
+  <h2>Prepare Scripts vs. Pre-Commit Scripts</h2>
+  <p>On the face of it, pre-commit scripts sound similar to prepare scripts. This is true when run once for the entire working copy. However there are significant differences when run once per item:</p>
+  <ol>
+  	<li>
+  		<p>Prepare scripts can modify the working copy to change the set of items to be committed. This is not the case with a pre-commit script.</p>
+  		<p>For example, if you need to change unmodified files (or revert changed files)&mdash;thus changing the set of files to be committed&mdash;then you should use a prepare script.</p>
+  	</li>
+  	<li>
+  		<p>The user may invest significant time writing their log message selecting the files for commit. Subsequently aborting the commit as a result of pre-commit validation would not be appropriate.</p>
+  		<p>Pre-commit validation is better suited to prepare scripts.</p>
+  	</li>
+  	<li>
+  		<p>Per-item pre-commit scripts are run once for each item to be committed. Unchecked items in the commit view&rsquo;s <span class="uiref">Changes</span> list are not committed and are therefore not passed to the pre-commit script.</p>
+  		<p>Time-consuming operations should therefore be placed in pre-commit scripts.</p>
+  	</li>
+  	<li>
+  		<p>The user has the opportunity to cancel the commit while the commit view is displayed. Destructive, non-repeatable operations should therefore be run as pre-commit scripts.</p>
+  	</li>
+  </ol>
+  
+  <h2>Selecting a Script for Execution</h2>
+  <p>Pre-commit scripts are defined for each working copy:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Start a commit operation by selecting one or more changed items and choosing the <span class="uiref">Commit</span> command from the <span class="uiref">Working Copy</span> menu (key equivalent <span class="key">⌘T</span>).</p>
+  		</li>
+  		<li>
+  			<p>Expand the <span class="uiref">Options</span> section at the bottom of the commit view.</p>
+  		</li>
+  		<li>
+  			<p>Locate the <span class="uiref">Before continuing</span> options in the <span class="uiref">Actions</span> section.</p>
+  		</li>
+  		<li>
+  			<p>Check the <span class="uiref">Run script</span> button.</p>
+  		</li>
+  		<li>
+  			<p>Use the pop-up to choose the script to run.</p>
+  		</li>
+  		<li>
+  			<p>Specify whether the script should be run once for the entire working copy or once for each item.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Possible Uses for Pre-Commit Scripts</h2>
+  <ul>
+  	<li>
+  		<p>Updating the thumbnail for a modified image file and storing it as a custom property.</p>
+  	</li>
+  	<li>
+  		<p>Assign properties to newly-added files if the file pattern matching provided by Subversion&rsquo;s auto-props feature is insufficient.</p>
+  	</li>
+  </ul>
+  
+  <h2>Example Script</h2>
+  <table class="summary">
+  	<tr>
+  		<td>Purpose</td>
+  		<td>
+  			<p>Create a 120px thumbnail image for the specified image and store it in a custom property called <code>thumbnail</code>. Do nothing if the input file is not an image</p>
+  			<p>The script also demonstrates how to update the sidecar property (<code>thumbnail:attributes</code>) created by Cornerstone for file properties such that additional
+  information about the thumbnail is displayed in the <a href="../../working/inspector.html">inspector</a></p>
+  		</td>
+  	</tr>
+  	<tr>
+  		<td>Type</td>
+  		<td>Item</td>
+  	</tr>
+  	<tr>
+  		<td>Argument</td>
+  		<td>Path to an image file</td>
+  	</tr>
+  </table>
+
+  <div class="script">
+  <pre>#!/usr/bin/env bash
+
+# Updates the thumbnail of the specified file and writes the sidecar
+# property for the thumbnail such that information about the thumbnail
+# is displayed in Cornerstone's inspector
+#
+# Usage:
+#   GenerateThumbnail file
+#
+# Arguments:
+#   $1 path to the file to generate a thumbnail for
+
+dir="${1%/*}"
+
+# =============================================================================
+#
+# Generates a thumbnail for file specified as $1 and stores
+# it as the property named $2
+#
+# Arguments:
+#   $1 The path of the file to generate a thumbnail for
+#   $2 The name of the property to assign the thumbnail to
+#   $3 The name of the thumbnail file
+#   $4 The format of the thumbnail, e.g. "jpeg" or "png"
+#
+# =============================================================================
+
+function generate_thumbnail()
+{
+  # Generate a 120px thumbnail and assign it to the specifed property
+  
+  sips -Z 120 -s format "$4" "$1" --out "$dir/$3"
+  svn propset "$2" "$1" --file "$dir/$3"
+  
+  # Get file system and image information about the thumbnail file
+  # and store it globally where it can be accessed later as needed
+
+  eval $(stat -s "$dir/$3")
+  sips -g allxml "$dir/$3" > "$dir/sips.plist"
+
+  width=$(defaults read "$dir/sips" pixelWidth)
+  height=$(defaults read "$dir/sips" pixelHeight)
+
+  # Remove the temporary files created by this function
+
+  rm "$dir/$3"
+  rm "$dir/sips.plist"
+}
+
+# =============================================================================
+#
+# Generates a thumbnail attributes sidecar property and stores
+# it as the property named $2:attributes
+#
+# Arguments:
+#   $1 The path of the file to assign the property to
+#   $2 The name of the property to assign the attributes to
+#   $3 The name of the thumbnail file
+#   $4 The UTI of the thumbnail file, e.g. "public.jpeg", or "public.png"
+#
+# =============================================================================
+
+function generate_attributes()
+{
+  # Create or update the sidecar property withinformation about the 
+  # thumnail we generated
+
+  svn propget "$2" "$1" > "$dir/attrs.plist"
+
+  # Generate a 48px thumbnail icon and format it as uppercase hex
+
+  sips -Z 48 -s format png "$1" --out "$dir/icon.png"
+  data=$(cat "$dir/icon.png" | hexdump -v -e '1/1 "%02x" ""' | tr "[:lower:]" "[:upper:]")
+
+  # Assign file system and image information to the file's sidecar attributes property.
+  # Note that the st_* vars are initialized by the call to stat in generate_thumbnail()
+
+  defaults write "$dir/attrs" name "$3"
+  defaults write "$dir/attrs" display-name "${3%.*}"
+  defaults write "$dir/attrs" size $st_size
+  defaults write "$dir/attrs" creation-date $(date -r $st_ctime +"%Y-%m-%dT%TZ")
+  defaults write "$dir/attrs" modification-date $(date -r $st_mtime +"%Y-%m-%dT%TZ")
+  defaults write "$dir/attrs" type "file"
+  defaults write "$dir/attrs" kind "Preview Document"
+  defaults write "$dir/attrs" immutable -bool false
+  defaults write "$dir/attrs" uti "$4"
+  defaults write "$dir/attrs" posix-permissions -int 420
+  defaults write "$dir/attrs" extension-hidden -bool true
+  defaults write "$dir/attrs" icon -data $data
+  defaults write "$dir/attrs" additional-information "$width x $height"
+
+  # Using 'defaults' to write to the attributes plist file causes the file to
+  # be converted from xml to binary format. Convert the file back to xml format
+  # using the plutil utility and then assign the plist file to the thumbnail's
+  # sidecar attributes property
+
+  plutil -convert xml1 "$dir/attrs.plist"
+  svn propset "$2" "$1" --file "$dir/attrs.plist"
+
+  # Remove temporary files created by this function
+
+  rm "$dir/attrs.plist"
+  rm "$dir/icon.png"
+}
+
+# =============================================================================
+#
+# Entry point for the script
+#
+# Arguments:
+#   $1 The path of file to generate the thumbnail for
+#   $2 The name of the property to assign the thumbnail to
+#   $3 The format of the thumbnail file, e.g. "jpeg" or "png". The thumbnail's
+#      file extension and UTI will also be derived from this value.
+#   $4 Optional. Specify "--with-attrs" to store thumbnail attributes in a 
+#      sidecar property
+#
+# =============================================================================
+
+function run()
+{
+  # Check that the specified file is an image file, i.e. has a UTI that is
+  # derived from "public.image". Exit silently if input file is not an image
+  
+  if [ $(mdls -name kMDItemContentTypeTree "$1" | grep -c "\"public.image\"") -eq 0 ]
+  then
+    return 0
+  fi
+  
+  # Generate the thumbnail for the input file
+  
+  name="${1##*/}"
+  name="${name%.*}-thumbnail.$3"
+  
+  generate_thumbnail "$1" "$2" "$name" "$3"
+
+  # Generate attributes property for the thumbnail if the --with-attrs
+  # argument was specified. Otherwise delete attributes property.
+
+  attrs="$2:attributes"
+
+  if [ "${4-}" == "--with-attrs" ]
+  then
+    generate_attributes "$1" "$attrs" "$name" "image.$3"
+  else
+    svn propdel --quiet "$attrs" "$1"
+  fi
+}
+
+# Run the script by calling the run() entry point function. Omit the
+# --with-attrs argument to not generate an ":attributes" sidecar property.
+
+run "$1" "thumbnail" "jpeg" "--with-attrs"
+</pre>
+  </div>
+
+	<p><code>$1</code> is used to reference the path of the item that will be committed. It is supplied as the $1&rsquo;s single argument.</code></p>
+	
+	<div class="note">
+		<p>It is recommended that <code>$1</code> be placed in quotation marks in order that the script functions correctly with paths containing space characters.</p>
+	</div>
+
+</body>
+</html>

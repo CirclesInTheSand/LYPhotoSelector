@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Extending Cornerstone with User Properties</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="configuration.html"></a>
+	</div>
+
+  <h1>Extending Cornerstone with User Properties</h1>
+  
+  <h2>What is a User Property?</h2>
+  <p>A property is a named value associated with a file or folder under version control.</p>
+  <p>Subversion defines a set of standard properties (<code>svn:ignore</code>, <code>svn:keywords</code>, etc.) that have intrinsic meaning to both Cornerstone and Subversion.</p>
+  <p>You can also associate your own data with version-controlled items through the use of <span class="term">user properties</span> (also known as <span class="term">custom properties</span>).</p>
+  <p>A user property is just a property with a non-standard name.</p>
+
+  <div class="note">
+	  <p>Cornerstone and Subversion attach no meaning to the existence of user properties, or their contents. You (or your custom tools) are responsible for assigning, changing and retrieving these properties as required.</p>
+	  <p>See the Subversion documentation included with Cornerstone for information on <code>svn</code>&rsquo;s <code>proplist</code>, <code>propget</code> and <code>propset</code> commands that you can use in your own scripts to retrieve and modify the values of user properties.</p>
+  </div>
+
+	<h2>Why User Properties?</h2>
+	<p>User properties are version-controlled in the same way as standard properties and therefore represent a great way to attach user-defined data to items under version control.</p>
+
+  <p>The properties associated with a file or folder are automatically retrieved when an item is checked out or updated. And property modifications are transferred back to the repository when an item is committed.</p>
+      
+  <h2><a id="property-names">Property Names</a></h2>
+  <p>A property may have any name, provided that the following criteria are met:</p>
+  <p>
+  	<ul>
+  		<li>The property name may not start with &ldquo;<code>svn:</code>&rdquo;.</li>
+  		<li>Only alphanumeric characters may be used. Dot (<code>.</code>), dash (<code>-</code>), underscore (<code>_</code>) and colon (<code>:</code>) characters are also permitted.</li>
+  		<li>The first character must be an alphabetic character, colon or underscore.</li>
+  	</ul>
+  </p>
+  <div class="note">
+		<h3>Case-Sensitivity</h3>
+		<p>Property names are case-sensitive, i.e. <code>permissions</code>, <code>Permissions</code> and <code>PERMISSIONS</code> identify three distinct properties.</p>
+		
+		<h3>Prefixes</h3>
+		<p>Subversion&rsquo;s standard properties are identified with a &ldquo;<code>svn:</code>&rdquo; prefix. Consider prefixing your user property names with a prefix specific to your organization, as this will help you identify them more easily.</p>
+  </div>
+  
+  <h2>Property Values</h2>
+  <p>Property values may be textual or binary. It is completely up to you what you store in your properties&mdash;Cornerstone and Subversion will make no attempt to interpret their contents.</p>
+  <div class="note">
+  	<p>Properties can be used to store large values (e.g. a file&rsquo;s entire contents) but this practice is not recommended.</p>
+  	<p>As a rule, properties should contain small snippets of information, generally no larger than 10 kilobytes. Consider storing larger data as a file under version control.</p>
+  </div>
+  
+  <h2>Other Topics</h2>
+  <div class="links">
+	  <ul class="plain">
+		  <li><a href="configuration.html">Configuring User Properties</a></li>
+		  <li><a href="field-types.html">User Property Field Types</a></li>
+		  <li><a href="file-properties.html">File Properties</a></li>
+	  </ul>
+  </div>
+  
+</body>
+</html>

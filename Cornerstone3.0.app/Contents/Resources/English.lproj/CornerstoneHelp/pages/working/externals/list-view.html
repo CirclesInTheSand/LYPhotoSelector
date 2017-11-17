@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Editing Externals with the Definition List View</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="editor.html"></a>
+		<a id="next" href="text-view.html"></a>
+	</div>
+
+  <h1>Editing Externals with the Definitions List View</h1>
+  <p>The list view displays externals definitions as a list, with each definition represented by a separate form:</p>
+  <p><img class="comp" src="../../../images/externals-definition-form.png" srcset="../../../images/externals-definition-form@2x.png 2x" alt="Externals Definition Form"/></p>
+  
+  <p>The fields are as follows:</p>
+  <ul>
+  
+  	<li>
+  		<h3>check out</h3>
+  		<p>The URL to check out the dependency from.</p>
+  		<p>See the section on <a href="../url-formats.html">URL Formats</a> for more information on the various supported formats.</p>
+  		<p>Click the <img src="../../../images/rev-picker-button.png" srcset="../../../images/rev-picker-button@2x.png 2x" alt="Choose Button"/> button to show an open panel to select a URL from one of the repositories in Cornerstone&rsquo;s repository source list.</p>
+			<div class="note">
+		  	<p>Incorrect URLs will cause errors during subsequent check out and update operations, so double-check that they are correct before saving any changes.</p>
+				<p>The absolute URL to check out from is displayed in a callout whenever text is entered into the <span class="uiref">check out</span> field. This can help you check that relative URLs are correct.</p>
+			</div>  		
+  	</li>
+
+  	<li>
+  		<h3>revision</h3>
+  		<p>The revision to check out. Specify a number to reference a specific revision.</p>
+  		<div class="note">
+  			<p>See <a href="best-practices.html">Externals: Best Practices</a> for more information on how to specify revisions with externals.</p>
+  			<p>Expand the <span class="uiref">revision</span> field if you need to provide both an operative revision and a peg revision. If the <span class="uiref">revision</span> field is left collapsed then the specified revision is saved as the peg revision and the operative revision is omitted.</p>
+  			<p>Date revisions are not supported in external definitions.</p>
+  		</div>
+  	</li>
+
+  	<li>
+  		<h3>to</h3>
+  		<p>The path into which the dependent code will be checked out, relative to the folder declaring the <code>svn:externals</code> property.</p>
+  		<div class="note">
+  			<p>The path can contain folders (e.g. as <code>dependencies/webkit</code>) in which case intermediary folders such as <code>dependencies</code> will be created automatically.</p>
+  			<p>This folder should not already be under version control.</p>
+  		</div>
+  	</li>
+  	  	  	
+  </ul>
+  
+	<div class="note">
+		<p>You can change the order of definitions in list view by dragging them with the mouse. Definitions can also be dragged from one editor to another.</p>
+	</div>
+  
+  <h2>Adding the First Definition</h2>
+	<p>If the selected folder does not currently define any externals then the following placeholder is displayed:</p>
+	<p><img class="comp" src="../../../images/externals-placeholder.png" srcset="../../../images/externals-placeholder@2x.png 2x" alt="Externals Placeholder"/></p>
+	<p>Click the add button <span class="add-button"></span> to add the first definition.</p>
+	
+	<h2>Inserting a New Definition</h2>
+	<p>To insert a new definition after an existing definition, click the definition&rsquo;s add button <span class="add-button"></span>. To insert a definition <em>before</em> an existing definition, hold down the <span class="key">Option</span> (⌥) key while pressing the add button.</p>
+	
+	<h2>Removing a Definition</h2>
+	<p>Delete a definition from the list by clicking the definition&rsquo;s remove button <span class="remove-button"></span>.</p>
+	<div class="note">
+		<p>Cornerstone will remove the folder&rsquo;s <code>svn:externals</code> property from the folder when saved if the property does not contain any definitions.</p>
+	</div>
+	
+	<h2>The Filter Bar</h2>
+	<p>The definition list view provides a filter bar which provides quick access to commonly-used filters which can help you to quickly find an external of interest:</p>
+	<p><img class="comp" src="../../../images/externals-filter.png" srcset="../../../images/externals-filter@2x.png 2x" alt="Externals Filter"/></p>
+	
+	<p>The filters are:</p>
+	<ul>
+		<li>
+			<h3 class="filter">All <span class="small-key">^A</span></h3>
+			<p>Removes the other filters to show all items. The search field is not reset.</p>
+		</li>
+		<li>
+			<h3 class="filter">Latest Revisions <span class="small-key">^L</span></h3>
+			<p>Shows only external definitions where the revision is set to <span class="uiref">Latest in repository (HEAD)</span>.</p>
+		</li>
+		<li>
+			<h3 class="filter">Specific Revisions <span class="small-key">^S</span></h3>
+			<p>Shows only external definitions where the revision is set to a specific number.</p>
+		</li>
+	</ul>
+	
+	<h2>Search Field</h2>
+	<p>The search text box can be used to search for matching <span class="uiref">check out</span> URLs and <span class="uiref">to</span> paths in the definitions which match the currently selected filter.</p>
+	
+</body>
+</html>

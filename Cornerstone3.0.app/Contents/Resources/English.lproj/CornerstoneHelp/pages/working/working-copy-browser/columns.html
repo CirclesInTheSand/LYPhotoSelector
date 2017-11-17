@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Working Copy Browser Columns</title>
+	<style type="text/css">
+		table.status-markers {
+			border-collapse: collapse;
+			font-size: 9pt;
+		}
+		table.status-markers td {
+			border: 1px solid #dfdfdf;
+			vertical-align: top;
+			padding: 0.7em;
+		}
+		table td:nth-child(2) {
+			font-weight: bolder;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="filtering.html"></a>
+	</div>
+
+  <h1>Working Copy Browser Columns</h1>
+  <ul class="plain">
+  	<li>
+  		<h2>Name</h2>
+  		<p>The name of the file or folder. The name will be displayed in a lighter color if the file is not present in the file system or is ignored. Ignored and external items are displayed using italic text.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Working Copy Status <img class="template" src="../../../images/status-column-header.png" srcset="../../../images/status-column-header@2x.png 2x"/></h2>
+  		<p>The status of the working copy file. This column will contain one of the following icons for non-normal (i.e. changed) files. The icons&rsquo; letters are consistent with those used by Subversion to indicate the various statuses on the command-line.</p>
+  		<table class="status-markers">
+  			<tr>
+  				<td><img src="../../../images/marker-added.png" srcset="../../../images/marker-added@2x.png 2x"/></td>
+  				<td>Added</td>
+  				<td>The file or folder has been added to the working copy but has not yet been committed to the repository. Items which have been copied, moved or renamed are also displayed as added until committed.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-conflicted.png" srcset="../../../images/marker-conflicted@2x.png 2x"/></td>
+  				<td>Conflicted</td>
+  				<td>Changes made to the working copy version conflict with changes that have been committed to the repository since the last working copy update. Conflicts must be resolved before the file can can be committed to the repository. See <a href="../resolving-conflicts.html">Resolving Conflicts</a> for more information.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-deleted.png" srcset="../../../images/marker-deleted@2x.png 2x"/></td>
+  				<td>Deleted</td>
+  				<td>The file or folder has been deleted from the working copy. Items which have been moved or renamed are also shown as deleted until the change is committed to the repository.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-external.png" srcset="../../../images/marker-external@2x.png 2x"/></td>
+  				<td>External</td>
+  				<td>The folder contains files obtained from an external reference. The folder can only be expanded if <span class="uiref">View &gt; Show Contents of Externals</span> is enabled.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-ignored.png" srcset="../../../images/marker-ignored@2x.png 2x"/></td>
+  				<td>Ignored</td>
+  				<td>The file or folder is not under version control and is being ignored. Ignored items are only shown if <span class="uiref">View &gt; Show Ignored Items</span> is enabled.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-missing.png" srcset="../../../images/marker-missing@2x.png 2x"/></td>
+  				<td>Missing</td>
+  				<td>The file or folder is under version control but does not exist in the file system. Revert the item to restore it back to the last updated version. Delete the item to remove it from the working copy.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-modified.png" srcset="../../../images/marker-modified@2x.png 2x"/></td>
+  				<td>Modified</td>
+  				<td>The contents of the file have been modified.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-obstructed.png" srcset="../../../images/marker-obstructed@2x.png 2x"/></td>
+  				<td>Obstructed</td>
+  				<td>The file or folder is obstructed by an identically-named item of a different type, i.e. a folder was found where a file was expected, or vice-versa.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-replaced.png" srcset="../../../images/marker-replaced@2x.png 2x"/></td>
+  				<td>Replaced</td>
+  				<td>The file or folder was removed and then added again. The item&rsquo;s log history will be broken.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-switched.png" srcset="../../../images/marker-switched@2x.png 2x"/></td>
+  				<td>Switched</td>
+  				<td>The file or folder has been switched to refer to a location in the repository outside the containing working copy.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-unversioned.png" srcset="../../../images/marker-unversioned@2x.png 2x"/></td>
+  				<td>Unversioned</td>
+  				<td>The file or folder is not under version control. Subversion will not track changes to this item or its contents until it is placed under version control by being added to the working copy.</td>
+  			</tr>
+  		</table>
+  		
+  		<p>Property status icons are displayed for items which have not otherwise been modified, i.e. the content modifications listed above take precedence over property modification.</p>
+  		<p>Open the inspector if you need to see both the content and property statuses at the same time.</p>
+  		<table class="status-markers">
+  			<tr>
+  				<td><img src="../../../images/marker-prop-added.png" srcset="../../../images/marker-prop-added@2x.png 2x"/></td>
+  				<td>Added</td>
+  				<td>One or more properties were added to the file or folder.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-prop-conflicted.png" srcset="../../../images/marker-prop-conflicted@2x.png 2x"/></td>
+  				<td>Conflicted</td>
+  				<td>Changes made to the item&rsquo;s properties conflict with changes that have been committed to the repository since the last working copy update. Conflicts must be resolved before the item can can be committed to the repository.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-prop-deleted.png" srcset="../../../images/marker-prop-deleted@2x.png 2x"/></td>
+  				<td>Deleted</td>
+  				<td>One or more of the item&rsquo;s properties have been deleted.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-prop-modified.png" srcset="../../../images/marker-prop-modified@2x.png 2x"/></td>
+  				<td>Modified</td>
+  				<td>The values of one or more properties have been modified.</td>
+  			</tr>
+  			<tr>
+  				<td><img src="../../../images/marker-prop-replaced.png" srcset="../../../images/marker-prop-replaced@2x.png 2x"/></td>
+  				<td>Replaced</td>
+  				<td>A property has been deleted and then subsequently added again.</td>
+  			</tr>
+  		</table>
+  	</li>
+  	
+  	<li>
+  		<h2>Nested Change Indicator <img class="template" src="../../../images/nested-changes.png" srcset="../../../images/nested-changes@2x.png 2x"/></h2>
+  		<p>Folders marked with <img class="template-light" src="../../../images/nested-changes.png" srcset="../../../images/nested-changes@2x.png 2x"/> contain changed files.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Repository Status <img src="../../../images/repository-status-column-header.png" srcset="../../../images/repository-status-column-header@2x.png 2x"/></h2>
+  		<p>The status of the file or folder in the repository. This column is only displayed if <span class="uiref">View &gt; Show Repository Status</span> is enabled.</p>
+  		<div class="note">
+  			<p>Enabling <span class="uiref">View &gt; Show Repository Status</span> will cause Cornerstone to contact the repository for each refresh, commit and update. This can negatively affect refresh speed if repository access is slow or the working copy contains a large number of files.</p>
+  		</div>
+  	</li>
+  	
+  	<li>
+  		<h2>Date Modified</h2>
+  		<p>The date at which the file or folder was last modified. For unchanged items this date will be equivalent to the date of the item&rsquo;s revision. The file&rsquo;s last modification date in the file system is displayed for modified files.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Size</h2>
+  		<p>The size of the file.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Kind</h2>
+  		<p>Textual description of the type of the file.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Revision</h2>
+  		<p>The item&rsquo;s BASE revision, i.e. the item&rsquo;s revision at the time that the working copy was last updated.</p>
+  	</li>
+  	
+  	<li>
+  		<h2>Property Indicator <img class="template" src="../../../images/property.png" srcset="../../../images/property@2x.png 2x"/></h2>
+  		<p>Items (files or folders) which have Subversion properties are marked with a <img class="template-light" src="../../../images/property.png"/> icon.</p>
+  	</li>
+
+  	<li>
+  		<h2>Lock Status <img class="template" src="../../../images/lock-owned.png" srcset="../../../images/lock-owned@2x.png 2x"/></h2>
+  		<p>Working copy items can have one of the following lock statuses:</p>
+  		<table class="status-markers">
+  			<tr>
+  				<td></td>
+  				<td>Unlocked</td>
+  				<td>The file is not locked.</td>
+  			</tr>
+  			<tr>
+  				<td><img class="template-light" src="../../../images/lock-owned.png" srcset="../../../images/lock-owned@2x.png 2x"/></td>
+  				<td>Owned</td>
+  				<td>The file is locked and the lock is owned by the user&rsquo;s working copy (i.e. the user owns the lock).</td>
+  			</tr>
+  			<tr>
+  				<td><img class="template-light" src="../../../images/lock-normal.png" srcset="../../../images/lock-normal@2x.png 2x"/></td>
+  				<td>Locked</td>
+  				<td>The file is locked by someone else. If the lock was previously owned by the user then the lock has been stolen.</td>
+  			</tr>
+  			<tr>
+  				<td><img class="template-light" src="../../../images/lock-broken.png" srcset="../../../images/lock-broken@2x.png 2x"/></td>
+  				<td>Broken</td>
+  				<td>The file was locked by the user but the lock has been broken (i.e. the file was unlocked by another user). As a result the file is not currently locked. Update the file to reset the working copy&rsquo;s lock state.</td>
+  			</tr>
+  		</table>
+  	</li>
+  	
+  	<li>
+  		<h2>Check Out Depth <img class="template" src="../../../images/depth-immediates.png" srcset="../../../images/depth-immediates@2x.png 2x"/></h2>
+  		<p>Working copy folders can have one of the following check out depths:</p>
+  		<table class="status-markers">
+  			<tr>
+  				<td><img class="template-light" src="../../../images/depth-infinity.png" srcset="../../../images/depth-infinity@2x.png 2x"/></td>
+  				<td>All files and folders at all levels</td>
+  				<td><code>infinite</code></td>
+  				<td>The folder contains all files and sub-folders existing in the repository. Updating the folder will pull files and sub-folders added to the repository to the working copy.</td>
+  			</tr>
+  			<tr>
+  				<td><img class="template-light" src="../../../images/depth-immediates.png" srcset="../../../images/depth-immediates@2x.png 2x"/></td>
+  				<td>Immediate files and folders only</td>
+  				<td><code>immediate</code></td>
+  				<td>The folder only contains files and sub-folders located immediately within that folder. Sub-folders are checked out with a depth of <span class="uiref">Empty</span>. Updating the folder only updates files and folders located immediately within this folder.</td>
+  			</tr>
+  			<tr>
+  				<td><img class="template-light" src="../../../images/depth-files.png" srcset="../../../images/depth-files@2x.png 2x"/></td>
+  				<td>Immediate files only</td>
+  				<td><code>files</code></td>
+  				<td>The folder only contains files located immediately within the folder. Sub-folders are not included and are not added to the working copy during updates.</td>
+  			</tr>
+  			<tr>
+  				<td><img class="template-light" src="../../../images/depth-empty.png" srcset="../../../images/depth-empty@2x.png 2x"/></td>
+  				<td>Folder only</td>
+  				<td><code>empty</code></td>
+  				<td>Only the folder is checked out (complete with its properties). Files and sub-folders located in the folder are not included and are not added during update operations.</td>
+  			</tr>
+  		</table>
+  	</li>
+
+  	<li>
+  		<h2>Author</h2>
+  		<p>The name of the author that committed the item&rsquo;s latest revision to the repository.</p>
+  		<div class="note">
+  			The author will be empty when committing to a repository using an anonymous <code>http://</code> connection.
+  		</div>
+  	</li>
+  </ul>
+</body>
+</html>

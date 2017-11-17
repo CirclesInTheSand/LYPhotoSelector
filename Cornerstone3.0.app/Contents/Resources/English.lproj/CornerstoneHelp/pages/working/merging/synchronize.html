@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Synchronizing a Branch</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="reintegrate.html"></a>
+	</div>
+
+  <h1>
+  	<img src="../../../images/toolbar-merge-synchronize.png" srcset="../../../images/toolbar-merge-synchronize@2x.png 2x"/>
+  	Synchronizing a Branch
+  </h1>
+  <p>A <a href="../../introduction/terminology/merging.html#synchronization">synchronization merge</a> is appropriate when synchronization of a branch with its <a href="../../introduction/terminology/tags-and-branches.html#ancestor">ancestor</a> is required.</p>
+  
+  <p>For example, <a href="../../introduction/terminology/tags-and-branches.html#feature-branch">feature branches</a> should be periodically synchronized with their ancestor to minimize integration risk.</p>
+  <p>Synchronization should be performed as frequently as possible. Indeed, projects which practice <em>continuous integration</em> might require team members to synchronize their branches are pre-determined intervals such as daily or weekly.</p>
+  
+  <p>To synchronize a branch:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Click the <span class="uiref">Synchronize Branch</span> button:</p>
+  			<div class="view-button">
+	  			<img src="../../../images/toolbar-merge-synchronize.png" srcset="../../../images/toolbar-merge-synchronize@2x.png 2x"/>
+	  			<p>Synchronize Branch</p>
+	  		</div>
+  		</li>
+  		<li>
+  			<p>Verify that the selected working copy does not contain any uncommitted modifications.</p>
+  			<div class="warning">
+  				<p>Merging into a working copy which contains uncommitted modifications can result in unnecessary conflicts and is not recommended.</p>
+  			</div>
+  			<p>Cornerstone will display a warning in the <span class="uiref">Working Copy Checklist</span> if modifications are detected. If necessary, click the <span class="uiref">Revert...</span> or <span class="uiref">Commit...</span> button as required.</p>
+  		</li>
+  		<li>
+  			<p>Verify that the selected working copy is up-to-date.</p>
+  			<div class="warning">
+  				<p>Merging into a working copy which is not up-to-date can result in unnecessary conflicts and is not recommended.</p>
+  			</div>
+  			<p>Cornerstone will display a warning in the <span class="uiref">Working Copy Checklist</span> if the working is not up-to-date. If necessary, click the <span class="uiref">Update to Latest Revision</span> button to bring the working copy up to date.</p>
+  		</li>
+  		<li>
+  			<p>Specify the ancestor branch to merge from in the <span class="uiref">Merge from</span> field.</p>
+  			<p>This field will be filled automatically for branches which have been synchronized before.</p>
+  		</li>
+  		<li>
+	  		<p>If required, change the <a href="index.html#options">merge options</a> by clicking on the <span class="uiref">Options</span> popup button.</p>
+  		</li>
+  		<li>
+  			<p>Cornerstone will display a preview of the changes to be merged.</p>
+  		</li>
+  		<li>
+  			<p>Click the <span class="uiref">Merge Changes</span> button to merge the changes into the working copy.</p>
+  		</li>
+  		<li>
+  			<p>Unmerged changes in the ancestor branch are merged into the selected working copy.</p>
+  		</li>
+  		<li>
+  			<p><a href="index.html#review">Verify the changes</a> and resolve any conflicts.</p>
+  		</li>
+  		<li>
+  			<p><a href="index.html#commit">Commit the changes</a> to the repository to complete the merge operation.</p>
+  		</li>
+  	</ol>
+  </div>
+</body>
+</html>

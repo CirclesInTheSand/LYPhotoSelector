@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Connecting to an SVN Server</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="connect-tunnel.html"></a>
+	</div>
+
+  <h1>Connecting to an SVN Server</h1>
+  <p>This section describes how to connect to an SVN server without using a tunneling protocol. For information on connecting through SSH (or a custom tunnel) see <a href="connect-tunnel.html">Connecting to an SVN Server via a Tunnel</a>.</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select <span class="uiref">File &gt; Add Repository&hellip;</span> (or click the <img class="template" src="../../images/statusbar-add.png" srcset="../../images/statusbar-add@2x.png 2x"/> button located at the bottom of the source list and select <span class="uiref">Add Repository&hellip;</span>)</li>
+  		<li>
+  			<p>Select the <span class="uiref">SVN Server</span> button at the top of the displayed sheet:</p>
+  			<div class="view-button">
+	  			<img src="../../images/toolbar-svn.png" srcset="../../images/toolbar-svn@2x.png 2x"/>
+	  			<p>SVN Server</p>
+	  		</div>
+  		</li>
+  		<li>Select <span class="uiref">None</span> to access a server without tunneling.</li>
+  		<li>Use the <span class="uiref">Server</span> field to enter the name or IP address of the SVN server. Do not include the scheme (i.e. <code>svn://</code>) in this field.</li>
+  		<li>If your server is listening on a non-standard port (3690 for <code>svn://</code>) then enter the port number into the <span class="uiref">Port</span> field. Leave this field blank if your server is using the standard port.</li>
+  		<li>Enter the relative path of the repository into the <span class="uiref">Repository Path</span> field. You may also specify the path to a folder in the repository.</li>
+  		<li>For example, for the URL <pre>svn://svn.myserver.org:3792/repos/project/trunk</pre> enter <code>svn.myserver.org</code> into the <span class="uiref">Server</span> field, <code>3792</code> into the <span class="uiref">Port</span> field and <code>repos/project/trunk</code> into the <span class="uiref">Repository Path</span> field.
+  		<div class="note">The path entered into the <span class="uiref">Repository Path</span> field should not be URL-encoded.</div>
+  		</li>
+  		</li>
+  		<li>Use the <span class="uiref">Nickname</span> field to specify the name used to represent the repository in the source list.</li>
+  		<li>Specify the account name and password you use to access the repository.</li>
+  		<li>You can leave the <span class="uiref">Name</span> field blank if you only require anonymous access.
+  		<div class="note">The value entered into the <span class="uiref">Name</span> field should not be URL-encoded.</div>
+  		</li>
+  		<li>Click the <span class="uiref">Add</span> button to connect to the repository.</li>
+  	</ol>
+  </div>
+  
+  <p>Cornerstone will attempt to contact the server and query information about the repository. The server must be reachable to successfully add a repository.</p>
+
+	<div class="note">
+		<p>The sheet will autofill if the pasteboard contains an <code>svn://</code> URL when the sheet is opened. You can click the <span class="uiref">Reset</span> button to clear the autofilled contents if required.</p>
+		<p>Your account information is stored in your login keychain.</p>
+		<p>Starting with 1.1, Cornerstone does not share keychain items with the Subversion command-line tools. Users upgrading from 1.0 will be prompted for their password when they connect to the repository for the first time.</p>
+	</div>
+
+	<h2>Security Considerations</h2>
+	<p>You can use a tunnel such as SSH to connect to an SVN server. This practice is generally recommended when connecting to a repository via a public network such as the Internet. See <a href="connect-tunnel.html">Connecting to an SVN Server via a Tunnel</a> for more information.</p>
+
+	<div class="note">
+		<h3>What about SASL?</h3>
+		<p>SASL is an extensible service used by Subversion to add security to the SVN protocol. SASL can be used to add both authentication and encryption to SVN.</p>
+		<p>No client-side configuration is necessary to enable SASL services when connecting to an SVN server&mdash;the server defines the level of security required. The client will attempt meet these requirements, with the server refusing access if the client is unable to do so.</p>
+	</div>
+
+</body>
+</html>

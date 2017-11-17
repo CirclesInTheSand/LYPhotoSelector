@@ -1,0 +1,238 @@
+{
+	name                      : 'java';
+	title                     : 'Java';
+	match:
+	[ 
+		uti											: 'com.sun.java-source',
+
+		# Common Java symbols
+		regex										: @'\b(this|super)\b',
+
+		# Package
+		regex										: @'(?s)\bpackage\s+[:alpha:]\w*(\.[:alpha:]\w*)*\s*;',
+
+		# Import statement
+		regex										: @'\bimport\s+[:alpha:]\w*(\.[:alpha:]\w*)*(\.\*)?;',
+
+		# Class definition
+		regex										: @'(?s)((\bpublic|\bprivate|\babstract)\s+)*\bclass\s+[:alpha:]\w*',
+
+		# Class definition extending another class
+		regex										: @'(?s)((\bpublic|\bprivate|\babstract)\s+)*\bclass\s+[:upper:]\w*\s+extends\s+[:alpha:]\w*(\.[:alpha:]\w*)*',
+
+		# Class definition implementing interface (multiple interfaces not included in match)
+		regex										: @'(?s)((\bpublic|\bprivate|\babstract)\s+)*\bclass\s+[:upper:]\w*\s+implements\s+[:alpha:]\w*(\.[:alpha:]\w*)*',
+
+		# Member variable declaration
+		regex										: @'(\b(private|public|final|static)\s+)*[:upper:]\w*(\s*\[\])?\s+[[:alpha:]_]\w*(\s*=\s*.*)?;',
+
+		# Method declaration
+		regex										: @'(\b(private|protected|public|static)\s+)*([:alpha:]\w*(\s*\[\])?)\s+[:lower:]\w*\(.*\)\s*\{',
+
+		# Common system types
+		regex										: @'\b(bool|string|String|object|Object|DateTime|TimeSpan)\b',
+
+		# Common system types with namespace
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bSystem\.(Bool|String|Object|DateTime|Number|TimeSpan)\b';
+		},
+
+		# Common methods
+		regex										: @'\b(toString)\s*\(.*\)',
+
+		# Container types
+		regex										: @'\b(Hashtable|Properties|ConcurrentMap|Map|SortedMap|HashMap|ArrayList|LinkedList|Stack|Queue|Deque|ArrayDeque|PriorityQueue|HashSet|TreeSet|HashMap|LinkedHashSet)',
+
+		# Single-line comment
+		regex										: @'//.*',
+
+		# Multi line comment (dot matches newline)
+		regex										: @'(?s)/\*.*?\*/',
+
+		# Doc comment (dot matches newline)
+		regex										: @'(?s)/\*\*.*?\*/',
+
+		# For loop
+		regex										: @'\bfor\s*\(.*;.*;.*\)',
+
+		# Method call
+		regex										: @'[[:alpha:]_]\w*\s*\.\s*[:lower:]\w*\s*\(',
+
+		# Semi-colon at end of the line
+		regex										: @'(?m);$',
+
+		# throws statement
+		regex										: @'\bthrows\s[:upper:]\w*Exception',
+
+		# Common annotation
+		regex:
+		{
+			score									: 2;
+			pattern								: @'@(Override|Deprecated|SuppressWarnings|SafeVarargs|FunctionalInterface|Retention|Documented|Target|Inherited|Repeatable)\b';
+		},
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line doc comment partition which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.doc.java';
+			open-sequence     		: @'/**';
+			close-sequence    		: @'*/';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name							: 'comment.keyword.property.java';
+					case-insensitive	: no;
+					pattern						: @'@\w+';
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.java.doc';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.java.doc';
+						value           : 'comment.keyword.scm.value.java.doc';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Multi-line comment partition which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.java';
+			open-sequence     		: @'/*';
+			close-sequence    		: @'*/';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.java';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.java';
+						value           : 'comment.keyword.scm.value.java';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.java';
+			open-sequence					:	@'//';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				ref									: 'comment.keyword.scm.java',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Java keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.java';
+			case-insensitive      : no;
+			words:                [ 
+															'abstract', 'assert',
+															'boolean', 'break', 'byte',
+															'case', 'catch', 'char', 'class', 'const', 'continue',
+															'default', 'do', 'double',
+															'else', 'enum', 'extends',
+															'false', 'final', 'finally', 'float', 'for',
+															'goto',
+															'if', 'implements', 'import', 'instanceof', 'int', 'interface',
+															'long',
+															'native', 'new', 'null',
+															'package', 'private', 'protected', 'public',
+															'return',
+															'short', 'static', 'strictfp', 'super', 'switch', 'synchronized',
+															'this', 'throw', 'throws', 'transient', 'true', 'try',
+															'void', 'volatile',
+															'while',
+														];
+		},
+				
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.java';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.char.java';
+			open-sequence         : '\'';
+			close-sequence        : '\'';
+			escape-char           : @'\';
+			multi-line            : no;
+			quoted-tokens         : yes;
+		},
+		
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.java';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|(-?(\d+)?\.(\d+)([eE]\d+)?[fF]?)|(-?\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

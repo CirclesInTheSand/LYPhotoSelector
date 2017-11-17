@@ -1,0 +1,170 @@
+{
+	name                      : 'actionscript';
+	title                     : 'ActionScript';
+	match:
+	[ 
+		uti											: 'com.adobe.flash.actionscript',
+		
+		# also define file extension in order that we correctly match
+		# files which are incorrectly reported as 'public.archive.applesingle'
+		
+		extension								: 'as',
+		
+		# Import statement
+		regex										: @'\bimport\s+([:alpha:]\w*\.)*([:alpha:]\w*|\*);',
+
+		# Variable definition
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\b((private|public)\s+)?(static\s+)?(const|var)\s+\w+\s*:\s*([:alpha:]\w*\.)*([:upper:]\w*(\s*\.\s*<\s*\w+\s*>)?|void|int|uint)\s*[;=]';
+		},
+
+		# Package declaration
+		regex										: @'(?s)\bpackage(\s+([:alpha:]\w*\.)*([:alpha:]\w*))?\s*\{',
+
+		# Function declaration
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?s)\b((public|private)\s+)?(static\s+)?\bfunction\s+((get|set)\s+)?\w+\s*\(.*?\)(\s*:\s*([:alpha:]\w*\.)*([:upper:]\w*(\s*\.\s*<\s*\w+\s*>)?|void|int|uint))?\s*\{?';
+		},
+		
+		# Function argument
+		regex										: @'(?<=[(,\s])\w+\s*:\s*[:alpha:]\w*(?=[\s,)])',
+
+		# Semi-colon at end of the line
+		regex										: @'(?m);$',
+
+		# Class declaration
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?s)\b((public|internal|final|dynamic)\s+)?class\s+[:upper:]\w*(\s+extends\s+([:alpha:]\w*\.)*([:upper:]\w*))?(\s+implements\s+([:alpha:]\w*\.)*([:upper:]\w*))?\s*\{';
+		},
+
+		# Method call
+		regex										: @'[\w\.]+\.\w+\s*\(',
+
+		# Single-line comment
+		regex										: @'//.*',
+
+		# Multi line comment
+		regex										: @'(?s)(?s)/\*.*?\*/',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line comment partition
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.actionscript';
+			open-sequence     		: @'/*';
+			close-sequence    		: @'*/';
+			capture-unclosed  		: yes;
+		},
+		
+		# End-of-line comment partition
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.actionscript';
+			open-sequence					:	@'//';
+		},
+
+		# Pre-Defined Variables/Functions/Symbols
+
+		# Keywords
+
+		word-rule:
+		{
+			name                  : 'symbol.actionscript';
+			case-insensitive      : no;
+			words:                [ 
+															'arguments',
+															'chr',
+															'escape', 'eval',
+															'false', 'fscommand',
+															'Infinity'
+															'_global',
+															'_highquality',
+															'int',
+															'_level', 'length',
+															'NaN', 'newline', 'null',
+															'mbchr', 'mblength', 'mbord', 'mbsubstring',
+															'ord',
+															'_parent',
+															'_quality',
+															'_root', 'random', 
+															'_soundbuftime', 'substring', 
+															'trace', 'true',
+															'undefined', 'unescape',
+														];
+		},
+
+		word-rule:
+		{
+			name                  : 'keyword.actionscript';
+			case-insensitive      : no;
+			words:                [ 
+															'and',
+															'break',
+															'case', 'catch', 'class', 'continue',
+															'default', 'delete', 'do', 'dynamic',
+															'else', 'eq', 'extends',
+															'finally', 'for', 'function',
+															'ge', 'get', 'gt', 
+															'if', 'implements', 'import', 'in', 'instanceof', 'interface', 'intrinsic', 
+															'le', 'lt',
+															'ne', 'new', 'not',
+															'or', 
+															'package', 'private', 'public',
+															'return',
+															'set', 'static', 'super', 'switch',
+															'this', 'throw', 'try', 'typeof',
+															'var', 'void',
+															'while', 'with',
+														];
+		},
+		
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.actionscript';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.actionscript.singlequote';
+			open-sequence         : @"'";
+			close-sequence        : @"'";
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		},
+
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.actionscript';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|((\d+)?\.(\d+)([eE]\d+)?[fF]?)|(\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

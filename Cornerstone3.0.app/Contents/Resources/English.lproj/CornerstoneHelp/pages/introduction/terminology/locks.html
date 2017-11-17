@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Locks</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="list.html"></a>
+	</div>
+	
+  <h1>Locks</h1>
+
+	<h2 class="term"><a id="lock">Lock</a></h2>
+	<div class="inset">
+		<p>When committing, Subversion merges the changes made in a working copy with the latest version in the repository. Likewise, when updating, changes from the repository are merged with the files in your working copy.</p>
+		<p>This process works well for most text files. However some text files (such as some XML formats) can be rendered unusable (i.e. corrupted) by the merging of changes. Worse, most binary file formats (images, word processing documents etc.) can&rsquo;t be merged at all.</p>
+		<p>As a result, Subversion will not attempt to merge changes to binary files when committing or updating a working copy. While this avoids file corruption, it doesn&rsquo;t solve conflicts which occur when two team members modify the same file in parallel. In such situations, the last commit will overwrite all previous changes made by other team members.</p>
+		<p><span class="term">Locking</span> is Subversion&rsquo;s solution to to prevent users from overwriting each others work when working in parallel on the same file.</p>
+		<p>Locking a file (directories can&rsquo;t be locked) results in a lock being recorded in the repository that will prevent other team members from committing changes until unlocked. Other team members can see the file&rsquo;s locked status when browsing the repository. The lock is also propagated to the working copies of other team members when they next update the file.</p>
+	</div>
+	
+	<h2 class="term"><a id="needs-lock">Needs Lock</a></h2>
+	<div class="inset">
+		<p>While this locking mechanism prevents edits from being overwritten by a later commit, it doesn&rsquo;t prevent team members from making changes in parallel. An attempt to commit changes to the repository will simply fail, leaving the unfortunate team member with no choice but to manually integrate her changes into the newer version in the repository.</p>
+		<p>For this reason, Subversion allows the user to specify that a file must be locked before it can be edited. This is done by setting the value of the <code>svn:needs-lock</code> property to <span class="term">Yes</span>.</p>
+		<p>Once set, the <code>svn:needs-lock</code> property will cause the file to be marked read-only in the file-system, thus preventing users from inadvertently changing the file before it is locked, at which point the read-only status is removed.</p>
+		
+		<div class="note">
+			<p>The user can of course circumvent this protection by removing the read-only state using the Finder or command-line. However an explicit action is required and they have nobody to blame but themselves when they overwrite other people&rsquo;s work when committing these changes to the repository.</p>
+		</div>
+	</div>
+	
+	<h2 class="term"><a id="unlock">Unlock</a></h2>
+	<div class="inset">
+		<p>By default, files are unlocked when modifications are committed to the repository. This behavior can be overridden for each commit using the <span class="uiref">Unlock files after commit</span> option in the commit view.</p>
+		<div class="note">
+			<p>If you would prefer to always leave files locked after committing changes to the repository then change the value of the <span class="uiref">Unlock files when committing</span> option in the app&rsquo;s preferences.</p>
+		</div>
+		<p>A locked file can also be unlocked either directly in the repository or in a working copy.</p>
+		<p><span class="term">Unlocking</span> a file which was locked by another user is termed <span class="term">breaking their lock</span>. Locking a file which belongs to another user is called <span class="term">stealing their lock</span>.</p>
+		
+		<div class="note">
+			<p>Locks should generally only be broken or stolen in agreement with the lock owner. However the exclusive nature of locks means that there are instances (such as absence of the owner from the project) when stealing or breaking a lock is a necessity.</p>
+		</div>
+	</div>
+  
+</body>
+</html>

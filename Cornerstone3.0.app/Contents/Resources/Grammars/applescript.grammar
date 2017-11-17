@@ -1,0 +1,137 @@
+{
+	name                      : 'applescript';
+	title                     : 'AppleScript';
+	match:
+	[ 
+		uti											: 'com.apple.applescript.text',
+	
+		# Multiline Comment
+		regex										: @'(?s)\(\*.*?\*\)',
+
+		# Singleline comment
+		regex										: @'--.*',
+
+		# Continuation character
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?m)¬$';
+		},
+
+		# set statement
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bset\s+(the\s+)?(end\s+of\s+)?(\w+\s+of\s+)?\w+\s+to\b';
+		}
+
+		# Common verbs
+		regex										: @'\b(tell)\s+(application)\b',
+
+		# Comment verb end statements
+		regex										: @'\bend\s+(if|repeat|run|tell|try)\b',
+
+		# Repeat statement on list
+		regex										: @'\brepeat\s+with\s+\w+\s+in\s+\w+',
+
+		# Repeat statement on range
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\brepeat\s+with\s+\w+\s+from\s+\w+\s+to\s+the\s+count\s+of\s+the\s+\w+';
+		},
+
+		# Run shell script
+		regex										: @'\bdo\s+shell\s+script\b',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line comment partition
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.applescript';
+			open-sequence     		: @'(*';
+			close-sequence    		: @'*)';
+			capture-unclosed  		: yes;
+		},
+		
+		# End-of-line comment partition
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.applescript';
+			open-sequence					:	@'--';
+		},
+
+		# Pre-Defined Variables/Functions/Symbols
+
+		word-rule:
+		{
+			name                  : 'symbol.applescript';
+			case-insensitive      : no;
+			words:                [ 
+															'access', 'application', 'close', 'count', 'eof', 'file', 'open', 'write',
+														];
+		},
+
+		# Keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.applescript';
+			case-insensitive      : no;
+			words:                [ 
+															'after', 'and', 'as', 
+															'back', 'before', 'begin', 'beginning', 'begins', 'by',
+															'come', 'comes', 'considering', 'contain', 'contained', 'contains', 'copy',
+															'div', 'does', 'doesn\'t', 
+															'eighth', 'else', 'end', 'ends', 'equal', 'equals', 'error', 'exit', 
+															'false', 'fifth', 'first', 'fourth', 'from',
+															'given', 'get', 'global', 'greater', 
+															'if', 'ignoring', 'in', 'is', 'isn\'t', 'it', 
+															'less', 'local', 
+															'me', 'mod',
+															'named', 'ninth', 'not', 'not', 
+															'of', 'on', 'or', 
+															'pi', 'prop', 'properties', 'property',
+															'repeat', 'result', 'return',
+															'second', 'set', 'seventh', 'sixth', 'space', 'start', 'starts', 
+															'tab', 'tell', 'tenth', 'than', 'the', 'then', 'third', 'through', 'thru', 'timeout', 'to', 'transaction', 'true', 'try', 
+															'using',
+															'version', 
+															'with', 
+														];
+		},
+		
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.applescript';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		},
+		
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.applescript';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|((\d+)?\.(\d+)([eE]\d+)?[fF]?)|(\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

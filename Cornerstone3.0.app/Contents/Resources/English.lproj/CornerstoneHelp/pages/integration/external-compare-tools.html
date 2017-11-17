@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Using External Compare Tools</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="commit-actions/index.html"></a>
+	</div>
+
+  <h1>Using External Compare Tools</h1>
+  <p>Cornerstone provides support for the use of the following external tools for the comparison of files:</p>
+  <ul>
+		<li>Apple FileMerge</li>
+		<li>Araxis Merge</li>
+		<li>BareBones BBEdit</li>
+		<li>BareBones TextWrangler</li>
+		<li>Black Pixel Kaleidoscope</li>
+		<li>Connected Flow&rsquo;s Changes</li>
+		<li>Deltopia DeltaWalker</li>
+		<li>Macromates TextMate</li>
+		<li>Microsoft Word</li>
+		<li>Perforce P4Merge</li>
+		<li>SourceGear DiffMerge</li>
+  </ul>
+  
+  <h2>Installing Support for Compare Tools </h2>
+  <p>To install support for a compare tool:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select <span class="uiref">Cornerstone &gt; Compare Tools&hellip;</span>  and select the compare tool to install.
+  		<li>Install support by dragging the compare tool&rsquo;s icon to Cornerstone&rsquo;s scripts folder. You can open the scripts folder by clicking the <span class="uiref">Open Scripts Folder</span> button.</li>
+  		<li>A check mark <img src="../../images/tick-small.png" srcset="../../images/tick-small@2x.png 2x"/> appears over the compare tool&rsquo;s icon indicating that installation was successful.</li>
+  	</ol>
+  </div>
+  
+  <h2>Selecting a Compare Tool </h2>
+  <ol>
+  	<li>Open the app&rsquo;s preferences by selecting <span class="uiref">Cornerstone &gt; Preferences&hellip;</span> (key equivalent <span class="key">⌘,</span>) and activating the <span class="uiref">General</span> pane.</li>
+		<li>Select the tool to use from the <span class="uiref">External compare tool</span> popup menu.</li>
+  </ol>
+  
+	<h2>Custom Compare Scripts</h2>
+	<p>If you wish to use a compare tool that is not directly supported by Cornerstone, then you can also select a custom Unix shell script or AppleScript file. Custom scripts are required to take two arguments which describe the paths to the files being compared.</p>
+	<p>Custom scripts are executed as:</p>
+  <pre>/path/to/script original modified</pre>
+  	 
+  <h3>Unix Shell Scripts</h3>
+  <p>The following example Bash shell script uses the <code>opendiff</code> tool provided with macOS to compare the files specified as the script&rsquo;s two arguments:</p>
+  <div class="script">
+  	<pre>
+#!/bin/bash
+
+original_path="$1"
+modified_path="$3"
+
+/usr/bin/opendiff "$original_path" "$modified_path"</pre>
+  </div>
+  <h3>AppleScript</h3>
+  <p>AppleScript files must implement the <code>run</code> handler, which takes a single <code>argv</code> argument which is a list that contains two POSIX paths: the path to the original and modified files. The following AppleScript is functionally equivalent to the above Unix shell script, which uses the <code>opendiff</code> tool to compare the specified files:</p>
+  <div class="script">
+  	<pre>
+on run argv
+  set original_path to (item 1 of argv)
+  set modified_path to (item 3 of argv)
+  do shell script "/usr/bin/opendiff \"" & original_path & "\" \"" & modified_path & "\""
+end run</pre>
+	</div>
+	
+	<h2>Installing Custom Compare Scripts</h2>
+  <p>To install a custom script:</p>
+  <ol>
+	  <li><p>Choose <span class="uiref">Cornerstone &gt; Preferences&hellip;</span> then click <span class="uiref">General</span>.</p></li>
+	  <li><p>Click the &ldquo;External compare tool&rdquo; pop-up menu and choose Open Scripts Folder.</p></li>
+	  <li><p>Copy your script into the selected directory.</p></li>
+	</ol>
+	 
+	<h2>Selecting a Custom Compare Script</h2>
+	<p>To select a custom compare script:</p>
+	 <ol>
+	  <li><p>Choose <span class="uiref">Cornerstone &gt; Preferences&hellip;</span> then click <span class="uiref">General</span>.</p></li>
+	  <li><p>Click the &ldquo;External compare tool&rdquo; pop-up menu and select your script.</p></li>
+	</ol>
+
+  
+  <h2>Comparing WORKING Against BASE</h2>
+  <p>When comparing BASE against the working version, BASE is treated as the original (or old) version and the working version as the modified (or new) version (the two file paths are specified in this order to custom scripts as well).</p>
+  <p>As a result, most comparison tools will display the BASE version on the left and the working version on the right (<span class="uiref">BBEdit</span> and <span class="uiref">TextWrangler</span> behave somewhat differently, displaying the newer file on the left).</p>
+  <p>The BASE file is locked before launching the external compare tool and should not be modified.</p>
+  
+  <h2>Compare WORKING Against HEAD</h2>
+  <p>When comparing the working version against HEAD, the working version is treated as the original (or old) version and HEAD as the modified (or new) version in a manner consistent with Cornerstone’s integrated comparison view.</p>
+  <p>Once again, this is also the order in which the files are specified to custom scripts. As with BASE files, the HEAD file is locked and should not be modified.</p>
+  
+  <h1><a id="resolving-conflicts">Resolving Conflicts with External Merge Tools</a></h1>
+  <p>Cornerstone also provides support for using the following external merge tools to resolve conflicts:</p>
+  <ul>
+  	<li>Apple FileMerge</li>
+  	<li>Araxis Merge</li>
+  	<li>Deltopia DeltaWalker</li>
+  	<li>Perforce P4Merge</li>
+  	<li>SourceGear DiffMerge</li>
+  </ul>
+  <p>To select a different merge tool:</p>
+  <div class="task">
+  	<ol>
+  		<li>Open the app&rsquo;s preferences by selecting <span class="uiref">Cornerstone &gt; Preferences&hellip;</span> (key equivalent <span class="key">⌘,</span>) and activating the <span class="uiref">General</span> pane.</li>
+  		<li>Select the tool to use from the <span class="uiref">External merge tool</span> popup menu. If the tool is not listed select Add Compare Tools&hellip; and follow the same steps for installing support for compare tools, as described above.</li>
+  	</ol>
+  </div>
+  
+  <p>Four files are involved when resolving conflicts:</p>
+  <ul>
+  	<li>
+  		<p><strong>My Changes</strong></p>
+  		<p>This file contains the uncommitted changes made before the conflict occurred.</p>
+  	</li>
+  	<li>
+  		<p><strong>Latest in Repository (HEAD)</strong></p>
+  		<p>This file contains the latest version from the repository at the time the conflict occurred.</p>
+  	</li>
+  	<li>
+  		<p><strong>Last Update (BASE)</strong></p>
+  		<p>This file is the pristine version (i.e. BASE revision) at the time the last update was made <em>before the conflict occurred</em>.</p>
+  	</li>
+  	<li>
+  		<p><strong>Working Version</strong></p>
+  		<p>This is the file visible in the Cornerstone working copy browser. It is decorated with markers that indicate conflicting regions and can be edited by hand if necessary.</p>
+  	</li>
+  </ul>
+  
+  <p>When resolving conflicts using an external tool, <span class="term">My Changes</span> is treated as the original file (normally displayed on the left) and <span class="term">Latest in Repository</span> is treated as the modified file (displayed on the right). The <span class="uiref">Last Update</span> file is treated as the common ancestor (displayed between or underneath the other files) and the results of the merge are saved to the <span class="term">Working Version</span>.</p>
+  
+  <p>To resolve conflicts using an external merge tool:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>Select a conflicted file in Cornerstone&rsquo;s working copy browser.</li>
+  		<li>Select the <span class="uiref">Resolve Conflicts Using <em>Tool</em></span> command from the <span class="uiref">Working Copy</span> menu</span>.</li>
+  		<li>The external compare tool will be launched.</li>
+  		<li>Differences between the original and modified files are automatically merged into the common ancestor (with the exception of DeltaWalker that does not support this feature).</li>
+  		<li>Use the external merge tool to merge sections from the original and modified versions into the common ancestor.</li>
+  		<li>When you are happy that the conflict has been resolved, save the results. They are automatically written to the file&rsquo;s working version.</li>
+  		<li>In Cornerstone, mark the file&rsquo;s conflicts as resolved by selecting the <span class="uiref">Resolve Conflicts</span> command from the <span class="uiref">Working Copy</span> menu.</li>
+  	</ol>
+  </div>
+  
+  <p>Once resolved, the file is marked as modified and the changes can be committed like any other modification.</p>
+
+</body>
+</html>

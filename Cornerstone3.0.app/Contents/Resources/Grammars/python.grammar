@@ -1,0 +1,267 @@
+{
+	name                      : 'python';
+	title                     : 'Python';
+	match:
+	[ 
+		extension								: 'py',
+
+		# Shebang
+		regex:
+		{
+			score									: 1000;
+			pattern								: @'\A#\!(/[:alpha:]\w*)+(/|\s+)python';
+		},
+
+		# Common Python keywords
+		regex										: @'\b(self|super|raise)\b',
+
+		# Common decorators
+		regex										: @'@(property|classmethod|staticmethod)\b',
+
+		# Docstring comment (dot matches newline)
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?s)""".*?"""';
+		},
+
+		# from ... import ...
+		regex										: @'((\bfrom\s+)[:alpha:]\w*(\.[:alpha:]\w*)*\s+)?\bimport\s+[:alpha:]\w*(\.[:alpha:]\w*)*(\s*,\s*[:alpha:]\w*(\.[:alpha:]\w*)*)*',
+
+		# Function declation
+		regex										: @'\bdef\s+[[:lower:]_]\w*\s*\(.*\)\s*:',
+
+		# if block
+		regex										: @'\bif\s+.*:',
+
+		# elif block
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\belif\s+.*:';
+		},
+
+		# else block
+		regex										: @'\belse\s*:',
+
+		# for loop
+		regex										: @'\bfor\s+.*:',
+
+		# Try block
+		regex										: @'\btry\s*:',
+
+		# Except block
+		regex										: @'\bexcept\s*([:upper:]\w*\s*(,\s*[:lower:]\w*)?)?:',
+
+		# Class definition
+		regex										: @'\bclass\s+[:upper:]\w*(\s*\([:alpha:]\w*\))?\s*:',
+
+		# Pass statement
+		regex										: @'\s+pass\b',
+
+		# Method call
+		regex										: @'[[:alpha:]_]\w*\s*\.\s*[:lower:]\w*\s*\(',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.python';
+			open-sequence					:	@'#';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.python';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.python';
+						value           : 'comment.keyword.scm.value.python';
+					};
+				},
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Python keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.python';
+			case-insensitive      : no;
+			words:                [ 
+															'and', 'as', 'assert',
+															'break',
+															'class', 'continue',
+															'def', 'del',
+															'elif', 'else', 'except', 'exec', 
+															'finally', 'for', 'from',
+															'global',
+															'if', 'import', 'in', 'is', 
+															'lambda', 'not',
+															'or',
+															'pass', 'print',
+															'raise', 'return',
+															'try',
+															'while', 'with',
+															'yield',
+														];
+		},
+				
+		# Symbol rules for built-in symbols
+
+		word-rule:
+		{
+			name                  : 'symbol.python';
+			case-insensitive      : no;
+			words:                [ 
+															'None', 'True', 'False',
+														];
+		},
+				
+		# Text literal rules for strings and characters
+		
+		regex-rule:
+		{
+			name                  : 'literal.string.python.triple-quote';
+			pattern 							: '[rRuU]{,2}(?<delimiter>[\'"]{3}).*?\\k<delimiter>';
+			multiline							: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name							: 'symbol.string.python.escaped-percent';
+					pattern						: '%%';
+				},
+		
+				regex-rule:
+				{
+					name              : 'symbol.python.escaped.character';
+					case-insensitive  : no;
+					pattern           : @'\\\w';
+				},
+
+				regex-rule:
+				{
+					name              : 'symbol.python.formatting.token';
+					case-insensitive  : no;
+					pattern           : @'%[.-]?\d?\w';
+				},
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		text-literal-rule:
+		{
+			name                  : 'literal.string.python.double-quote';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+		
+				ref									: 'symbol.string.python.escaped-percent',
+				ref               	: 'symbol.python.escaped.character',
+				ref               	: 'symbol.python.formatting.token',
+
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.python.single-quote';
+			open-sequence         : @"'";
+			close-sequence        : @"'";
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+		
+				ref									: 'symbol.string.python.escaped-percent',
+				ref               	: 'symbol.python.escaped.character',
+				ref               	: 'symbol.python.formatting.token',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		text-literal-rule:
+		{
+			name                  : 'literal.string.python.backtick-quote';
+			open-sequence         : @"`";
+			close-sequence        : @"`";
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+		
+				ref									: 'symbol.string.python.escaped-percent',
+				ref               	: 'symbol.python.escaped.character',
+				ref               	: 'symbol.python.formatting.token',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.python';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|(-?(\d+)?\.(\d+)([eE]\d+)?[fFj]?)|(-?\d+\.?(\d+([eE]\d+)?)?[fFj]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

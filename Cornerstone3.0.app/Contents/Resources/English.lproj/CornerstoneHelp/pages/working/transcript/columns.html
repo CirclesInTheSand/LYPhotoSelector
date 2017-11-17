@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Transcript View Columns</title>
+	<style type="text/css">
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: 9pt;
+		}
+		table td {
+			border: 1px solid #dfdfdf;
+			vertical-align: top;
+			padding: 0.6em;
+		}
+		td+td {
+			width: 100%;
+		}
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="user-notes.html"></a>
+	</div>
+
+  <h1>Transcript View Columns</h1>
+  <p>Transcript entries are displayed in 6 columns:</p>
+  
+	<h2>Time</h2>
+	<p>The local system time when the entry was recorded.</p>
+
+	<h2>Status <img class="template" src="../../../images/transcript-status-success.png" srcset="../../../images/transcript-status-success@2x.png 2x"/></h2>
+	<p>The status of the operation. This can be one of the following statuses:</p>
+	<table>
+		<tr>
+			<td><img class="template" src="../../../images/transcript-status-running.png" srcset="../../../images/transcript-status-running@2x.png 2x"/></td>
+			<td>The operation is running</td>
+		</tr>
+		<tr>
+			<td><img class="template" src="../../../images/transcript-status-success.png" srcset="../../../images/transcript-status-success@2x.png 2x"/></td>
+			<td>The operation completed successfully</td>
+		</tr>
+		<tr>
+			<td><img class="template" src="../../../images/transcript-status-error.png" srcset="../../../images/transcript-status-error@2x.png 2x"/></td>
+			<td>The operation failed</td>
+		</tr>
+		<tr>
+			<td><img class="template" src="../../../images/transcript-status-user.png" srcset="../../../images/transcript-status-user@2x.png 2x"/></td>
+			<td>The entry is a user note</td>
+		</tr>
+	</table>
+
+	<h2><a id="item-action">Item Action</a> <img class="template" src="../../../images/transcript-content-state-header.png" srcset="../../../images/transcript-content-state-header@2x.png 2x"/></h2>
+	<p>The action performed on the file or folder during update and export operations.</p>
+	<p>This can be one of the following actions:</p>
+	<table>
+		<tr>
+			<td><img src="../../../images/marker-update-added.png" srcset="../../../images/marker-update-added@2x.png 2x"/></td>
+			<td>The item was added</td>
+		</tr>
+		<tr>
+			<td><img src="../../../images/marker-update-conflicted.png" srcset="../../../images/marker-update-conflicted@2x.png 2x"/></td>
+			<td>Merging changes resulted in a conflict</td>
+		</tr>
+		<tr>
+			<td><img src="../../../images/marker-update-deleted.png" srcset="../../../images/marker-update-deleted@2x.png 2x"/></td>
+			<td>The item was deleted</td>
+		</tr>
+		<tr>
+			<td><img src="../../../images/marker-update-exists.png" srcset="../../../images/marker-update-exists@2x.png 2x"/></td>
+			<td>The item already existed</td>
+		</tr>
+		<tr>
+			<td><img src="../../../images/marker-update-merged.png" srcset="../../../images/marker-update-merged@2x.png 2x"/></td>
+			<td>Changes were merged without conflicts</td>
+		</tr>
+		<tr>
+			<td><img src="../../../images/marker-update-replaced.png" srcset="../../../images/marker-update-replaced@2x.png 2x"/></td>
+			<td>The item was replaced</td>
+		</tr>
+		<tr>
+			<td><img src="../../../images/marker-update-updated.png" srcset="../../../images/marker-update-updated@2x.png 2x"/></td>
+			<td>The item was updated to a newer revision</td>
+		</tr>
+	</table>
+
+	<h2>Property Action <img class="template" src="../../../images/property.png" srcset="../../../images/property@2x.png 2x"/></h2>
+	<p>The action performed on the item&rsquo;s properties. The possible actions are as for <a href="#item-action">item actions</a>.</p>
+
+	<h2>Lock Action <img class="template" src="../../../images/lock-owned.png" srcset="../../../images/lock-owned@2x.png 2x"/></h2>
+	<p>The action performed on the item&rsquo;s lock during update and export operations.</p>
+	<p>This can be one of the following actions:</p>
+	<table>
+		<tr>
+			<td><img src="../../../images/marker-update-broken.png" srcset="../../../images/marker-update-broken@2x.png 2x"/></td>
+			<td>The lock was broken or stolen</td>
+		</tr>
+	</table>
+
+	<h2>Description</h2>
+	<p>Textual description of the operation performed.</p>
+  
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Annotations Legend Window</title>
+</head>
+<style>
+		
+	.last-committer,
+	.past-month-committer,
+	.other-committer {
+		display: inline-block;
+		border-radius: 50%;	
+		border: 1px solid #6ac89f;
+	}	
+		
+	.last-committer {
+		display: inline-block;
+		border-radius: 50%;	
+		border: 1px solid #6ac89f;
+		width: 12px;
+		height: 12px;
+		background-color: #7bf6c1;
+	}
+	
+	.past-month-committer {
+		width: 8px;
+		height: 8px;
+		background-color: #7bf6c1;
+	}
+	
+	.other-committer {
+		width: 12px;
+		height: 12px;
+	}
+	
+</style>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+	</div>
+
+  <h2 id="legend">The Legend Window</h2>
+  <p>The legend window is displayed automatically when annotations are enabled and have been read from the repository.</p>
+  <p><img class="screenshot" src="../../../images/annotations-legend.png" srcset="../../../images/annotations-legend@2x.png 2x"/></p>
+  
+  <p>The legend displays four columns of information:</p>
+  <ol>
+  	<li>
+  		<p><strong>Users</strong></p>
+  		<p>The user names and colors of the team members that have contributed to current state of the file. The colors correspond to those used to display the sections in the annotation gutter.</p>
+  		<p>Uncommitted changes in modified working files are displayed as a pseudo-user named <span class="uiref">Uncommitted</span></p>
+  		<div class="note">
+  			<p>Colors are computed separately for the users in each file (or pair of files when comparing). As a result, the color used to represent a particular user may differ between files.</p>
+  		</div>
+  	</li>
+  	
+  	<li>
+  		<p><strong>Recent Activity</strong></p>
+  		<p>Indicates how recently each user has worked on this file. This column can be used to quickly gain an overview of who has been working on a file recently.</p>
+  		<div class="task">
+  			<ol>
+  				<li>
+			  		<p>The last committer (i.e. the user that committed the current revision) is indicated with a filled circle <span class="last-committer"></span>.</p>
+  				</li>
+  				<li>
+			  		<p>Users other than the last committer that have worked on the file in the past month are indicated with a small circle <span class="past-month-committer"></span>.</p>
+  				</li>
+  				<li>
+  					<p>All other users that last contributed to the file more that one month ago are indicated with an empty circle <span class="other-committer"></span>.</p>
+  				</li>
+  			</ol>
+  		</div>
+  	</li>
+  	
+  	<li>
+  		<p><strong>Lines Contributed</strong></p>
+  		<p>The percentage of lines contributed by that user, as a percentage.</p>
+  		<p>This column can be used to quickly gain an overview of who is most responsible for the contents of the file.</p>
+  	</li>
+  	
+  	<li>
+  		<p><strong>Timeline</strong></p>
+  		<p>The fourth column uses a timeline to graphically indicate the temporal relationship between commits made by the file&rsquo;s various contributors.</p>
+  		<p>Revisions are displayed in chronological order from left to right.</p>
+  		<p>The timeline can be used to navigate within the file. To activate a revision</p>
+  		<div class="task">
+  			<ol>
+  				<li>
+  					<p>select a revision by clicking on the revision&rsquo;s circular icon in the timeline;</p>
+  					<p>or</p>
+  				</li>
+  				<li>
+  					<p>click the <span class="uiref">Show Latest</span> button at the bottom of the legend window to select the changes committed in the latest revision.</p>
+  				</li>
+  			</ol>
+  		</div>
+  		<p>The active revision is highlighted in the timeline:</p>
+  		<p><img class="screenshot" src="../../../images/annotations-legend-selection.png" srcset="../../../images/annotations-legend-selection@2x.png 2x"/></p>
+  		<div class="note">
+  			<p>The timeline does not display the file&rsquo;s log history. Instead, it shows only those revisions that contributed to contents of the file in its current state. Therefore any previous modifications that have been completely removed from the file will not appear in the timeline.</p>
+  		</div>
+  	</li>
+  </ol>
+  
+</body>
+</html>

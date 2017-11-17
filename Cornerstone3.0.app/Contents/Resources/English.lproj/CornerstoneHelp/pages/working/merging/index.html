@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Merging</title>
+	<style type="text/css">
+		.strategy {
+			display: table;
+			margin-top:1em;
+		}
+		
+		.strategy img {
+			margin-top: 0.2em;
+		}
+		
+		.strategy h3 {
+			margin: 0;
+			font-size: 16px;
+		}
+		
+		.strategy p {
+			margin: 0.2em 0.0em 0.0em 0.0em;
+			font-size: 13px;
+		}
+	
+		.strategy .row {
+			display: table-row;
+		}
+		
+		.strategy .row .col {
+			display: table-cell;
+			vertical-align: top;
+			padding-left:1.5em;
+			padding-top: 1em;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="synchronize.html"></a>
+	</div>
+
+  <h1>Merging</h1>
+  <p>With Subversion, changes are always merged into a working copy before being committed to the repository.</p>
+  
+  <p>The first step of a merge operation is therefore to select the working copy to merge into. If you do not already have a working copy available then you will have to <a href="../../getting-started/check-out-working-copy.html">check one out</a> before continuing.</p>
+  
+  <p>To start a merge operation:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select the working copy (or sub-folder) that you wish to merge into.</li>
+  		<li>
+  			<p>Select <span class="uiref">Merge...</span> from the <span class="uiref">Working Copy</span> menu</p>
+  			<p>or</p>
+  			<p>Click the <span class="uiref">Merge</span> button <img class="template button" src="../../../images/toolbar-merge.png" srcset="../../../images/toolbar-merge@2x.png 2x"/> in the app toolbar.</p>
+  		</li>
+  		<li>The <span class="uiref">Merge</span> view will be displayed.</li>
+  	</ol>
+  </div>
+  
+  <h2>Select a Merge Strategy</h2>
+  <p>Cornerstone provides four merge strategies to choose from:</p>
+ 
+  <div class="links strategy">
+	  <div class="row">
+		  <div class="col">
+				<img src="../../../images/toolbar-merge-synchronize.png" srcset="../../../images/toolbar-merge-synchronize@2x.png 2x"/>
+		  </div>
+		  <div class="col">
+				<h3>Synchronization</h3>
+  			<p>A <a href="synchronize.html">synchronization merge</a> is appropriate when the synchronization of a branch with its <a href="../../introduction/terminology/tags-and-branches.html#ancestor">ancestor</a> is required.</p>
+			</div>
+	  </div>
+	  <div class="row">
+		  <div class="col">
+				<img src="../../../images/toolbar-merge-reintegrate.png" srcset="../../../images/toolbar-merge-reintegrate@2x.png 2x"/>
+		  </div>
+		  <div class="col">
+				<h3>Reintegration</h3>
+				<p>A <a href="reintegrate.html">reintegration merge</a> is appropriate when the integration of changes implemented in a <a href="../../introduction/terminology/tags-and-branches.html#feature-branch">feature branch</a> into its ancestor is required.</p>
+			</div>
+	  </div>
+	  <div class="row">
+		  <div class="col">
+				<img src="../../../images/toolbar-merge-cherrypick.png" srcset="../../../images/toolbar-merge-cherrypick@2x.png 2x"/>
+		  </div>
+		  <div class="col">
+				<h3>Cherry Picking</h3>
+				<p><a href="cherrypick.html">Cherry picking</a> is appropriate when individual change sets (i.e. revisions) need to be copied from one branch e.g. trunk to another e.g. a maintenance branch.</p>
+			</div>
+	  </div>
+	  <div class="row">
+		  <div class="col">
+				<img src="../../../images/toolbar-merge-advanced.png" srcset="../../../images/toolbar-merge-advanced@2x.png 2x"/>
+		  </div>
+		  <div class="col">
+				<h3>Advanced</h3>	
+				<p>An <a href="advanced.html">advanced merge</a> is appropriate when other merge types provide insufficient flexibility.</p>
+			</div>
+	  </div>
+  </div>
+  
+  <h2 id="options">Merge Options</h2>
+  <p>Cornerstone provides a set of options that provide fine control over the merge process:</p>
+  <ol>
+  	<li>
+  		<strong>Depth</strong>
+  		<p>The depth option provides the user with control over the extent of the working copy that the merge is applied to.</p>
+  		<p>The depth defaults to <span class="uiref">Include all files and folders</span> which will result in changes in all files and folders at all levels being merged.</p>
+  		<div class="note">
+  			<p>The <span class="uiref">Depth</span> option is not available for reintegration merges.</p>
+  		</div>
+  	</li>
+  	<li>
+  		<strong>Whitespace Options</strong>
+  		<p>These options control whether differences in whitespace and/or line endings are included in the merge.</p>
+  		<p>Whitespace and line endings are <em>not</em> ignored by default.</p>
+  	</li>
+  	<li>
+  		<strong>Ignore Ancestry</strong>
+  		<p>By default, merges take file ancestry into account. You can suppress this behavior by checking the <span class="uiref">Ignore Ancestry</span> option to force a merge to function more like <code>svn diff</code> when comparing trees of files.</p>
+  		<p>The <span class="uiref">Ignore Ancestry</span> option is off by default and should generally be left this way.</p>
+  		<p>If you&rsquo;re not sure whether you need to change this option then you probably don&rsquo;t.</p>
+  		<p>See the <span class="uiref">Noticing or Ignoring Ancestry</span> section in the Subversion document included with Cornerstone (<span class="uiref">Help &gt; Subversion Documentation</span>) for more information on this option.</p>
+  		<div class="note">
+  			<p>The <span class="uiref">Ignore Ancestry</span> option is not available for reintegration merges.</p>
+  		</div>
+  	</li>
+  </ol>
+  
+  <h2 id="review">Verify the Results of the Merge</h2>
+  <p>The working copy will contain the uncommitted results of the merge once the merge operation is complete.</p>
+  <p>Take the opportunity to review and verify the result of the merge. Before committing the working copy changes you should:</p>
+  <div class="task">
+  	<ol>
+  		<li>Compare the modified working copy files against BASE. Verify that the results of the merge are correct.</li>
+  		<li>Review and resolve any conflicts which occurred during the merge.</li>
+  		<li>Build and run your project to verify that the results of the merge are correct.</li>
+  		<li>Build and run available unit tests to verify that the merge has had no undesirable side-effects.</li>
+  		<li>Fix any consistencies or bugs introduced by the merge <em>before</em> committing the merge results.</li>
+  	</ol>
+  </div>
+  
+  <h2 id="commit">Commit the Changes</h2>
+  <p>The merge results can be committed to the repository <a href="../committing.html">in the same way</a> as for normal working copy modifications.</p>
+  
+</body>
+</html>

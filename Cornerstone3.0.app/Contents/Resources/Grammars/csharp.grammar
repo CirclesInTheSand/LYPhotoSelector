@@ -1,0 +1,289 @@
+{
+	name                      : 'csharp';
+	title                     : 'C#';
+	match:
+	[
+		extension								: 'cs',
+	
+		# Common C# symbols
+		regex										: @'\b(this|super)\b',
+		
+		# Using statement
+		regex										: @'\busing\s+[:upper:]\w*(\.[:upper:]\w*)*;',
+
+		# Using statement with assignment
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\busing\s+[:upper:]\w*(\.[:upper:]\w*)*(\s*=\s*+[:upper:]\w*(\.[:upper:]\w*)*)?;';
+		},
+
+		# Namespace
+		regex										: @'(?s)\bnamespace\s*[:upper:]\w*(\.[:upper:]\w*)*\s*\{',
+
+		# Class definition
+		regex										: @'(?s)(\b(public|private|internal|partial|abstract)\s+)*\bclass\s+[:upper:]\w*\s*(:\s*[:upper:]\w*(\.[:upper:]\w*)*\s*)?\{',
+
+		# Enum definition
+		regex										: @'(?s)(\b(public|private|internal)\s+)?\benum\s+[:upper:]\w*\s*\{',
+
+		# Member variable declaration
+		regex										: @'(\b(private|public|readonly|static)\s)+[:alpha:]\w*(\s*\[\])?\s+[[:alpha:]_]\w*(\s*=\s*.*)?;',
+
+		# Method declaration
+		regex										: @'(\b(private|protected|internal|public|static)\s+)*([:alpha:]\w*(\s*\[\])?)\s+[:upper:]\w*\(.*\)\s*\{',
+
+		# Regions
+		regex:
+		{
+			score									: 2;
+			pattern								: @'#(region|endregion)';
+		},
+
+		# Common system types
+		regex										: @'\b(bool|string|String|object|Object|DateTime|TimeSpan)\b',
+
+		# Common system types with namespace
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bSystem\.(Boolean|String|Object|DateTime|Number|TimeSpan)\b';
+		},
+
+		# Common methods
+		regex										: @'\b(ToString)\s*\(.*\)',
+
+		# Container types
+		regex										: @'\b(ArrayList|BitArray|Comparer|Hashtable|Queue|SortedList|Stack)',
+
+		# Generic types
+		regex										: @'\b[:upper:]\w*<[:upper:]\w*(\s*,\s*[:upper:]\w*)*>',
+
+		# Generic types
+		regex										: @'\b(Comparer|Dictionary|HashSet|LinkedList|List|Queue|SortedDictionary|SortedList|SortedSet|Stack|SynchronizedCollection)<[:upper:]\w*(\s*,\s*[:upper:]\w*)*>',
+
+		# Single-line comment
+		regex										: @'//.*',
+
+		# Multi line comment (dot matches newline)
+		regex										: @'(?s)/\*.*?\*/',
+
+		# Single-line doc comment
+		regex										: @'///.*',
+
+		# Multiline doc comment (dot matches newline)
+		regex										: @'(?s)/\*\*.*?\*/',
+
+		# For loop
+		regex										: @'\bfor\s*\(.*;.*;.*\)',
+
+		# Method call
+		regex										: @'[[:alpha:]_]\w*\s*\.\s*[:upper:]\w*\s*\(',
+
+		# Semi-colon at end of the line
+		regex										: @'(?m);$',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line comment partition which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.csharp';
+			open-sequence     		: @'/*';
+			close-sequence    		: @'*/';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.csharp';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.csharp';
+						value           : 'comment.keyword.scm.value.csharp';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		# End-of-line doc-comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.csharp.doc';
+			open-sequence					:	@'///';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				ref									: 'comment.keyword.scm.csharp',
+				
+				regex-rule:
+				{
+					name							: 'exterior.csharp.doc.xml.element';
+					pattern						: @'</?\w+\s*(\w+\s*=\s*["].*?["])*/?>';
+				},
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.csharp';
+			open-sequence					:	@'//';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				ref									: 'comment.keyword.scm.csharp',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# C# keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.csharp';
+			case-insensitive      : no;
+			words:                [ 
+															'abstract', 'add', 'as',
+															'base', 'bool', 'break', 'byte',
+															'case', 'catch', 'char', 'checked', 'class', 'const', 'continue',
+															'decimal', 'default', 'delegate', 'do', 'double',
+															'else', 'enum', 'event', 'explicit', 'extern', 'false', 'finally', 'fixed', 'float', 'for', 'foreach',
+															'get', 'goto',
+															'if', 'implicit', 'in', 'int', 'interface', 'internal', 'is',
+															'lock', 'long',
+															'namespace', 'new', 'null',
+															'object', 'operator', 'out', 'override',
+															'params', 'private', 'protected', 'public',
+															'readonly', 'ref', 'remove', 'return',
+															'sbyte', 'sealed', 'set', 'short', 'sizeof', 'stackalloc', 'static', 'string', 'struct', 'switch',
+															'this', 'throw', 'true', 'try', 'typeof',
+															'uint', 'ulong', 'unchecked', 'unsafe', 'ushort', 'using',
+															'virtual', 'volatile', 'void', 'while',
+														];
+		},
+		
+		regex-rule:
+		{
+			name									: 'keyword.preprocessor.csharp';
+			pattern								: @'#(if|else|elif|endif|define|undef|warning|error|line|region|endregion).*';
+		},
+				
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.csharp';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name							: 'symbol.csharp.formatting.placeholder';
+					pattern						: @'\{\d+\}';
+				},
+				
+				regex-rule:
+				{
+					name							: 'symbol.csharp.formatting.token';
+					pattern						: @'\\.';
+				},
+				
+				default-rule:
+				{
+					
+				},
+			];
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.csharp.verbatim';
+			open-sequence         : @'@"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'symbol.csharp.formatting.placeholder',
+				
+				default-rule:
+				{
+					
+				},
+			];
+		},
+
+		text-literal-rule:
+		{
+			name                  : 'literal.char.csharp';
+			open-sequence         : '\'';
+			close-sequence        : '\'';
+			escape-char           : @'\';
+			multi-line            : no;
+			quoted-tokens         : yes;
+		},
+		
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.csharp';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|((\d+)?\.(\d+)([eE]\d+)?[fF]?)|(\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

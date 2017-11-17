@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Merging</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="revisions.html"></a>
+	</div>
+
+  <h1>Merging</h1>
+  
+  <h2 class="term"><a id="merging">Merging</a></h2>
+	<div class="inset">
+		<p><span class="term">Merging</span> describes the process of integrating distinct sets of changes made in separate files or folders into a single, coherent version.</p>
+		<p>Merging is most commonly performed in combination with <a href="tags-and-branches.html#branch">branching</a> in order to recombine changes made in parallel by different team members or on different versions.</p>
+		<p>Changes are always merged into a working copy. This allows merge results to be reviewed and committed (or rejected) as necessary. The resultant changes are then committed in exactly the same way as any other set of changes.</p>
+	</div>
+	
+	<h2 class="term"><a id="merge-conflict">Merge Conflict</a></h2>
+	<div class="inset">
+		<p><span class="term">Merge conflicts</span> occur when overlapping changes occur in the files being merged. Such changes cannot be automatically resolved and require manual intervention from the user.</p>
+		<p>As changes are always merged into working copies, conflict resolution is no different from that required for conflicts resulting from <a href="working-copies.html#update">update operations</a>.</p>
+	</div>
+  
+	<h2 class="term"><a id="synchronization">Synchronization</a></h2>
+	<div class="inset">
+		<p><span class="term">Synchronization</span> merging refers to the act of copying of all changes made in one branch to another.</p>
+		<p>Synchronization merging is a common task when developers utilize <a href="tags-and-branches.html#feature-branch">feature branches</a> to develop in parallel and in isolation from one another.</p>
+		<p>In such circumstances it is crucial that changes integrated into trunk are pushed out to active feature branches. This should happen frequently to ensure that the branches don&rsquo;t diverge too far and to keep reintegration effort to a minimum.</p>
+		<p><a href="#merge-tracking">Merge tracking</a> plays an important role in synchronization as it tells Subversion when the branch was last synchronized with its ancestor allowing only subsequent changes to be merged in the process.</p>
+		<p>The source branch for a synchronization merge is the branch&rsquo;s <a href="tags-and-branches.html#ancestor">ancestor</a> (usually trunk). Changes are merged into a feature branch working copy.</p>
+	</div>
+	
+	<h2 class="term"><a id="reintegration">Reintegration</a></h2>
+	<div class="inset">
+		<p><span class="term">Reintegration</span> merging is closely related to <a href="#synchronization">synchronization</a>.</p>
+		<p>Once work on a feature is complete, the changes implemented on that <a href="tags-and-branches.html#feature-branch">feature branch</a> need to be reintegrated back into the <a href="tags-and-branches.html#trunk">trunk</a>. Synchronization is a pre-requisite to successful reintegration, i.e. all upstream changes should be integrated into the feature branch before the changes are merged upstream into trunk. Only then can the developer know that their changes are compatible with others made on other branches. Incompatibilities and conflicts should be fixed on the feature branch prior to reintegration.</p>
+		<p>The source of a reintegration merge is the feature branch. Changes are merged into a working copy for the branch&rsquo;s <a href="tags-and-branches.html#ancestor">ancestor</a>.</p>
+		<p>Once reintegrated, a branch should no longer be used. In practice this is not a limitation: if any further development is required then a new branch can be created for that purpose.</p>
+	</div>
+
+	<h2 class="term"><a id="cherry-picking">Cherry-Picking</a></h2>
+	<div class="inset">
+		<p><span class="term">Cherry-picking</span> is a merge strategy where only certain change sets (i.e. individual revisions) are copied from one branch to another. This contrasts with <a href="#synchronization">synchronization</a> merging where one branch is brought up to date with all changes made in another branch.</p>
+		<p>Cherry-picking is generally used to copy small, localized spot changes from one version to another. For example, bug fixes implemented in a project&rsquo;s <a href="tags-and-branches.html#trunk">trunk</a> might be cherry-pick merged to a <a href="tags-and-branches.html#maintenance-branch">maintenance branch</a> for inclusion in a patch version.</p>
+		<p>The source of a cherry-picking merge is generally trunk, with changes being merged into a working copy for the destination branch. For example, a bug fixed in the main development branch for version 2.0 is cherry-pick merged from trunk into a working copy for the 2.0.x maintenance branch.</p>
+	</div>
+
+	<h2 class="term"><a id="merge-tracking">Merge Tracking</a></h2>
+	<div class="inset">
+		<p><span class="term">Merge tracking</span> refers to the book-keeping associated with tracking the changes that have been merged into a project&rsquo;s various branches. The correct tracking of this information is key to successful and efficient synchronization and reintegration merging.</p>
+		<p>Subversion stores information about merge operations in <code>svn:mergeinfo</code> properties. These properties are automatically updated following synchronization merges and are committed along with changes to the files themselves. <code>svn:mergeinfo</code> properties should be regarded as private to Subversion; there is no need for users to inspect or modify their contents.</p>
+	</div>
+</body>
+</html>

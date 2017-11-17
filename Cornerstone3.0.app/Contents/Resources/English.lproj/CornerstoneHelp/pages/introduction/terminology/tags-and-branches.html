@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Tags and Branches</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="locks.html"></a>
+	</div>
+
+  <h1>Tags and Branches</h1>
+  
+  <h2 class="term"><a id="branch">Branch</a></h2>
+  <div class="inset">
+  	<p>A branch is technically identical to a <a href="#tag">tag</a>, i.e. it is a copy of an existing folder at a given point in time. The two only really differ in terms of intent, i.e. what, by convention, they are intended for.</p>
+  	<p>While a tag is generally intended as a static snapshot, a branch is intended to be continued to be modified subsequent to the branch operation. This allows two versions of a folder starting from a common point to diverge over time independently of one another.</p>
+  	<p>This can be useful on several levels. The most common is to enable the continued development of multiple versions of a project. For example, a branch can be created for 1.0 immediately after final release. 1.1 development then immediately continues. Any high-priority issues isolated in 1.0 can then be fixed on the 1.0 branch resulting in 1.0.x maintenance releases without having to worry about changes made to 1.1 destabilizing the 1.0 code.</p>
+  	<p>Branches can also be used to work on different parts of the project independently. This can be particularly useful with multi-site development.</p>
+  	
+  	<div class="note">
+  		<p>The disadvantage of branches is that the divergence of the branches often needs to be reconciled to fold changes made on one branch back into another. For example, high-priority bugs fixed for 1.0.1 on a 1.0 branch should obviously be incorporated into 1.1. This folding is termed <a href="merge.html#merging">merging</a> and projects can incur significant merge overhead if branches are allowed to diverge too far. Indeed, merging changes can become non-trivial if the source and destination files have been modified in parallel resulting in a <a href="merge.html#merge-conflict">merge conflict</a>.</p>
+  	</div>
+  </div>
+  
+  <h2 class="term"><a id="ancestor">Ancestor</a></h2>
+  <div class="inset">
+  	<p>A branch&rsquo;s <span class="term">ancestor</span> refers to the folder a branch was originally copied from.</p>
+  	<p>In most cases a branch&rsquo;s folder will be the project&rsquo;s <a href="#trunk">trunk</a>. However, larger organizations may implement more complex multi-layered branching policies where sub-branches are created from other branches, with trunk being only an indirect ancestor of a developer&rsquo;s branch.</p>
+  	<p>For example, a project team may be distributed across several geographical locations. The team at each location works on its own isolated branch, and each team member works on their own sub-branch of the team&rsquo;s branch. In such cases the direct ancestor of a developer&rsquo;s branch is not trunk, but their teams&rsquo;s local branch, and their changes will have to be merged up two levels before integration into trunk is complete.</p>
+  </div>
+  
+  <h2 class="term"><a id="tag">Tag</a></h2>
+  <div class="inset">
+  	<p>Also called a <span class="term">label</span> in other version control systems, a <span class="term">tag</span> uniquely identifies the state of a part or all of the repository at a particular point in time.</p>
+  	<p>Subversion differs from other version control systems in that a tag is simply a folder in the repository (rather than a name assigned to a version of a folder).</p>
+  	<p>A tag is created by copying a folder to a new location. For example, by convention, projects in a Subversion repository have three standard sub-folders: <code>branches</code>, <code>tags</code> and <code>trunk</code>. Creating a tag is generally as simple as copying <code>trunk</code> to a sub-folder of <code>tags</code> and giving it a meaningful name.</p>
+  	<p>Tags can be deleted or renamed just like any other folder.</p>
+  	
+  	<div class="note">
+  		<p>Copying a folder does not copy any of the data. Instead Subversion simply records the exact revisions of the contents at the point at which the folder is copied. This is handled very efficiently, both in terms of the disk space required and the time it takes to complete.</p>
+  	</div>
+  </div>
+  
+  <h2 class="term"><a id="trunk">Trunk</a></h2>
+  <div class="inset">
+  	<p>A project&rsquo;s <span class="term">trunk</span> refers to a project&rsquo;s main development branch in the repository. Generally, developers working on the next main version of a project will be working on the trunk.</p>
+  	<p>By convention, a project&rsquo;s top-level folder generally contains a <code>trunk</code> sub-folder (along with <code>tags</code> and <code>branches</code> folders) which contains the latest-and-greatest version of the project at any given time. Most projects will have their developers check out working copies from <code>trunk</code> and commit their changes back to it.</p>
+  </div>
+  
+  <h2 class="term"><a id="feature-branch">Feature Branch</a></h2>
+  <div class="inset">
+		<p>It is common for development teams to utilize branches to develop features in parallel and in isolation from one another. Such branches are termed <span class="term">feature branches</span>.</p>
+		<p>This strategy can be used to implement a <span class="term">stable trunk policy</span> where only complete and stable features are integrated into the <a href="#trunk">trunk</a>, with all other significant development taking place on isolated branches.</p>
+  </div>
+  
+  <h2 class="term"><a id="maintenance-branch">Maintenance Branch</a></h2>
+  <div class="inset">
+  	<p>A <span class="term">maintenance branch</span> is a branch which is created for the integration of bug fixes and minor modifications which will be published as maintenance releases.</p>
+  	<p>Maintenance releases usually branch directly from <a href="#trunk">trunk</a> and are created as part of a product&rsquo;s release process.</p>
+  	<p>For example, during the release of version 2.0, a <code>2.0.x</code> maintenance branch is created. Bugs fixed as part of continuing 2.1 development are then <a href="merge.html#merging">merged</a> from trunk to the <code>2.0.x</code> maintenance branch.</p>
+  	<p>Subsequent 2.0.x maintenance releases are created from the <code>2.0.x</code> branch instead of <code>trunk</code>.</p>
+  </div>
+  
+</body>
+</html>

@@ -1,0 +1,187 @@
+{
+	name                      : 'lua';
+	title                     : 'Lua';
+	match:
+	[ 
+		extension								: 'lua',
+
+		# Module definition
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bmodule\s*\(\s*\.\.\.\s*';
+		},
+
+		# Local variable
+		regex										: @'\blocal\s+\w+\s*[=,]',
+
+		# Function declaration
+		regex										: @'\bfunction\s+\w+\s*\(((\s*(\w+|\.\.\.)\s*,)*\s*(\w+|\.\.\.)\s*)?\)',
+
+		# Class function declaration
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\bfunction\s+\w+\s*[\.:]\s*\w+\s*\(((\s*(\w+|\.\.\.)\s*,)*\s*(\w+|\.\.\.)\s*)?\)';
+		},
+
+		# Singleline comment
+		regex										: @'--.*',
+
+		# String concatenation (string left)
+		regex										: @'"\)?\s*\.\.\s*\w+',
+
+		# String concatenation (string right)
+		regex										: @'\w+\s*\.\.\s*\(?"',
+
+		# Ellipsis operator
+		regex										: @'[(,]\s*\.\.\.\s*[,)]',
+
+		# Metamethods
+		regex										: @'\b__(index|newindex|eq|lt|le|call|concat|tostring|len|metatable|tag|add|sub|mul|mod|pow)\b',
+
+		# Method call
+		regex										: @'\w+:\w+\s*\(',
+
+		# Array subscript call
+		regex										: @'\w+:\w+\s*\[',
+
+		# Multiline string literal
+		regex:
+		{
+			score									: 2;
+			pattern								: @'(?s)\[(=*)\[.*?\]\1\]';
+		},
+
+		# Variable string formatting
+		regex										: @'%\{\w+\}',
+
+		# Array length
+		regex										: @'#\w+',
+
+		# Inequality operator
+		regex										: @'~=',
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line comment partition which includes SCM keywords
+		
+		regex-rule:
+		{
+			name                  : 'comment.multiline.lua';
+			pattern               : @'--\[(?<level>=*)\[.*?]\k<level>]';
+			multiline             : yes;
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.lua';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.lua';
+						value           : 'comment.keyword.scm.value.lua';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		# End-of-line rule for shebang statements
+		
+		eol-rule:
+		{
+			name									: 'keyword.preprocessor.lua.shebang';
+			open-sequence					: '#!';
+		},
+		
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.lua';
+			open-sequence					:	@'--';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				ref									: 'comment.keyword.scm.lua',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Lua keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.lua';
+			case-insensitive      : no;
+			words:                [ 
+															'and', 'break', 'do', 'else', 'elseif', 'end', 'false', 'for', 'function', 'if', 'in',
+															'local', 'nil', 'not', 'or', 'repeat', 'return', 'then', 'true', 'until', 'while',
+														];
+		},
+		
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.lua';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.lua.singlequotes';
+			open-sequence         : '\'';
+			close-sequence        : '\'';
+			escape-char           : @'\';
+			multi-line            : no;
+			quoted-tokens         : yes;
+		},
+		
+		regex-rule:
+		{
+			name                  : 'literal.string.lua.multiline';
+			pattern               : @'\[(?<level>=*)\[.*?]\k<level>]';
+			multiline             : yes;
+		},
+
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.lua';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|(-?(\d+)?\.(\d+)([eE]\d+)?[fF]?)|(-?\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>The Log View</title>
+	<style type="text/css">
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			font-size: 9pt;
+		}
+		table td {
+			border: 1px solid #dfdfdf;
+			vertical-align: top;
+			padding: 0.4em;
+		}
+		
+		.working-badge {
+			display: inline-block;
+			background-color:#5a5a5a;
+			border-radius: 4px;
+			color:white;
+			padding:4px 7px 4px 7px;
+			font-size: 90%;
+		}
+		
+		.changes {
+			text-transform: uppercase;
+		}
+		
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="selection.html"></a>
+	</div>
+
+  <h1>The Log View</h1>
+  <p>The log displays the log items for the selected file or folder in a verbose, top-down style which is similar to the output of the <code>svn log</code> command.</p>
+  <p>Log items are displayed in descending order with the newest item show at the top of the view.</p>
+  
+  <h2>Issue Number Links</h2>
+  <p>If issue tracking support is enabled (see <a href="../../../integration/issue-tracking.html">Integrating with Issue Tracking Systems</a> for more information), matching issue numbers in log messages are displayed as links. Clicking on the link will open a browser window on the issue&rsquo;s page in the issue tracking system.</p>
+  
+  <h2>Working Copy Badges</h2>
+  <p>For working copy items, the working revision is marked with a <span class="working-badge">working</span> badge.</p>
+  
+  <h2>Updating</h2>
+  <p>Click the update button <img class="template" src="../../../../images/toolbar-update.png" srcset="../../../../images/toolbar-update@2x.png 2x"/> to update your working copy to a log item&rsquo;s revision.</p>
+  
+  <h2>Reverting</h2>
+  <p>Click the revert button <img class="template" src="../../../../images/toolbar-revert.png" srcset="../../../../images/toolbar-revert@2x.png 2x"/> to revert your working copy to a log item&rsquo;s revision.</p>
+  <p>If your working copy contains uncommitted changes then Cornerstone will ask how to proceed, giving you the option of either keeping or discarding the changes.</p>
+
+  <h2>Sharing</h2>
+  <p>Click the share button <img class="template" src="../../../../images/log-share.png" srcset="../../../../images/log-share@2x.png 2x"/> to share a log item.</p>
+  <p>You can choose which items appear in the Share menu by using the <span class="uiref">Extensions</span> pane of <span class="uiref">System Preferences</span>.</p>
+  
+	<h2>Changes</h2>
+	<p>Each log item contains a list of the files which were changed in that revision. The changed files are grouped by action (i.e. additions, deletions, modifications and replacements).</p>
+	<p>A change can be selected by single-clicking the change&rsquo;s filename. Double-clicking a change&rsquo;s filename shows the changes made in that revision in the compare view.</p>
+	<p>A log item&rsquo;s change set is collapsed by default. It can be expanded by clicking on the <span class="uiref changes">Changes</span> section title.</p>
+	
+	<h3>Topics</h3>
+  <ul class="plain">
+  	<li><a href="selection.html">Switching to the Log View</a></li>
+  	<li><a href="filtering.html">Filtering the Log View</a></li>
+  	<li><a href="comparing.html">Comparing Revisions in the Log View</a></li>
+  	<li><a href="exporting.html">Exporting Revisions from the Log View</a></li>
+  	<li><a href="undeleting.html">Undeleting Items in the Log View</a></li>
+  </ul>
+  
+</body>
+</html>

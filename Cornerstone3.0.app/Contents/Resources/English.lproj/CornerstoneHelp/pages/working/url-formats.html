@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>URL Formats</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+	<h1><a id="url-formats">URL Formats</a></h1>
+	<p>Cornerstone permits several different forms of URLs to be used when specifying the location of a file or folder:</p>
+	<ul>
+		<li>
+			<h3>Absolute</h3>
+			<p>Absolute URLs are fully-qualified URLs in the standard form used to identify files or folders in a repository.</p>
+			<p>For example:</p>
+			<pre>http://svn.server.org/repos/libs/liburl</pre>
+		</li>
+		
+		<li>
+			<h3>Relative to Folder</h3>
+			<p>URLs may be specified relative to the folder that declares them in the repository. Folder-relative URLs are prefixed with <code>../</code>.</p>
+			<p>For example:</p>
+			<pre>../../libs/liburl</pre>
+		</li>
+		
+		<li>
+			<h3>Relative to Repository</h3>
+			<p>URLs may be specified relative to the root URL of the repository that contains the folder that declares them. Repository-relative URLs are prefixed with <code>^/</code>.</p>
+			<p>For example:</p>
+			<pre>^/libs/liburl</pre>
+		</li>
+		
+		<li>
+			<h3>Relative to Server</h3>
+			<p>URLs may be specified relative to the server which hosts the repository containing the folder that declares them. Server-relative URLs are prefixed with <code>/</code>.</p>
+			<p>For example:</p>
+			<pre>/repos/libs/liburl</pre>
+		</li>
+		
+		<li>
+			<h3>Relative to Scheme</h3>
+			<p>URLs may be specified independent of the scheme used in the repository URL. This allows the same URL to be used regardless of the protocol used to check out the working copy. Scheme-relative URLs are prefixed with <code>//</code>.</p>
+			<p>For example:</p>
+			<pre>//svn.server.org/repos/libs/liburl</pre>
+		</li>
+	</ul>
+
+</body>
+</html>

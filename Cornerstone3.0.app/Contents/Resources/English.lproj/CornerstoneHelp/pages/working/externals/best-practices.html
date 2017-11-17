@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all"/>
+	<title>Externals: Best Practices</title>
+	<style type="text/css">
+	
+		ol.split {
+			padding-left: 2em;
+		}
+		
+		ol.first {
+			counter-reset: list-order;			
+		}
+
+		ol.split li {
+		  counter-increment: list-order;
+		  list-style-type: none;
+		}
+
+		ol.split li:before  { 
+			content: counter(list-order) ".";
+			padding-right: 0.75em;
+		}
+	
+	</style>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="../index.html"></a>
+		<a id="next" href="selection.html"></a>
+	</div>
+
+  <h1>Externals: Best Practices</h1>
+  <p>Externals are a very powerful feature of Subversion, but they can cause issues if not used properly. The following sections describe best practices for ensuring that you get the most out of this feature.</p>
+  
+  <h2>Use Relative Source URLs Wherever Possible</h2>
+  <p>Subversion allows source URLs to be specified in a number of different formats:</p>
+  <ul>
+  	<li>Absolute</li>
+  	<li>Relative to Folder</li>
+  	<li>Relative to Repository</li>
+  	<li>Relative to Server</li>
+  	<li>Relative to Scheme</li>
+  </ul>
+  
+  <p>See <a href="../url-formats.html">URL Formats</a> for more information on these various URL formats.</p>
+  
+  <div class="warning">
+  	<p>If you are referencing a dependency located in the same repository as the project declaring the external then we recommend that you <strong>use either the folder-relative or repository-relative syntax</strong>. Doing so will prevent your external from breaking when your repository is moved to a different server or you switch to a different protocol (e.g. from HTTP to HTTPS).</p>
+  </div>
+  <p>Whether you use folder-relative or repository-relative URLs is up to you. If your project and its dependencies are tightly coupled and are located in the same subtree of your repository then a folder-relative URL might be appropriate. If your dependencies are only loosely related to your project (and their respective locations may change independent of one another) then we recommend using repository-relative URLs.</p>
+  <h2>Always Specify Revisions for Your Externals</h2>
+  <p>If a revision is not specified as part of an external definition then Subversion will automatically pull in the latest version of the referenced folder whenever a working copy is checked out, updated or switched. This can have unintended side effects such as:</p>
+  <ul>
+  	<li>
+  		<p>Required files may be removed from the external dependency causing compiler or linker errors.</p>
+  	</li>
+  	<li>
+  		<p>Class, method or function names may be changed causing unexpected compilation errors.</p>	  	
+  	</li>
+  	<li>
+  		<p>Changes to the external dependency may cause subtle behavioral changes that introduce unwanted bugs and other side effects.</p>
+  	</li>
+  	<li>
+  		<p>The referenced folder may be renamed or moved thereby causing check out, update and switch operations to fail.</p>
+  	</li>
+  </ul>
+  
+  <div class="warning">
+  	<p>To avoid such issues we recommend that you <strong>always set your externals to reference specific revisions</strong> and only update to newer revisions when you are aware of the changes associated with those versions.</p>
+  </div>
+  
+  <h2>Use Peg Revisions to Specify Revisions for Your Externals</h2>
+  <p>Subversion allows both operative and peg revisions to be used to specify revisions in external definitions.</p>
+  <p>For example, both:</p>
+
+	<div class="script">
+		<pre>-r14990 ^/libpng/trunk deps/libpng</pre>
+	</div>
+	
+	<p>and</p>
+	
+	<div class="script">
+		<pre>^/libpng/trunk@14990 deps/libpng</pre>
+	</div>
+	
+	<p>specify that revision 14,990 of <code>/libpng/trunk</code> should be checked out as <code>deps/libpng</code>. However, there is a subtle difference in how Subversion will locate <code>/libpng/trunk</code> in the repository.</p>
+
+	<p>In the first version, the revision (<code>-r14990</code>) is specified as an <span class="term">operative</span> revision. As a result, Subversion will look for <code>/libpng/trunk</code> in the repository&rsquo;s HEAD revision and then check out revision 14,990 of that item.</p>
+	
+	<p>By contrast, in the second version, the revision (<code>@14990</code>) is specified as a <span class="term">peg</span> revision. This specifies to Subversion to look for <code>/libpng/trunk</code> in revision 14,900 and check out that version of the item.</p>
+	
+	<p>The difference is subtle, but important. For example, if the revision is specified as an operative revision and <code>/libpng/trunk</code> is moved to <code>/libs/libpng/trunk</code> at some point after revision 14,900 then Subversion will no longer find <code>/libpng/trunk</code> in the repository&rsquo;s HEAD revision and the external will be broken. However, the peg revision continues to work because <code>/libpng/trunk</code> continues to exist in revision 14,900 regardless of its current location in the repository&rsquo;s HEAD revision.</p>
+	
+	<div class="warning">
+		<p>Peg revisions are inherently robuster than operative revisions and are the best choice for use with external definitions.</p>
+	</div>
+	
+	<h2>Update Your Folder Before Committing svn:externals</h2>
+	<p>Subversion will only let you commit changes to a folder&rsquo;s property if the folder is up-to-date with the repository. Attempting to commit a property change on a folder that is out of date results in an error. This can be avoided by updating the folder before editing its <code>svn:externals</code>.</p>
+	
+	<p>Note that it is not necessary to update both the folder and its contents. Instead, you only need to update the folder itself:</p>
+	
+	<div class="task">
+		<ol>
+			<li>Select the folder that declares the <code>svn:externals</code> property in the working copy browser or source list.</li>
+			<li>Select <span class="uiref">Update...</span> from the <span class="uiref">Working Copy</span> menu.</li>
+			<li>Select <span class="uiref">Folder only</span> from the <span class="uiref">Depth</span> popup button.</li>
+			<li>Click the <span class="uiref">Update</span> button.</li>
+		</ol>
+	</div>
+	
+	<div class="warning">
+		<p>Always update the folder that declares the property <em>before</em> editing its <code>svn:externals</code>. This will also avoid unnecessary conflicts.</p>
+	</div>
+
+</body>
+</html>

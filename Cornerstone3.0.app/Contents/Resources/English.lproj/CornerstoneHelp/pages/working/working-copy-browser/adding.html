@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Adding Items to a Working Copy</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="renaming.html"></a>
+	</div>
+
+  <h1>Adding Items to a Working Copy</h1>
+  <p>To add unversioned items to a working copy:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select one or more unversioned items in the working copy browser.</li>
+  		<li>Select <span class="uiref">Working Copy &gt; Add to Working Copy</span> (key equivalent <span class="key">⌘D</span>).</li>
+  		<li>Alternatively, right-click on the items to add and select <span class="uiref">Add to Working Copy</span> or click the <span class="uiref">Add</span> button in the file browser toolbar.</li>
+  	</ol>
+  </div>
+  
+  <h2>Recursively Adding Items</h2>
+  <p>By default, folders are added without their contents also being added. While this affords you great flexibility in selecting which files to add, it can make it tedious to add a deep hierarchy of files and folders.</p>
+  <p>Cornerstone therefore provides the option to recursively add a folder and all its sub-items in one go.</p>
+  <div class="task">
+  	<ol>
+  		<li>Select one or more unversioned folders in the working copy browser.</li>
+  		<li>Click and hold the <span class="uiref">Add</span> button in the file browser toolbar until the popup menu is displayed.</li>
+  		<li>Select <span class="uiref">Add to Working Copy with Contents</span> from the popup menu.</li>
+  	</ol>
+  </div>
+  <p>You can also use the following alternate menu function:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select one or more unversioned folders in the working copy browser.</li>
+  		<li>Press the <span class="uiref">Shift</span> key while accessing the <span class="uiref">Working Copy</span> menu.</li>
+  		<li>Select <span class="uiref">Add to Working Copy with Contents</span> (key equivalent <span class="key">⇧⌘D</span>).</li>
+  		<li>Alternatively, right-click to display the action menu, press the <span class="uiref">Shift</span> key and select <span class="uiref">Add to Working Copy with Contents</span>.</li>
+  	</ol>
+  </div>
+  <p>See <a href="../menu-alternates.html">Alternate Menu Functions</a> for more information on Cornerstone&rsquo;s alternate menu functions.</p>
+  
+  <h2>Undoing an Add</h2>
+  <p>Files which have been added to a working copy are scheduled for addition to the repository with the next commit. You can undo the add at any time before the commit by reverting the added files or folders. This will revert them to their original, i.e. unversioned state.</p>
+  <p>To undo an add:</p>
+  <div class="task">
+  	<ol>
+  		<li>Select the added files or folders.</li>
+  		<li>Select <span class="uiref">Revert to Last Update</span> (key equivalent <span class="key">⌘L</span>) from the <span class="uiref">Working Copy</span> menu.</li>
+  		<li>The files are reverted back to their initial unversioned state.</li>
+  	</ol>
+  </div>
+</body>
+</html>

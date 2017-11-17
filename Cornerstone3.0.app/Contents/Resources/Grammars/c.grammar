@@ -1,0 +1,260 @@
+{
+	name                      : 'c';
+	title                     : 'C';
+	match:
+	[ 
+		uti											: 'public.c-header',
+		uti											: 'public.c-source', 
+		extension								: 'pch',
+		
+		# Common symbols
+		regex										: @'\b(typedef|inline|__cplusplus|strcmp|strcpy|strlen|strcat|scanf|sscanf|printf|fprintf|getc|getch|getchar|putc|putchar)\b',
+
+		# sizeof
+		regex										: @'\bsizeof\s*\(\s*[:alpha:]\w*\s*\)',
+
+		# Common pre-processor keywords
+		regex										: @'(#include|#import|#define|#if|#ifdef|#ifndef|#elif|#endif|#pragma)\b',
+		
+		# Extern "C"
+		regex										: @'\bextern\s+"C"',
+		
+		# Single-line comment
+		regex										: @'//.*',
+		
+		# Multi line comment (dot matches newline)
+		regex										: @'(?s)/\*.*?\*/',
+		
+		# Struct member dereference
+		regex										: @'[:alpha:]\w*->[:alpha:]\w*',
+		
+		# Address of
+		regex										: @'&[:alpha:]\w*',
+		
+		# Dereference on left or right side of operator
+		regex										: @'((<|>|=|&|\||\+|-)\s*\*[:alpha:]\w*)|(\*[:alpha:]\w*\s*(<|>|=|&|\||\+|-))',
+		
+		# Double dereference or pointer declaration
+		regex										: @'\*\*[:alpha:]\w*',
+
+		# const pointer type
+		regex										: @'\bconst\s*[:alpha:]\w*\s\*+',
+		
+		# Method declaration/definition
+		regex										: @'(\b(static|extern)\s+)?(\bconst\s*)?[:alpha:]\w*(\s*\*+\s*|\s+)[:alpha:]\w*\s*\((((\s*(const\s*)?[:alpha:]\w*(\s*\*+\s*|\s+)[:alpha:]\w*,)*(\s*(const\s*)?[:alpha:]\w*(\s*\*+\s*|\s+)[:alpha:]\w*)?)|(\s*void\s*))\)',
+
+		# Assignment or comparison to NULL
+		regex										: @'[:alpha:]\w*\s*(==|!=|=)\s*NULL\b',
+		
+		# For loop
+		regex										: @'\bfor\s*\(.*;.*;.*\)',
+
+		# Block argument type
+		regex										: @'\(\^\s*[:alpha:]\w*\)',
+
+		# Pointer variable declaration
+		regex										: @'[:alpha:]\w*\s*\*\s*[:alpha:]\w*(\s*=)?.*;',
+
+		# Semi-colon at end of the line
+		regex										: @'(?m);$',
+
+		# Types ending in _t such as size_t, uint32_t etc.
+		regex: 
+		{ 
+			score									: 2; 
+			pattern 							: @'\b[:lower:]\w*_t\b'; 
+		},
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# Multi-line comment partition which includes SCM keywords
+		
+		multiline-rule:
+		{
+			name              		: 'comment.multiline.c';
+			open-sequence     		: @'/*';
+			close-sequence    		: @'*/';
+			capture-unclosed  		: yes;
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'comment.keyword.scm.c';
+					case-insensitive  : no;
+					pattern           : @'\$(?<name>\w+)\:(?<value>.*)\s\$';
+					groups:
+					{
+						name            : 'comment.keyword.scm.name.c';
+						value           : 'comment.keyword.scm.value.c';
+					};
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		# End-of-line comment partition which includes SCM keywords
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.c';
+			open-sequence					:	@'//';
+
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+			
+				ref									: 'comment.keyword.scm.c',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# C keywords
+
+		word-rule:
+		{
+			name                  : 'keyword.c';
+			case-insensitive      : no;
+			words:                [ 
+															'asm', 'auto', 'bool', 'break', 'case', 'char', 'const', 'continue',
+															'default', 'do', 'double', 'else', 'enum', 
+															'extern', 'false', 'float', 'for', 'goto', 'if', 'inline', 'int', 'long',
+															'register',
+															'return', 'short', 'signed', 'sizeof', 'static', 'struct', 'switch',
+															'true', 'typedef', 'union', 'unsigned',
+															'void', 'wchar_t', 'while',
+															'__block',
+														];
+		},
+		
+		# C/C++ pre-processor keywords. Note that #include is not
+		# included here. It gets its own rule instead, as does #pragma.
+		
+		word-rule:
+		{
+			name                  : 'keyword.preprocessor.c';
+			case-insensitive      : no;
+			words:                [ 
+															'#define', '#elif', '#else', '#endif', '#error', '#if', '#ifdef', '#ifndef', '#line',
+															'#undef', '#using', '#assert', '#unassert', '#machine', '#machine'
+														];
+		},
+		
+		# Pre-defined, well-known pre-processor keywords
+		
+		word-rule:
+		{
+			name                  : 'symbol.preprocessor.c';
+			case-insensitive      : no;
+			words:                [ '__LINE__', '__FILE__', '__DATE__', '__TIME__', '__cplusplus', '__STDC__' ];
+		},
+		
+		# Rule for #include which matches square-bracketed system includes
+		# correctly using regular expression groups
+		
+		regex-rule:
+		{
+			name                  : 'keyword.preprocessor.include.c';
+			case-insensitive      : no;
+			pattern               : @'(?<keyword>(?:#include|#import))\s+(?<path>["<].*[">])';
+			groups:
+			{
+				keyword             : 'keyword.preprocessor.c';
+				path                : 'literal.string.preprocessor.include.c';
+			};
+		},
+		
+		# Rule for #pragma which matches the directive as well as the #pragma keyword
+		
+		regex-rule:
+		{
+			name                  : 'keyword.preprocessor.pragma.c';
+			case-insensitive      : no;
+			pattern               : @'(?<directive>#pragma)\s+(?<target>GCC|clang)?\s*(?<keyword>\w+)?\s*(?<value>.*)';
+			groups:
+			{
+				directive           : 'keyword.preprocessor.c';
+				target              : 'keyword.preprocessor.pragma.c.target';
+				keyword             : 'keyword.preprocessor.pragma.c.keyword';
+				value               : 'keyword.preprocessor.pragma.c.value';
+			};
+		},
+		
+		# Text literal rules for strings and characters
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.string.c';
+			open-sequence         : @'"';
+			close-sequence        : @'"';
+			escape-char           : @'\';
+			multiline							: no;
+			quoted-tokens         : yes;
+		
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				regex-rule:
+				{
+					name              : 'symbol.c.escaped.character';
+					case-insensitive  : no;
+					pattern           : @'\\\w';
+				},
+
+				regex-rule:
+				{
+					name              : 'symbol.c.formatting.token';
+					case-insensitive  : no;
+					pattern						: @'%[\-+0 #]*[\d\*]?(\.\d+)?[hlLIw]?[cCdiouxXeEfgGaAnpsS%]';
+				},
+
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		text-literal-rule:
+		{
+			name                  : 'literal.char.c';
+			open-sequence         : '\'';
+			close-sequence        : '\'';
+			escape-char           : @'\';
+			multi-line            : no;
+			quoted-tokens         : yes;
+		},
+		
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.c';
+			case-insensitive      : no;
+			pattern               : @'((0x[\da-fA-F]+[lL]?)|(-?(\d+)?\.(\d+)([eE]\d+)?[fF]?)|(-?\d+\.?(\d+([eE]\d+)?)?[fF]?))(?=\s|$|\W)';
+		},
+		
+		default-rule:
+		{
+		}
+	];
+};

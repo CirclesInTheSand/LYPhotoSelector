@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Moving and Copying Working Copy Items</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+		<a id="next" href="adding.html"></a>
+	</div>
+
+  <h1>Moving and Copying Working Copy Items</h1>
+  <p>Cornerstone provides a number of ways to copy and move items in the working copy browser.</p>
+  
+  <h2>Drag and Drop</h2>  
+  <p>To move or copy a file or folder:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select one or more items to move:</p>
+  		</li>
+  		<li>Drag the items to the new location. If you want to copy the items, press the <span class="key">Option</span> (⌥) key during the drag.</li>
+  		<li>
+  			<p>If you are moving a single item, an options window will appear at the position of the destination folder. You can specify an alternate name for the selected item in the destination folder as well as select the source revision.</p>
+  			<p>You can also specify the source revision when copying.</p>
+  		</li>
+  		<li>Click <span class="uiref">Move</span> (or <span class="uiref">Copy</span>).</li>
+  		<li>
+  			<p>Once moved, the original items are scheduled for deletion and the destination items are scheduled to be added to the working copy.</p>
+  			<div class="note">
+					<p>When copying, the original items are left intact and the destination items are scheduled to be added to the working copy.</p>
+  			</div>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Using <span class="uiref">Move</span> and <span class="uiref">Duplicate</span></h2>
+  <p>Drag and drop can be cumbersome when moving or copying items between folders separated by large numbers of intermediary folders. In such situations it may be preferable to use the <span class="uiref">Move...</span> and <span class="uiref">Duplicate...</span> commands located in the <span class="uiref">File</span> menu.</p>
+	<div class="note">
+		<p>Both <span class="uiref">Move...</span> and <span class="uiref">Duplicate...</span> are also available in an item&rsquo;s right-click menu, but only <span class="uiref">Duplicate...</span> is visible by default.</p>
+		<p>Hold down the <span class="uiref">Shift </span> (<span class="key">⇧</span>) key to display the <span class="uiref">Move...</span> menu item.</p>
+	</div>
+  <p>To move or copy a file or folder:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select one or more items to move:</p>
+  		</li>
+  		<li>
+  			<p>Select <span class="uiref">Move...</span> (or <span class="uiref">Duplicate...</span>) from the <span class="uiref">File</span> menu.</p>
+  		</li>
+  		<li>
+  			<p>An options window appears at the position of the selected item (or first item if multiple items are selected). You can specify the name and location to move (or copy) the item to.</p>
+  			<p>You can also specify the source revision when copying.</p>
+  		</li>
+  		<li>Click <span class="uiref">Move</span> (or <span class="uiref">Copy</span>).</li>
+  		<li>
+  			<p>The selected items are copied or moved to the specified location.</p>
+  		</li>
+  	</ol>
+  </div>
+  
+  <h2>Undoing a Move (or Copy)</h2>
+  <p>You can use the <span class="uiref">Revert</span> function to undo a move using the following steps:</p>
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>To undo a move operation:</p>
+  			<p>Select the original items which were scheduled for deletion and revert them to their BASE versions using the <span class="uiref">Revert</span> function. The items are restored to their BASE versions and are no longer scheduled for deletion.</p>
+  		</li>
+  		<li>
+  			<p>For both move and copy operations:</p>
+  			<p>Select the new items which are still scheduled to be added and remove them using the <span class="uiref">Delete</span> function.</p>
+  		</li>
+  	</ol>
+  </div>
+
+  <h2>Committing a Move</h2>
+  <div class="note">
+  <p>In order to preserve the move operation correctly in the repository&rsquo;s history, it is recommended that you commit both the deleted and added items at the same time.</p>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>	
+	<link href="../../stylesheets/style.css" rel="stylesheet" media="all" />
+	<title>Cleaning a Working Copy</title>
+</head>
+<body>
+	<div id="navbar">
+		<a id="home" href="index.html"></a>
+	</div>
+
+	<h1>Cleaning a Working Copy</h1>
+	<p>Subversion locks a working copy whenever it performs operations such as commits, updates, merges etc. Normally, these locks are released when an operation completes, regardless of the outcome of the operation.</p>
+	<p>If Cornerstone is unable to complete an operation due to interruption (e.g. when force-quit) then the locks will not be released. As a result, future attempts to commit, update merge etc. will fail with an error.</p>
+	<p>The <span class="uiref">Clean</span> command can be used to recover from such situations by cleaning up any unreleased locks in a working copy. The command is not context-sensitive and always cleans the entire working copy.</p>
+  
+  <p>To clean a working copy:</p>
+  
+  <div class="task">
+  	<ol>
+  		<li>
+  			<p>Select the working copy to relocate in the source list.</p>
+  		</li>
+  		<li>
+  			<p>Select the <span class="uiref">Clean</span> item in the <span class="uiref">Working Copy</span> menu.</p>
+  		</li>
+  	</ol>
+  </div>
+
+	<p>Any locks held by the working copy are released and interrupted operations are completed such that the working copy has a known good state.</p>
+	<div class="note">
+		<p>The <span class="uiref">Clean</span> command does not clean a working copy&rsquo;s externals. You will need to use the <code>svn cleanup</code> command in Terminal to clean externals.</p>
+	</div>
+
+</body>
+</html>

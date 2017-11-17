@@ -1,0 +1,227 @@
+{
+	name                      : 'latex';
+	title                     : 'LaTeX';
+	match:
+	[ 
+		extension								: 'tex',
+	
+		# Command
+		regex										: @'\\[a-zA-Z0-9]+',
+
+		# Command with {argument}
+		regex:
+		{
+			score									: 2;
+			pattern								: @'\\[a-zA-Z0-9]+\s*(\[.*\]\s*)?\{.*?\}';
+		},
+
+		# Quotes
+		regex:
+		{
+			score									: 2;
+			pattern								: @"``.*?''";
+		},
+	];
+
+	rules: 
+	[
+		whitespace-rule:
+		{
+		},
+		
+		# End-of-line comment partition
+		
+		eol-rule:
+		{
+			name									: 'comment.singleline.latex';
+			open-sequence					:	@'%';
+		},
+		
+		# Rule for integral and non-integral numeric literals
+		
+		regex-rule:
+		{
+			name                  : 'literal.number.latex';
+			case-insensitive      : no;
+			pattern               : @'-?((\d+\.\d+)|(\d+\.)|(\.\d+)|(\d+))(em|ex|in|cm|mm|pt|pc|bp|dd|cc|sp|mu)';
+		},
+
+		# Rules for commands
+		
+		regex-rule:
+		{
+			name									: 'keyword.latex.command.matrix';
+			pattern								: @'\\(left|right|big|Big|bigg|Bigg|bigl|bigr)[()\[\]|]';
+		},
+
+		regex-rule:
+		{
+			name									: 'keyword.latex.command';
+			pattern								: @'\\([a-zA-Z0-9]|@)+\*?';
+		},
+
+		regex-rule:
+		{
+			name									: 'symbol.latex.equation.inline';
+			multiline							: yes;
+			pattern								: @'\$.*?\$';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'keyword.latex.command',
+				regex-rule:
+				{
+					name							: 'keyword.latex.command.builtin.equation';
+					pattern						: @'\\.';
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		regex-rule:
+		{
+			name									: 'symbol.latex.equation.paragraph';
+			multiline							: yes;
+			pattern								: @'\\\[.*?\\\]';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'keyword.latex.command',
+				regex-rule:
+				{
+					name							: 'keyword.latex.command.builtin.equation.paragraph';
+					pattern						: @'\\.';
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		regex-rule:
+		{
+			name									: 'symbol.latex.formula.inline';
+			multiline							: yes;
+			pattern								: @'\\\(.*?\\\)';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'keyword.latex.command',
+				regex-rule:
+				{
+					name							: 'keyword.latex.command.builtin.formula';
+					pattern						: @'\\.';
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+
+		regex-rule:
+		{
+			name									: 'keyword.latex.command.builtin';
+			pattern								: @'\\.';
+		},
+
+		# Partition rules for command arguments
+		
+		regex-rule:
+		{
+			name									: 'default.latex.command.arguments';
+			multiline							: yes;
+			pattern								: @'{(?<content>(?<balanced>[^{}]|{\g<balanced>*})*)}';
+			group									: 'content';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'comment.singleline.latex',
+				ref									: 'keyword.latex.command',
+				ref									: 'keyword.latex.command.builtin',
+				ref									: 'symbol.latex.equation.inline',
+				ref									: 'symbol.latex.equation.paragraph',
+				ref									: 'literal.number.latex',
+				ref									: 'default.latex.command.arguments',
+				
+				regex-rule:
+				{
+					name							: 'symbol.latex.argument';
+					pattern						: @'#\d+';
+				},
+				
+				default-rule:
+				{
+				},
+			];
+		},
+		
+		regex-rule:
+		{
+			name									: 'default.latex.command.arguments.optional';
+			pattern								: @'\[(?<content>(?<balanced>[^\[\]]|{\g<balanced>*})*)\]';
+			group									: 'content';
+			
+			rules:
+			[
+				whitespace-rule:
+				{
+				},
+				
+				ref									: 'keyword.latex.command',
+				ref									: 'keyword.latex.command.builtin',
+				ref									: 'literal.number.latex',
+				ref									: 'default.latex.command.arguments',
+				ref									: 'default.latex.command.arguments.optional',
+				ref									: 'symbol.latex.equation.inline',
+				ref									: 'symbol.latex.equation.paragraph',
+
+				default-rule:
+				{
+				},
+			];
+		},
+
+		# Rules for blocks
+		
+		regex-rule:
+		{
+			name									: 'keyword.latex.block.parenthesis';
+			pattern								: @'\\\(.*?\\\)';
+		},
+				
+		# Rule for double-quoted strings
+		
+		text-literal-rule:
+		{
+			name									: 'literal.string.latex.double-quoted';
+			open-sequence					: '``';
+			close-sequence				: "''";
+			multiline							: yes;
+		},
+
+		default-rule:
+		{
+		}
+	];
+};
