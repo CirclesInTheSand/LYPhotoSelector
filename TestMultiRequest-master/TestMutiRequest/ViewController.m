@@ -27,19 +27,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-//   [self dispatchGroupTest];
-    
-//    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(100, 100, 100, 100)];
-//    view.backgroundColor = UIColor.yellowColor;
-//    [self.view addSubview:view];
-//    
-//    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(100, 200, 100, 100)];
-//    imageView.backgroundColor = UIColor.greenColor;
-//    [self.view addSubview:imageView];
-    
+
     NSString *homeUrlString = @"http://172.16.10.18/dyh5/web/index/init?b=dy2";
-//    WKWebView *wkWebView = [[WKWebView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
+
     
     UIWebView *webview = [[UIWebView alloc] initWithFrame:CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)];
     self.webview = webview;
@@ -48,23 +38,12 @@
     [self.view addSubview:webview];
     [webview loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:homeUrlString]]];
     
-    NSString *chooseCityUrlString = @"http://yxphp.omnijoi.cn:8090/xfkapp4.2/web/index.php?r=default/city";
-
-//    NSURL *webUrl = [NSURL URLWithString:mineUrlString];
-//    NSURLRequest *request = [NSURLRequest requestWithURL:webUrl];
-//    self.wkWebView = wkWebView;
-//    wkWebView.scrollView.showsHorizontalScrollIndicator = false;
-//    [wkWebView loadRequest:request];
-//    [self.view addSubview:wkWebView];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRewind target:self action:@selector(goBack:)];
 
 }
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-//    NSString *launchImageUrlPath = @"http://172.16.10.130/eshop/adminapi/web/upload/base/2017/11/02/59fa84096afe4/o.jpg";
-//    
-//    [BBLaunchAdMonitor showAdAtPath:launchImageUrlPath onView:[UIApplication sharedApplication].keyWindow timeInterval:3 detailParameters:@{}];
 }
 
 #pragma mark -- UIWebView Delegate
@@ -257,27 +236,4 @@
     return _toolView;
 }
 
-
-//- (void)demo{
-//    #import "AppDelegate.h"
-//    #import "UIImageView+WebCache.h"
-//    @interface AppDelegate ()
-//    @property (strong, nonatomic) UIView *lunchView;
-//    @end
-//    @implementation AppDelegate
-//    @synthesize lunchView;
-//    - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-//        [self.window makeKeyAndVisible];
-//        lunchView = [[NSBundle mainBundle ]loadNibNamed:@"LaunchScreen" owner:nil options:nil][0];
-//        lunchView.frame = CGRectMake(0, 0, self.window.screen.bounds.size.width, self.window.screen.bounds.size.height); [self.window addSubview:lunchView];
-//        UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(0, 50, 320, 300)];
-//        NSString *str = @"https://www.jerehedu.com/images/temp/logo.gif";
-//        [imageV sd_setImageWithURL:[NSURL URLWithString:str] placeholderImage:[UIImage imageNamed:@"default1.jpg"]];
-//        [lunchView addSubview:imageV];
-//        [self.window bringSubviewToFront:lunchView];
-//        [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(removeLun) userInfo:nil repeats:NO]; return YES;
-//        
-//    }
-//    -(void)removeLun { [lunchView removeFromSuperview]; }
-//}
 @end
