@@ -22,7 +22,7 @@
 @property (nonatomic,strong) WKWebView *wkWebView; /** 网页 */
 @property (nonatomic,strong) UIWebView *webview; /** webView */
 @end
-//Don't afraid of compete with others
+//AAAA I'm confused.
 @implementation ViewController
 
 - (void)viewDidLoad {
