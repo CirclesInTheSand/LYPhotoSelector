@@ -19,7 +19,7 @@
 #import "SubMaterialView.h"
 
 @interface UITableViewMaterialCell ()<PhotoBtnClickProtocol>
-@property (nonatomic,strong) MaterialModel *materialModel; /** 材料模型 */
+@property (nonatomic,strong) CredentialsModel *credentialModel; /** 材料模型 */
 @end
 
 @implementation UITableViewMaterialCell
@@ -50,7 +50,7 @@
 
 #pragma mark -- 模型赋值
 - (void)reuseCellWithModel:(MaterialModel *)model{
-    self.materialModel = model;
+    self.credentialModel = model;
     for(id view in self.contentView.subviews){
         if([view isKindOfClass:[SubMaterialView class]]){
             SubMaterialView *materialView = view;
@@ -60,8 +60,8 @@
     
     UIView *subMaterialContentView = nil;
     CGFloat maxContentY = 0;
-    for(NSInteger index = 0; index < model.subMaterialArray.count; index ++){
-        SubMaterialModel *subModel = model.subMaterialArray[index];
+    for(NSInteger index = 0; index < model.credentialsArray.count; index ++){
+        CredentialsModel *subModel = model.credentialsArray[index];
         SubMaterialView *materialView = [[SubMaterialView alloc] initWithSubMaterialModel:subModel modelType:model.modelType];
         materialView.frame = CGRectMake(0, maxContentY, Screen_Width, [materialView estimatedHeight]);
         materialView.delegate = self;
@@ -74,8 +74,8 @@
     }
 }
 
-- (void)fillCellWithModel:(MaterialModel *)model{
-    self.materialModel = model;
+- (void)fillCellWithModel:(CredentialsModel *)model{
+    self.credentialModel = model;
     //清除以前的视图
     for(id view in self.contentView.subviews){
         if([view isKindOfClass:[UILabel class]] || [view isKindOfClass:[SubMaterialView class]] || [view isKindOfClass:[UITextField class]]){
@@ -83,88 +83,80 @@
         }
     }
     
-    UIView *subMaterialContentView = nil;
-    CGFloat maxContentY = 0;
-    for(NSInteger index = 0; index < model.subMaterialArray.count; index ++){
-        SubMaterialModel *subModel = model.subMaterialArray[index];
-        SubMaterialView *materialView = [[SubMaterialView alloc] initWithSubMaterialModel:subModel modelType:model.modelType];
-        materialView.frame = CGRectMake(0, maxContentY, Screen_Width, [materialView estimatedHeight]);
-        materialView.delegate = self;
-        subMaterialContentView = materialView;
-        if(subMaterialContentView){
-            maxContentY = CGRectGetMaxY(subMaterialContentView.frame);
-        }
-
-        [self.contentView addSubview:materialView];
-    }
+   
+    SubMaterialView *materialView = [[SubMaterialView alloc] initWithSubMaterialModel:model modelType:model.modelType];
+    materialView.frame = CGRectMake(0, 0, Screen_Width, [materialView estimatedHeight]);
+    materialView.delegate = self;
+    [self.contentView addSubview:materialView];
+    
    
 
-    if(model.modelType >=  MaterialModelType_EventOne)return;
-    NSString *detailText = @"备注 : 如果您上传的材料有特殊的译法，请务必在本下栏中注明。如果有钢印描述不清，请注明钢印文字";
-    NSMutableAttributedString *firstAttributedString = [[NSMutableAttributedString alloc] initWithString:detailText];
-    CGFloat maximunHeight = AdaptedHeight(18);
-
-    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    if([detailText heightForFont:kFontSize(12) width:(Screen_Width - AdaptedWidth(2 * OriginBtnCellX))] > maximunHeight){
-        [paragraphStyle setLineSpacing:9];
-    }else{
-        [paragraphStyle setLineSpacing:0];
-    }
-
-    [firstAttributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, detailText.length)];
-
-    UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, Screen_Width - 2 * OriginBtnCellX, 0)];
-    detailLabel.numberOfLines = 0;
-    detailLabel.attributedText = firstAttributedString;
-    detailLabel.textColor = RGB(51, 51, 51);
-    detailLabel.font = kFontSize(12);
-    [detailLabel sizeToFit];
-    detailLabel.frame = CGRectMake(OriginBtnCellX, maxContentY + OriginBtnCellY, Screen_Width - 2 * OriginBtnCellX, detailLabel.frame.size.height);
-    [self.contentView addSubview:detailLabel];
-
-    UITextField *detailTextField = [[UITextField alloc] initWithFrame:CGRectMake(OriginBtnCellX, CGRectGetMaxY(detailLabel.frame) + OriginBtnCellY, Screen_Width - 2 * OriginBtnCellX, 25)];
-    detailTextField.placeholder = @"  请输入需要备注的信息";
-    detailTextField.font = kFontSize(12);
-    detailTextField.backgroundColor = RGB(245, 245, 245);
-    detailTextField.layer.borderColor = RGB(179, 179, 179).CGColor;
-    detailTextField.layer.borderWidth = SINGLE_LINE_WIDTH;
-    [self.contentView addSubview:detailTextField];
+//    if(model.modelType >=  MaterialModelType_EventOne)return;
+//    NSString *detailText = @"备注 : 如果您上传的材料有特殊的译法，请务必在本下栏中注明。如果有钢印描述不清，请注明钢印文字";
+//    NSMutableAttributedString *firstAttributedString = [[NSMutableAttributedString alloc] initWithString:detailText];
+//    CGFloat maximunHeight = AdaptedHeight(18);
+//
+//    NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+//    if([detailText heightForFont:kFontSize(12) width:(Screen_Width - AdaptedWidth(2 * OriginBtnCellX))] > maximunHeight){
+//        [paragraphStyle setLineSpacing:9];
+//    }else{
+//        [paragraphStyle setLineSpacing:0];
+//    }
+//
+//    [firstAttributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, detailText.length)];
+//
+//    UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, Screen_Width - 2 * OriginBtnCellX, 0)];
+//    detailLabel.numberOfLines = 0;
+//    detailLabel.attributedText = firstAttributedString;
+//    detailLabel.textColor = RGB(51, 51, 51);
+//    detailLabel.font = kFontSize(12);
+//    [detailLabel sizeToFit];
+//    detailLabel.frame = CGRectMake(OriginBtnCellX, maxContentY + OriginBtnCellY, Screen_Width - 2 * OriginBtnCellX, detailLabel.frame.size.height);
+//    [self.contentView addSubview:detailLabel];
+//
+//    UITextField *detailTextField = [[UITextField alloc] initWithFrame:CGRectMake(OriginBtnCellX, CGRectGetMaxY(detailLabel.frame) + OriginBtnCellY, Screen_Width - 2 * OriginBtnCellX, 25)];
+//    detailTextField.placeholder = @"  请输入需要备注的信息";
+//    detailTextField.font = kFontSize(12);
+//    detailTextField.backgroundColor = RGB(245, 245, 245);
+//    detailTextField.layer.borderColor = RGB(179, 179, 179).CGColor;
+//    detailTextField.layer.borderWidth = SINGLE_LINE_WIDTH;
+//    [self.contentView addSubview:detailTextField];
 
 }
 
-- (CGSize)sizeThatFits:(CGSize)size{
-    MaterialModel *model = self.materialModel;
-    CGFloat originHeight = 0;
-    CGFloat integerBtnDistanceY = (Screen_Width - AdaptedWidth(63))/4.0 + AdaptedHeight(10);
-    
-    for(NSInteger index = 0; index < model.subMaterialArray.count; index ++){
-        SubMaterialModel *subMaterialModel = model.subMaterialArray[index];
-        NSInteger linePhotoCount = subMaterialModel.photoModelsArray.count;
-        if(linePhotoCount == subMaterialModel.maximumPhotoNum){//已达最大数量
-            linePhotoCount -= 1;
-        }
-        originHeight += (linePhotoCount / 4 * integerBtnDistanceY);
-    }
-    
-    switch (model.modelType) {
-        case 0:
-        {
-            originHeight += AdaptedHeight(349);
-            break;
-        }
-        case 1:
-        {
-            originHeight += AdaptedHeight(279);
-            break;
-        }
-        case 2:
-        {
-            originHeight += AdaptedHeight(279);
-            break;
-        }
-        default:
-            break;
-    }
-    return CGSizeMake(self.frame.size.width, originHeight);
-}
+//- (CGSize)sizeThatFits:(CGSize)size{
+//    MaterialModel *model = self.credentialModel;
+//    CGFloat originHeight = 0;
+//    CGFloat integerBtnDistanceY = (Screen_Width - AdaptedWidth(63))/4.0 + AdaptedHeight(10);
+//
+//    for(NSInteger index = 0; index < model.credentialsArray.count; index ++){
+//        CredentialsModel *subMaterialModel = model.credentialsArray[index];
+//        NSInteger linePhotoCount = subMaterialModel.photoModelsArray.count;
+//        if(linePhotoCount == subMaterialModel.maximumPhotoNum){//已达最大数量
+//            linePhotoCount -= 1;
+//        }
+//        originHeight += (linePhotoCount / 4 * integerBtnDistanceY);
+//    }
+//
+//    switch (model.modelType) {
+//        case 0:
+//        {
+//            originHeight += AdaptedHeight(349);
+//            break;
+//        }
+//        case 1:
+//        {
+//            originHeight += AdaptedHeight(279);
+//            break;
+//        }
+//        case 2:
+//        {
+//            originHeight += AdaptedHeight(279);
+//            break;
+//        }
+//        default:
+//            break;
+//    }
+//    return CGSizeMake(self.frame.size.width, originHeight);
+//}
 @end

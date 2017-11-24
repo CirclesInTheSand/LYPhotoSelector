@@ -19,7 +19,7 @@
 
 @property (nonatomic,weak) id <PhotoBtnClickProtocol>delegate;
 
-- (instancetype)initWithSubMaterialModel:(SubMaterialModel *)submaterialModel modelType:(MaterialModelType)materialType;
+- (instancetype)initWithSubMaterialModel:(CredentialsModel *)submaterialModel modelType:(MaterialModelType)materialType;
 - (CGFloat)estimatedHeight;
-- (void)reuseModel:(SubMaterialModel *)submaterialModel modelType:(MaterialModelType)materialType;
+- (void)reuseModel:(CredentialsModel *)submaterialModel modelType:(MaterialModelType)materialType;
 @end

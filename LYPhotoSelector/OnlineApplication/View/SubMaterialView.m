@@ -22,7 +22,7 @@
 @end
 
 @implementation SubMaterialView
-- (instancetype)initWithSubMaterialModel:(SubMaterialModel *)submaterialModel modelType:(MaterialModelType)materialType
+- (instancetype)initWithSubMaterialModel:(CredentialsModel *)submaterialModel modelType:(MaterialModelType)materialType
 {
     self = [super init];
     if(self){
@@ -60,7 +60,7 @@
             }
             
             MaterialBtn *btn = [MaterialBtn buttonWithType:UIButtonTypeCustom];
-            btn.tag = kBtnMacroIndex + index;
+            
             btn.frame = CGRectMake(OriginBtnCellX + index % 4 * (OriginBtnXGap + MaterialBtnWidth), maxTitleLabelY + (index / 4) * (OriginBtnYGap + MaterialBtnHeight), MaterialBtnWidth, MaterialBtnHeight);
             maxBtnY = CGRectGetMaxY(btn.frame);
             
@@ -75,8 +75,9 @@
             
             [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
             [btn.deleteBtn addTarget:self action:@selector(deleteIconClicked:) forControlEvents:UIControlEventTouchUpInside];
-            btn.btnType = submaterialModel.photoBtnType;
-            btn.modelType = materialType;
+            btn.photoModel.modelType = materialType;
+            btn.photoModel.credentialsSection = submaterialModel.credentialsSection;
+            btn.photoModel.photoRow = index;
             [self addSubview:btn];
             self.maximumHeight = maxBtnY;
         }
@@ -84,7 +85,7 @@
     return self;
 }
 
-- (void)reuseModel:(SubMaterialModel *)submaterialModel modelType:(MaterialModelType)materialType{
+- (void)reuseModel:(CredentialsModel *)submaterialModel modelType:(MaterialModelType)materialType{
     
 }
 

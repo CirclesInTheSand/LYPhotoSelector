@@ -10,8 +10,6 @@
 #define OnlineConst_h
 
 #import "NSString+YYQExtension.h"
-//照片按钮固定tag
-#define kBtnMacroIndex 22222
 //屏幕高度
 #define Screen_Height      [[UIScreen mainScreen] bounds].size.height
 //屏幕宽度

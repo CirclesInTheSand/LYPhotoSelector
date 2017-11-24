@@ -24,7 +24,7 @@
         
         self.bgImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
         [self insertSubview:self.bgImageView atIndex:0];
-        
+        self.photoModel = [[PhotoModel alloc] init];
     }
     return self;
 }

@@ -33,6 +33,7 @@
     }
     return self;
 }
+
 - (instancetype)initWithModel:(MaterialModel *)materialModel{
     self = [super init];
     if(self){

@@ -39,6 +39,8 @@ static NSString *onlineCellIdentifier = @"onlineCell";
     [self basicSettings];
     [self setUpSubviews];
     self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -58,7 +60,6 @@ static NSString *onlineCellIdentifier = @"onlineCell";
 - (void)basicSettings{
     self.title = @"在线申办";
     self.automaticallyAdjustsScrollViewInsets = false;
-    self.view.backgroundColor = [UIColor whiteColor];
      //4,49,121 导航条
     self.navigationController.navigationBar.barTintColor = RGB(4,49,121);
     
@@ -77,30 +78,30 @@ static NSString *onlineCellIdentifier = @"onlineCell";
     
     [self.applicationTableView registerClass:[UITableViewMaterialCell class] forCellReuseIdentifier:onlineCellIdentifier];
     
-    //假的数据源
-    NSArray *titleArray = @[@"公共材料",@"事项一材料",@"事项二材料"];
-    NSArray *firstLineTextArray = @[@"身份证复印件",@"事项一类型 : 合同-担保合同-抵押合同\n合同复印件",@"事件二类型 : 出国留学-学历证明\n学历复印件"];
-    NSArray *secondLineTextArray = @[@"户口本",@"其他",@"其他"];
-    NSArray *subTitleArray = @[firstLineTextArray,secondLineTextArray];
-    NSArray *defautlMaximumNum = @[@[@99,@99],@[@99,@99],@[@99,@99]];
-    
-    NSInteger maxAmount = 3;
-    for(NSInteger index = 0; index < maxAmount; index ++){
-        MaterialModel *model = MaterialModel.new;
-        model.modelType = index;
-        model.cellTitle = titleArray[index];
-        for(NSInteger subModelIndex = 0; subModelIndex < 2; subModelIndex ++)
-        {
-            NSArray *subMaterialTitleArray = subTitleArray[subModelIndex];
-            NSNumber *limiteNum = defautlMaximumNum[index][subModelIndex];
-            SubMaterialModel *subModel = [[SubMaterialModel alloc] init];
-            subModel.title = subMaterialTitleArray[index];
-            subModel.maximumPhotoNum = [limiteNum integerValue];
-            subModel.photoBtnType =  subModelIndex;
-            [model.subMaterialArray addObject:subModel];
+    {
+        
+        /**< 事项材料个数 */
+        NSArray *eventsArray = @[@"公共材料",@"事项材料一"];
+        /**< 证件数组,为了方便起见最大数量都是99张*/
+        NSArray *credentialArray = @[@[@"结婚证",@"准考证"],@[@"离婚证",@"出生证",@"装逼证"]];
+        //开始造假数据
+        for(NSInteger fakeType = 0; fakeType < eventsArray.count; fakeType ++){
+            /**< 创建材料,一共就两种材料类型啊喂*/
+            MaterialModel *materialModel = [[MaterialModel alloc] initWithMaterialType:fakeType];
+            materialModel.cellTitle = eventsArray[fakeType];
+            /**< 创建证件,但是证件却可以有很多种*/
+            for(NSInteger credentialIndex = 0; credentialIndex < [credentialArray[fakeType] count]; credentialIndex ++){
+                
+                NSString *showTitle = credentialArray[fakeType][credentialIndex];
+                CredentialsModel *credentialsModel = [[CredentialsModel alloc] initWithTitle:showTitle maxPhotoNum:99 materialType:fakeType];
+                [materialModel addCredentialsModel:credentialsModel];
+            }
+
+
+            [self.dataSource addObject:materialModel];
         }
-        [self.dataSource addObject:model];
     }
+    
 }
 
 #pragma mark -- 底部按钮点击
@@ -128,14 +129,16 @@ static NSString *onlineCellIdentifier = @"onlineCell";
     photoSelect.maxCount = self.availablePhotoNum;
     
     [photoSelect showInController:self result:^(NSMutableArray * responseImageObjects, NSMutableArray *responsePHAssetObjects) {
+        
+        /**< 将选择完的照片加入cell里面 */
         for(NSInteger countIndex = 0; countIndex < responseImageObjects.count ; countIndex ++)
         {
             UIImage* image = responseImageObjects[countIndex];
             
-            PhotoModel *newPhotoModel =  [[PhotoModel alloc] initWithUIImage:image type:self.currentSelectedMaterialBtn.btnType];
+            PhotoModel *newPhotoModel =  [[PhotoModel alloc] initWithUIImage:image credentialsSection:self.currentSelectedMaterialBtn.photoModel.credentialsSection materialType:self.currentSelectedMaterialBtn.photoModel.modelType];
             
-            MaterialModel *materialModel = self.dataSource[self.currentSelectedMaterialBtn.modelType];
-            NSMutableArray *photoArray = (materialModel.subMaterialArray[self.currentSelectedMaterialBtn.btnType]).photoModelsArray;
+            MaterialModel *materialModel = self.dataSource[self.currentSelectedMaterialBtn.photoModel.modelType];
+            NSMutableArray *photoArray = (materialModel.credentialsArray[self.currentSelectedMaterialBtn.photoModel.credentialsSection]).photoModelsArray;
             [photoArray addObject:newPhotoModel];
             
         }
@@ -143,15 +146,19 @@ static NSString *onlineCellIdentifier = @"onlineCell";
      //   NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:self.currentSelectedMaterialBtn.modelType];
     //    [self.applicationTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
    //     [self.applicationTableView reloadData];
-        [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:self.currentSelectedMaterialBtn.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.currentSelectedMaterialBtn.photoModel.credentialsSection inSection:self.currentSelectedMaterialBtn.photoModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.applicationTableView reloadData];
     }];
     
 }
 
 #pragma mark --  MaterialCellProtocol
 - (void)didClickAddBtn:(MaterialBtn *)btn{
-    MaterialModel *materialModel = self.dataSource[btn.modelType];
-    SubMaterialModel *subMaterial = materialModel.subMaterialArray[btn.btnType];
+    
+    PhotoModel *selectedPhotoModel = btn.photoModel;
+    
+    MaterialModel *materialModel = self.dataSource[selectedPhotoModel.modelType];
+    CredentialsModel *subMaterial = materialModel.credentialsArray[selectedPhotoModel.credentialsSection];
     
     NSMutableArray *photosArray = subMaterial.photoModelsArray;
     if(subMaterial.maximumPhotoNum <= photosArray.count){
@@ -172,12 +179,13 @@ static NSString *onlineCellIdentifier = @"onlineCell";
 
 - (void)didClickShowBtn:(MaterialBtn *)btn{
     self.navigationController.navigationBar.barStyle = UIBarStyleDefault;
-    NSInteger indexOfPhotoModel = btn.tag - kBtnMacroIndex;
-    MaterialModel *materialModel = self.dataSource[btn.modelType];
-    NSMutableArray *photosArray = (materialModel.subMaterialArray[btn.btnType]).photoModelsArray;
+    
+    PhotoModel *selectedPhotoModel = btn.photoModel;
+    NSInteger indexOfPhotoModel = selectedPhotoModel.photoRow;
+    MaterialModel *materialModel = self.dataSource[selectedPhotoModel.modelType];
+    NSMutableArray *photosArray = (materialModel.credentialsArray[selectedPhotoModel.credentialsSection]).photoModelsArray;
     
     MJPhotoBrowser *browser  = [[MJPhotoBrowser alloc]init];
-    browser.delegate = self;
     NSMutableArray *photos = [NSMutableArray array];
     for (NSInteger index = 0 ; index < photosArray.count; index++) {
         PhotoModel *photoModel = photosArray[index];
@@ -204,16 +212,17 @@ static NSString *onlineCellIdentifier = @"onlineCell";
 }
 
 - (void)didClickDeleteIcon:(MaterialBtn *)btn{
-
-    NSInteger indexOfPhotoModel = btn.tag - kBtnMacroIndex;
-    MaterialModel *materialModel = self.dataSource[btn.modelType];
-    NSMutableArray *photosArray = (materialModel.subMaterialArray[btn.btnType]).photoModelsArray;
+    PhotoModel *selectedPhotoModel = btn.photoModel;
+    NSInteger indexOfPhotoModel = selectedPhotoModel.photoRow;
+    MaterialModel *materialModel = self.dataSource[selectedPhotoModel.modelType];
+    NSMutableArray *photosArray = (materialModel.credentialsArray[selectedPhotoModel.credentialsSection]).photoModelsArray;
     [photosArray removeObjectAtIndex:indexOfPhotoModel];
 //
 //    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:materialModel.modelType];
 //    [self.applicationTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-    [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:0 inSection:materialModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    
 
+    [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.currentSelectedMaterialBtn.photoModel.credentialsSection inSection:self.currentSelectedMaterialBtn.photoModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
 
 }
 
@@ -223,6 +232,7 @@ static NSString *onlineCellIdentifier = @"onlineCell";
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if(section == 0)return AdaptedHeight(120);
     return AdaptedHeight(8);
 }
 
@@ -236,52 +246,69 @@ static NSString *onlineCellIdentifier = @"onlineCell";
     return headerView;
 }
 
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if(section == 0){
+        
+        
+            UIView *bgFooterView = [[UIView alloc] init];
+            bgFooterView.backgroundColor = [UIColor whiteColor];
+            NSString *detailText = @"备注 : 如果您上传的材料有特殊的译法，请务必在本下栏中注明。如果有钢印描述不清，请注明钢印文字";
+            NSMutableAttributedString *firstAttributedString = [[NSMutableAttributedString alloc] initWithString:detailText];
+            CGFloat maximunHeight = AdaptedHeight(18);
+        
+            NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+            if([detailText heightForFont:kFontSize(12) width:(Screen_Width - AdaptedWidth(2 * AdaptedWidth(16)))] > maximunHeight){
+                [paragraphStyle setLineSpacing:9];
+            }else{
+                [paragraphStyle setLineSpacing:0];
+            }
+        
+            [firstAttributedString addAttribute:NSParagraphStyleAttributeName value:paragraphStyle range:NSMakeRange(0, detailText.length)];
+        
+            UILabel *detailLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, Screen_Width - 2 * AdaptedWidth(16), 0)];
+            detailLabel.numberOfLines = 0;
+            detailLabel.attributedText = firstAttributedString;
+            detailLabel.textColor = RGB(51, 51, 51);
+            detailLabel.font = kFontSize(12);
+            [detailLabel sizeToFit];
+            detailLabel.frame = CGRectMake(AdaptedWidth(16), AdaptedHeight(16), Screen_Width - 2 * AdaptedWidth(16), detailLabel.frame.size.height);
+            [bgFooterView addSubview:detailLabel];
+        
+            UITextField *detailTextField = [[UITextField alloc] initWithFrame:CGRectMake(AdaptedWidth(16), CGRectGetMaxY(detailLabel.frame) + AdaptedHeight(16), Screen_Width - 2 * AdaptedWidth(16), AdaptedHeight(25))];
+            detailTextField.placeholder = @"  请输入需要备注的信息";
+            detailTextField.font = kFontSize(12);
+            detailTextField.backgroundColor = RGB(245, 245, 245);
+            detailTextField.layer.borderColor = RGB(179, 179, 179).CGColor;
+            detailTextField.layer.borderWidth = SINGLE_LINE_WIDTH;
+            [bgFooterView addSubview:detailTextField];
+        
+            UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(detailTextField.frame) + AdaptedHeight(8), Screen_Width, AdaptedHeight(8))];
+            bottomLine.backgroundColor = RGB(240, 240, 240);
+            [bgFooterView addSubview:bottomLine];
+        
+            return bgFooterView;
+    }
+    return nil;
+}
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     MaterialModel *model = self.dataSource[indexPath.section];
-//    return [tableView fd_heightForCellWithIdentifier:onlineCellIdentifier configuration:^(id cell) {
-//        // Configure this cell with data, same as what you've done in "-tableView:cellForRowAtIndexPath:"
-//        // Like:
-//        //    cell.entity = self.feedEntities[indexPath.row];
-//        ((UITableViewMaterialCell *)cell).fd_enforceFrameLayout = true;
-//        ((UITableViewMaterialCell *)cell).delegate = self;
-//        [((UITableViewMaterialCell *)cell) fillCellWithModel:model];
-//
-//    }];
-    
+    CredentialsModel *credential = model.credentialsArray[indexPath.row];
     CGFloat originHeight = 0;
     CGFloat integerBtnDistanceY = (Screen_Width - AdaptedWidth(63))/4.0 + AdaptedHeight(10);
     
-    for(NSInteger index = 0; index < model.subMaterialArray.count; index ++){
-        SubMaterialModel *subMaterialModel = model.subMaterialArray[index];
-        NSInteger linePhotoCount = subMaterialModel.photoModelsArray.count;
-        if(linePhotoCount == subMaterialModel.maximumPhotoNum){//已达最大数量
-            linePhotoCount -= 1;
-        }
-        originHeight += (linePhotoCount / 4 * integerBtnDistanceY);
+ 
+    NSInteger linePhotoCount = credential.photoModelsArray.count;
+    if(linePhotoCount == credential.maximumPhotoNum){//已达最大数量
+        linePhotoCount -= 1;
     }
+    originHeight += (linePhotoCount / 4 * integerBtnDistanceY);
+
+    originHeight += AdaptedHeight(140);//349
     
-    switch (indexPath.section) {
-        case 0:
-        {
-            originHeight += AdaptedHeight(349);
-            
-            return originHeight;
-        }
-        case 1:
-        {
-            originHeight += AdaptedHeight(279);
-            return originHeight;
-        }
-        case 2:
-        {
-            originHeight += AdaptedHeight(279);
-            return originHeight;
-        }
-        default:
-            break;
-    }
-    return 0;
+    return originHeight;
 }
 
 
@@ -290,15 +317,19 @@ static NSString *onlineCellIdentifier = @"onlineCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 1;
+    MaterialModel *model = self.dataSource[section];
+    
+    return model.credentialsArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     MaterialModel *model = self.dataSource[indexPath.section];
+    CredentialsModel *credentialModel = model.credentialsArray[indexPath.row];
+    
     UITableViewMaterialCell *onlineCell = [tableView dequeueReusableCellWithIdentifier:onlineCellIdentifier];
     onlineCell.delegate = self;
-    [onlineCell fillCellWithModel:model];
+    [onlineCell fillCellWithModel:credentialModel];
     NSLog(@"%@",indexPath);
     return onlineCell;
 }
