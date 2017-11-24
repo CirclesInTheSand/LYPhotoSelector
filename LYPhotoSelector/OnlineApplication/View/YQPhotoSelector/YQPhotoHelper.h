@@ -2,8 +2,8 @@
 //  YQPhotoHelper.h
 //  PhotoSelect
 //
-//  Created by Mopon on 16/4/28.
-//  Copyright © 2016年 Mopon. All rights reserved.
+//  Created by PINE on 16/4/28.
+//  Copyright © 2016年 PINE. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>

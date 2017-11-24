@@ -2,7 +2,7 @@
 //  OnlineSectionHeaderView.m
 //  LYPhotoSelector
 //
-//  Created by company on 17/10/2017.
+//  Created by Pine on 17/10/2017.
 //  Copyright © 2017 Calvix. All rights reserved.
 //
 

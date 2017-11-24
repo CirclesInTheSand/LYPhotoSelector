@@ -2,7 +2,7 @@
 //  SubMaterialView.m
 //  LYPhotoSelector
 //
-//  Created by company on 26/9/2017.
+//  Created by Pine on 26/9/2017.
 //  Copyright © 2017 Calvix. All rights reserved.
 //
 

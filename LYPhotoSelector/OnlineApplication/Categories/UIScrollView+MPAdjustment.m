@@ -1,9 +1,9 @@
 //
 //  UIScrollView+MPAdjustment.m
-//  MoponChinaFilm
+//  PINEChinaFilm
 //
-//  Created by Mopon on 2017/9/22.
-//  Copyright © 2017年 Mopon. All rights reserved.
+//  Created by PINE on 2017/9/22.
+//  Copyright © 2017年 PINE. All rights reserved.
 //
 
 #import "UIScrollView+MPAdjustment.h"

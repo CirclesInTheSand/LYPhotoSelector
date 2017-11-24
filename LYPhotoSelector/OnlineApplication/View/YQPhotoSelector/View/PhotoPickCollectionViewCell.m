@@ -2,8 +2,8 @@
 //  PhotoPickCollectionViewCell.m
 //  PhotoSelect
 //
-//  Created by Mopon on 16/5/3.
-//  Copyright © 2016年 Mopon. All rights reserved.
+//  Created by PINE on 16/5/3.
+//  Copyright © 2016年 PINE. All rights reserved.
 //
 
 #import "PhotoPickCollectionViewCell.h"

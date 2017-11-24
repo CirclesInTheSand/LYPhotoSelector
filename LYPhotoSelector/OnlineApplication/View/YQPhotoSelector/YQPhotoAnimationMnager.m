@@ -2,8 +2,8 @@
 //  YQPhotoAnimationMnager.m
 //  PhotoSelect
 //
-//  Created by Mopon on 16/5/4.
-//  Copyright © 2016年 Mopon. All rights reserved.
+//  Created by PINE on 16/5/4.
+//  Copyright © 2016年 PINE. All rights reserved.
 //
 
 #import "YQPhotoAnimationMnager.h"
