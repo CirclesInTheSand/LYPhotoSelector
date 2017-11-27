@@ -22,5 +22,4 @@
 @property (nonatomic,weak)id <MaterialCellProtocol>delegate;
 
 - (void)fillCellWithModel:(CredentialsModel *)model;
-- (void)reuseCellWithModel:(MaterialModel *)model;
 @end

@@ -11,6 +11,9 @@
 		0AE4C9931EB4B74700AC0ED0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE4C9921EB4B74700AC0ED0 /* AppDelegate.m */; };
 		0AE4C99B1EB4B74700AC0ED0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AE4C99A1EB4B74700AC0ED0 /* Assets.xcassets */; };
 		6539F41C1FC7F64F0029B543 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6539F41B1FC7F64F0029B543 /* logo.png */; };
+		65510AFF1FCBF08B003593F4 /* CredentialFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65510AFE1FCBF08B003593F4 /* CredentialFooterView.m */; };
+		65510B021FCBF22A003593F4 /* OnlineApplicationViewController+TableViewDelegateMethods.m in Sources */ = {isa = PBXBuildFile; fileRef = 65510B011FCBF22A003593F4 /* OnlineApplicationViewController+TableViewDelegateMethods.m */; };
+		65510B051FCBF77F003593F4 /* SubmitBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 65510B041FCBF77F003593F4 /* SubmitBottomView.m */; };
 		686FF18A1F960603007F90AA /* OnlineSectionHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 686FF1891F960603007F90AA /* OnlineSectionHeaderView.m */; };
 		68CF6C231F7917E700BA19AB /* OnlineApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CF6C221F7917E700BA19AB /* OnlineApplicationViewController.m */; };
 		68CF6C2B1F79248300BA19AB /* NSString+YYQExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 68CF6C2A1F79248300BA19AB /* NSString+YYQExtension.m */; };
@@ -64,6 +67,12 @@
 		2F73697B6AFCFBD937A064AC /* Pods-LYPhotoSelector.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LYPhotoSelector.release.xcconfig"; path = "Pods/Target Support Files/Pods-LYPhotoSelector/Pods-LYPhotoSelector.release.xcconfig"; sourceTree = "<group>"; };
 		5D604D974DCC06C208AE14A1 /* Pods-LYPhotoSelector.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LYPhotoSelector.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LYPhotoSelector/Pods-LYPhotoSelector.debug.xcconfig"; sourceTree = "<group>"; };
 		6539F41B1FC7F64F0029B543 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		65510AFD1FCBF08B003593F4 /* CredentialFooterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CredentialFooterView.h; sourceTree = "<group>"; };
+		65510AFE1FCBF08B003593F4 /* CredentialFooterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CredentialFooterView.m; sourceTree = "<group>"; };
+		65510B001FCBF22A003593F4 /* OnlineApplicationViewController+TableViewDelegateMethods.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OnlineApplicationViewController+TableViewDelegateMethods.h"; sourceTree = "<group>"; };
+		65510B011FCBF22A003593F4 /* OnlineApplicationViewController+TableViewDelegateMethods.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "OnlineApplicationViewController+TableViewDelegateMethods.m"; sourceTree = "<group>"; };
+		65510B031FCBF77F003593F4 /* SubmitBottomView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SubmitBottomView.h; sourceTree = "<group>"; };
+		65510B041FCBF77F003593F4 /* SubmitBottomView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SubmitBottomView.m; sourceTree = "<group>"; };
 		686FF1881F960603007F90AA /* OnlineSectionHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnlineSectionHeaderView.h; sourceTree = "<group>"; };
 		686FF1891F960603007F90AA /* OnlineSectionHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OnlineSectionHeaderView.m; sourceTree = "<group>"; };
 		68CF6C211F7917E700BA19AB /* OnlineApplicationViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OnlineApplicationViewController.h; sourceTree = "<group>"; };
@@ -231,6 +240,10 @@
 				68E292D21F79D75E0096AEE9 /* SubMaterialView.m */,
 				686FF1881F960603007F90AA /* OnlineSectionHeaderView.h */,
 				686FF1891F960603007F90AA /* OnlineSectionHeaderView.m */,
+				65510AFD1FCBF08B003593F4 /* CredentialFooterView.h */,
+				65510AFE1FCBF08B003593F4 /* CredentialFooterView.m */,
+				65510B031FCBF77F003593F4 /* SubmitBottomView.h */,
+				65510B041FCBF77F003593F4 /* SubmitBottomView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -249,6 +262,8 @@
 			children = (
 				68CF6C211F7917E700BA19AB /* OnlineApplicationViewController.h */,
 				68CF6C221F7917E700BA19AB /* OnlineApplicationViewController.m */,
+				65510B001FCBF22A003593F4 /* OnlineApplicationViewController+TableViewDelegateMethods.h */,
+				65510B011FCBF22A003593F4 /* OnlineApplicationViewController+TableViewDelegateMethods.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -513,7 +528,10 @@
 				68E292EF1F7A29030096AEE9 /* YQPhotoSelectorHUD.m in Sources */,
 				68E292F21F7A29040096AEE9 /* YQPhotoAnimationMnager.m in Sources */,
 				68E292F51F7A29040096AEE9 /* YQPhotoSelectController.m in Sources */,
+				65510B021FCBF22A003593F4 /* OnlineApplicationViewController+TableViewDelegateMethods.m in Sources */,
+				65510B051FCBF77F003593F4 /* SubmitBottomView.m in Sources */,
 				68E293081F7A2D470096AEE9 /* MJPhotoBrowser.m in Sources */,
+				65510AFF1FCBF08B003593F4 /* CredentialFooterView.m in Sources */,
 				68E292F01F7A29030096AEE9 /* YQPhotoSelectorToolView.m in Sources */,
 				0AE4C9901EB4B74700AC0ED0 /* main.m in Sources */,
 				68E292F41F7A29040096AEE9 /* YQPhotoPickViewController.m in Sources */,
