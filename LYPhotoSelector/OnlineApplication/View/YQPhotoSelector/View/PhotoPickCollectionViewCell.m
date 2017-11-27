@@ -61,6 +61,7 @@
     
     
     [[PHImageManager defaultManager] requestImageForAsset:asset targetSize:CGSizeMake(200,200) contentMode:PHImageContentModeDefault options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+       
         
         if (result == nil) {
     

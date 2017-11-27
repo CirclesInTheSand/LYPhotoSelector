@@ -70,7 +70,7 @@
     
     PHFetchResult *result = [[YQPhotoHelper shareYQPhotoHelper]GetFetchResult:self.assetCollection];
     
-    self.dataSource = [[YQPhotoHelper shareYQPhotoHelper]GetPhotoAssets:result];
+    self.dataSource = [[YQPhotoHelper shareYQPhotoHelper] GetPhotoAssets:result];
     
     UICollectionViewFlowLayout *flowLayout= [[UICollectionViewFlowLayout alloc]init];
     
@@ -118,11 +118,11 @@
     NSMutableArray *selectPhotos = [NSMutableArray array];
     
     self.originPhotos = selectPhotos;
-    
+   
     [arr enumerateObjectsUsingBlock:^(PHAsset * obj, NSUInteger idx, BOOL * _Nonnull stop) {
         
        __block UIImage *originalImage;
-        [[PHImageManager defaultManager]requestImageForAsset:obj targetSize:CGSizeMake(obj.pixelWidth, obj.pixelHeight) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [[PHImageManager defaultManager] requestImageForAsset:obj targetSize:CGSizeMake(obj.pixelWidth, obj.pixelHeight) contentMode:PHImageContentModeAspectFill options:nil resultHandler:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
             
             if (![[info objectForKey:PHImageResultIsDegradedKey] boolValue]) {
                 originalImage = result;

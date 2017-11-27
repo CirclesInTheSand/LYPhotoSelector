@@ -1,2 +1,2 @@
 # LYPhotoSelector
-阳仔最旧选择照片框架2233333333333
+The most fantastic and sexy photoSelector demo you've ever seen, I bet.

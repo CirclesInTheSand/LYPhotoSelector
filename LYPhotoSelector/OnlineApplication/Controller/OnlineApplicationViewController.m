@@ -134,7 +134,8 @@ static NSString *onlineCellIdentifier = @"onlineCell";
         for(NSInteger countIndex = 0; countIndex < responseImageObjects.count ; countIndex ++)
         {
             UIImage* image = responseImageObjects[countIndex];
-            
+            PHAsset *photoAsset = [responsePHAssetObjects objectAtIndex:countIndex];
+            NSLog(@"fileNameIs:%@",[photoAsset valueForKey:@"filename"]);
             PhotoModel *newPhotoModel =  [[PhotoModel alloc] initWithUIImage:image credentialsSection:self.currentSelectedMaterialBtn.photoModel.credentialsSection materialType:self.currentSelectedMaterialBtn.photoModel.modelType];
             
             MaterialModel *materialModel = self.dataSource[self.currentSelectedMaterialBtn.photoModel.modelType];
@@ -147,7 +148,6 @@ static NSString *onlineCellIdentifier = @"onlineCell";
     //    [self.applicationTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
    //     [self.applicationTableView reloadData];
         [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.currentSelectedMaterialBtn.photoModel.credentialsSection inSection:self.currentSelectedMaterialBtn.photoModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
-        [self.applicationTableView reloadData];
     }];
     
 }
@@ -330,7 +330,7 @@ static NSString *onlineCellIdentifier = @"onlineCell";
     UITableViewMaterialCell *onlineCell = [tableView dequeueReusableCellWithIdentifier:onlineCellIdentifier];
     onlineCell.delegate = self;
     [onlineCell fillCellWithModel:credentialModel];
-    NSLog(@"%@",indexPath);
+    
     return onlineCell;
 }
 

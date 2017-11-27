@@ -10,7 +10,7 @@
 #import "YQSelectorCommon.h"
 
 //回调block
-typedef void (^YQPhotoResult)(NSMutableArray * responseImageObjects, NSMutableArray *responsePHAssetObjects);
+typedef void (^YQPhotoResult)(NSMutableArray <UIImage *>* responseImageObjects, NSMutableArray <PHAsset *>*responsePHAssetObjects);
 
 @interface YQPhotoPickViewController : UIViewController
 
