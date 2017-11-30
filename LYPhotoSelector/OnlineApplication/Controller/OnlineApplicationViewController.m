@@ -114,7 +114,7 @@
 /**
  访问系统相册
  */
-- (void)callSystemPhotoLibrary{
+- (void)callSystemPhotoLibraryWithMaterialBtn:(MaterialBtn *)addBtn{
     
     YQPhotoSelectController *photoSelect = [[YQPhotoSelectController alloc]init];
     photoSelect.maxCount = self.availablePhotoNum;
@@ -127,10 +127,10 @@
             UIImage* image = responseImageObjects[countIndex];
             PHAsset *photoAsset = [responsePHAssetObjects objectAtIndex:countIndex];
             NSLog(@"fileNameIs:%@",[photoAsset valueForKey:@"filename"]);
-            PhotoModel *newPhotoModel =  [[PhotoModel alloc] initWithUIImage:image credentialsSection:self.currentSelectedMaterialBtn.photoModel.credentialsSection materialType:self.currentSelectedMaterialBtn.photoModel.modelType];
+            PhotoModel *newPhotoModel =  [[PhotoModel alloc] initWithUIImage:image credentialsSection:addBtn.photoModel.credentialsSection materialType:addBtn.photoModel.modelType];
             
-            MaterialModel *materialModel = self.dataSource[self.currentSelectedMaterialBtn.photoModel.modelType];
-            NSMutableArray *photoArray = (materialModel.credentialsArray[self.currentSelectedMaterialBtn.photoModel.credentialsSection]).photoModelsArray;
+            MaterialModel *materialModel = self.dataSource[addBtn.photoModel.modelType];
+            NSMutableArray *photoArray = (materialModel.credentialsArray[addBtn.photoModel.credentialsSection]).photoModelsArray;
             [photoArray addObject:newPhotoModel];
             
         }
@@ -138,7 +138,7 @@
      //   NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:self.currentSelectedMaterialBtn.modelType];
     //    [self.applicationTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
    //     [self.applicationTableView reloadData];
-        [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.currentSelectedMaterialBtn.photoModel.credentialsSection inSection:self.currentSelectedMaterialBtn.photoModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
+        [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:addBtn.photoModel.credentialsSection inSection:addBtn.photoModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
     
 }

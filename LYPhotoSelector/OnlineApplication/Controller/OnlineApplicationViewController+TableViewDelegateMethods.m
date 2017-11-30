@@ -101,8 +101,7 @@
         return;
     }
     self.availablePhotoNum = subMaterial.maximumPhotoNum - subMaterial.photoModelsArray.count;
-    self.currentSelectedMaterialBtn = btn;
-    [self callSystemPhotoLibrary];
+    [self callSystemPhotoLibraryWithMaterialBtn:btn];
 }
 
 - (void)didClickShowBtn:(MaterialBtn *)btn{
@@ -139,7 +138,13 @@
     [browser show];
 }
 
+/**
+ 点击了删除按钮
+
+ @param btn <#btn description#>
+ */
 - (void)didClickDeleteIcon:(MaterialBtn *)btn{
+    
     PhotoModel *selectedPhotoModel = btn.photoModel;
     NSInteger indexOfPhotoModel = selectedPhotoModel.photoRow;
     MaterialModel *materialModel = self.dataSource[selectedPhotoModel.modelType];
@@ -149,7 +154,7 @@
     //    NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:materialModel.modelType];
     //    [self.applicationTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self.currentSelectedMaterialBtn.photoModel.credentialsSection inSection:self.currentSelectedMaterialBtn.photoModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:btn.photoModel.credentialsSection inSection:btn.photoModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
     
 }
 @end

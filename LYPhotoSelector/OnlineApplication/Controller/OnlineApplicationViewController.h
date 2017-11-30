@@ -20,12 +20,11 @@ static NSString *onlineCellIdentifier = @"onlineCell";
 @interface OnlineApplicationViewController : UIViewController
 @property (nonatomic,strong) NSMutableArray *dataSource; /**< tableView的数据源 */
 @property (nonatomic,strong) CredentialFooterView *sectionFooterView; /**< 材料section的脚视图 */
-@property (nonatomic,strong) MaterialBtn *currentSelectedMaterialBtn; /**< 目前选中的照片材料按钮 */
 @property (nonatomic,assign) NSInteger availablePhotoNum; /**< row中的还可选择张数 */
 @property (nonatomic,strong) UITableView *applicationTableView; /**< 应用的表视图 */
 
 /**
  访问系统相册
  */
-- (void)callSystemPhotoLibrary;
+- (void)callSystemPhotoLibraryWithMaterialBtn:(MaterialBtn *)addBtn;
 @end
