@@ -21,5 +21,4 @@
 
 - (instancetype)initWithSubMaterialModel:(CredentialsModel *)submaterialModel modelType:(MaterialModelType)materialType;
 - (CGFloat)estimatedHeight;
-- (void)reuseModel:(CredentialsModel *)submaterialModel modelType:(MaterialModelType)materialType;
 @end

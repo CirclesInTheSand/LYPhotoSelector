@@ -43,50 +43,74 @@
         firstTitleLabel.textColor = RGB(51, 51, 51);
         firstTitleLabel.numberOfLines = 0;
         [firstTitleLabel sizeToFit];
-        firstTitleLabel.frame = CGRectMake(OriginBtnCellX, AdaptedHeight(15), Screen_Width, firstTitleLabel.frame.size.height);
+    
         [self addSubview:firstTitleLabel];
-        
-        
-        CGFloat maxTitleLabelY = CGRectGetMaxY(firstTitleLabel.frame) + OriginBtnYGap;
-        CGFloat maxBtnY = 0;
-        NSInteger arrayCount = submaterialModel.photoModelsArray.count + 1;
-        for (NSInteger index = 0; index < arrayCount; index ++){
-            
-            if(index == arrayCount - 1){
-                //如果是最后一个,并且最大数量已经达到了上限，那么不需要选中按钮
-                if(submaterialModel.maximumPhotoNum == arrayCount - 1){
-                    break;
-                }
-            }
-            
-            MaterialBtn *btn = [MaterialBtn buttonWithType:UIButtonTypeCustom];
-            
-            btn.frame = CGRectMake(OriginBtnCellX + index % 4 * (OriginBtnXGap + MaterialBtnWidth), maxTitleLabelY + (index / 4) * (OriginBtnYGap + MaterialBtnHeight), MaterialBtnWidth, MaterialBtnHeight);
-            maxBtnY = CGRectGetMaxY(btn.frame);
-            
-            //不是最后一个则是选中状态
-            btn.selected = !(arrayCount - 1 == index);
-        
-            if(index != arrayCount - 1){ //如果不是最后一个，赋值
-                btn.backgroundColor = [UIColor clearColor];
-                PhotoModel *photoModel = submaterialModel.photoModelsArray[index];
-                [btn setBackgroundImage:photoModel.photoImageObject forState:UIControlStateNormal];
-            }
-            
-            [btn addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
-            [btn.deleteBtn addTarget:self action:@selector(deleteIconClicked:) forControlEvents:UIControlEventTouchUpInside];
-            btn.photoModel.modelType = materialType;
-            btn.photoModel.credentialsSection = submaterialModel.credentialsSection;
-            btn.photoModel.photoRow = index;
-            [self addSubview:btn];
-            self.maximumHeight = maxBtnY;
-        }
+        [firstTitleLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(OriginBtnCellX);
+            make.top.mas_equalTo(AdaptedHeight(15));
+            make.width.mas_equalTo(self);
+        }];
+        [self addMutipuleBtnWithSubMaterialModel:submaterialModel type:materialType lastLabel:firstTitleLabel];
     }
     return self;
 }
 
-- (void)reuseModel:(CredentialsModel *)submaterialModel modelType:(MaterialModelType)materialType{
+- (void)addMutipuleBtnWithSubMaterialModel:(CredentialsModel *)model type:(MaterialModelType)type lastLabel:(UILabel *)descLabel{
+    UIButton *lastBtn = nil;
+    NSInteger totalCount = model.photoModelsArray.count + 1; /**< item总个数,+1 是因为有一个+号按钮*/
+    NSInteger maxRowCount = 4; /**< 每行最大个数 */
+    CGFloat leadSpacing = OriginBtnCellX; /**< 左边缘距离 */
+    CGFloat tailSpacing = OriginBtnCellX; /**< 右边缘距离 */
+    CGSize itemSize = CGSizeMake(MaterialBtnWidth, MaterialBtnHeight);
+    CGFloat fixedHorizontalSpacing = ([UIScreen mainScreen].bounds.size.width - leadSpacing - tailSpacing - maxRowCount * itemSize.width) / (CGFloat)(maxRowCount - 1); /**< item之间固定水平间隙 */
+    CGFloat fixedVerticalSpacing = OriginBtnYGap; /**< item之间固定垂直间隙 */
     
+    for (NSInteger itemIndex = 0; itemIndex < totalCount; itemIndex++) {
+        
+        if(itemIndex == totalCount - 1){
+            /**< 如果是最后一个,并且最大数量已经达到了上限，那么不需要选中按钮 */
+            if(model.maximumPhotoNum == totalCount - 1){
+                break;
+            }
+        }
+
+        MaterialBtn *button = [MaterialBtn buttonWithType:UIButtonTypeCustom];
+        button.selected = !(totalCount - 1 == itemIndex);
+        if(itemIndex != totalCount - 1){ //如果不是最后一个按钮，才给加背景图.
+            button.backgroundColor = [UIColor clearColor];
+            PhotoModel *photoModel = model.photoModelsArray[itemIndex];
+            [button setBackgroundImage:photoModel.photoImageObject forState:UIControlStateNormal];
+        }
+        
+        /**< 是不是最后一个都给点击事件,根据按钮的selected来判断点击事件*/
+        [button addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [button.deleteBtn addTarget:self action:@selector(deleteIconClicked:) forControlEvents:UIControlEventTouchUpInside];
+        button.photoModel.modelType = type;
+        button.photoModel.credentialsSection = model.credentialsSection;
+        button.photoModel.photoRow = itemIndex;
+
+        [self addSubview:button];
+        
+        CGFloat colTop = (fixedVerticalSpacing + itemIndex / maxRowCount * (fixedVerticalSpacing + itemSize.height));
+        [button mas_makeConstraints:^(MASConstraintMaker *make) {
+    
+            make.size.mas_equalTo(itemSize);
+            make.top.mas_equalTo(descLabel.mas_bottom).offset(colTop);
+        
+            if (itemIndex % maxRowCount == 0) {
+                make.left.mas_equalTo(leadSpacing);
+            }else{
+                make.left.equalTo(lastBtn.mas_right).offset(fixedHorizontalSpacing);
+            }
+            
+            if (itemIndex % maxRowCount == maxRowCount - 1) {
+                make.right.mas_equalTo(self).offset(-tailSpacing);
+            }
+            
+        }];
+        lastBtn = button;
+        self.maximumHeight = colTop + MaterialBtnHeight;
+    }
 }
 
 - (void)deleteIconClicked:(UIButton *)sender{

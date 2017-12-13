@@ -11,6 +11,5 @@
 
 @interface OnlineSectionHeaderView : UITableViewHeaderFooterView
 @property (nonatomic ,copy)NSString *titleString; /**<标题文字*/
-- (instancetype)initWithModel:(MaterialModel *)materialModel;
 - (instancetype)initWithReuseIdentifier:(NSString *)reuseIdentifier model:(MaterialModel *)materialModel;
 @end

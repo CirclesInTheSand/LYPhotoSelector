@@ -16,44 +16,45 @@
         self.frame = CGRectMake(0, 0, Screen_Width, AdaptedHeight(39));
         self.contentView.backgroundColor = UIColor.whiteColor;
         
-        UIView *straightLine = [[UIView alloc] initWithFrame:CGRectMake(AdaptedWidth(16), AdaptedHeight(12), AdaptedWidth(2), AdaptedHeight(16))];
+        UIView *straightLine = [[UIView alloc] init];
         straightLine.backgroundColor = RGB(197, 8, 25);
         [self.contentView addSubview:straightLine];
+        /**< 灰线布局 */
+        [straightLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(AdaptedWidth(16));
+            make.top.mas_equalTo(AdaptedHeight(12));
+            make.width.mas_equalTo(AdaptedWidth(2));
+            make.height.mas_equalTo(AdaptedHeight(16));
+        }];
         
-        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(straightLine.frame) + AdaptedWidth(4), AdaptedHeight(16), 100, AdaptedHeight(8))];
+        
+        UILabel *textLabel = [[UILabel alloc] init];
         textLabel.font = kFontSize(16);
         textLabel.text = materialModel.cellTitle;
         textLabel.textColor = RGB(51, 51, 51);
         textLabel.tag = 999;
         [self.contentView addSubview:textLabel];
         
-        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(AdaptedWidth(9), CGRectGetHeight(self.frame) - SINGLE_LINE_WIDTH, Screen_Width - AdaptedWidth(18), SINGLE_LINE_WIDTH)];
+        /**< 标签布局 */
+        [textLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(straightLine.mas_left).offset(AdaptedWidth(4));
+            make.top.mas_equalTo(AdaptedHeight(16));
+            make.width.mas_equalTo(100);
+            make.height.mas_equalTo(AdaptedHeight(8));
+        }];
+        
+        
+        UIView *bottomLine = [[UIView alloc] init];
         bottomLine.backgroundColor = RGB(191, 191, 191);
         [self.contentView addSubview:bottomLine];
-    }
-    return self;
-}
-
-- (instancetype)initWithModel:(MaterialModel *)materialModel{
-    self = [super init];
-    if(self){
-        self.frame = CGRectMake(0, 0, Screen_Width, AdaptedHeight(40));
-        self.backgroundColor = UIColor.whiteColor;
         
-        UIView *straightLine = [[UIView alloc] initWithFrame:CGRectMake(AdaptedWidth(16), AdaptedHeight(12), AdaptedWidth(2), AdaptedHeight(16))];
-        straightLine.backgroundColor = RGB(197, 8, 25);
-        [self addSubview:straightLine];
-        
-        UILabel *textLabel = [[UILabel alloc] initWithFrame:CGRectMake(CGRectGetMaxX(straightLine.frame) + AdaptedWidth(4), AdaptedHeight(16), 100, AdaptedHeight(8))];
-        textLabel.font = kFontSize(16);
-        textLabel.text = materialModel.cellTitle;
-        textLabel.textColor = RGB(51, 51, 51);
-        textLabel.tag = 999;
-        [self addSubview:textLabel];
-        
-        UIView *bottomLine = [[UIView alloc] initWithFrame:CGRectMake(AdaptedWidth(9), CGRectGetHeight(self.frame) - SINGLE_LINE_WIDTH, Screen_Width - AdaptedWidth(18), SINGLE_LINE_WIDTH)];
-        bottomLine.backgroundColor = RGB(191, 191, 191);
-        [self addSubview:bottomLine];
+        [bottomLine mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.left.mas_equalTo(9);
+            make.bottom.mas_equalTo(self).offset(-SINGLE_LINE_WIDTH);
+            make.right.mas_equalTo(self).offset(-AdaptedWidth(8));
+            make.height.mas_equalTo(SINGLE_LINE_WIDTH);
+            
+        }];
     }
     return self;
 }

@@ -15,8 +15,8 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
-    if(section == 0)return AdaptedHeight(120);
-    return AdaptedHeight(8);
+    if(section == 0) return AdaptedHeight(120);
+    return AdaptedHeight(24);
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section{
@@ -30,11 +30,18 @@
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    UIView *clearView = [[UIView alloc] init];
+    UIView *bgWhiteView = [[UIView alloc] init];
+    [clearView addSubview:bgWhiteView];
+    bgWhiteView.backgroundColor = [UIColor whiteColor];
+    [bgWhiteView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.mas_equalTo(UIEdgeInsetsMake(0, 0, AdaptedHeight(8), 0));
+    }];
+    
     if(section == 0){
         return self.sectionFooterView;
-        
     }
-    return nil;
+    return clearView;
 }
 
 
@@ -52,7 +59,7 @@
     }
     originHeight += (linePhotoCount / 4 * integerBtnDistanceY);
     
-    originHeight += AdaptedHeight(140);//349
+    originHeight += AdaptedHeight(124);//349
     
     return originHeight;
 }

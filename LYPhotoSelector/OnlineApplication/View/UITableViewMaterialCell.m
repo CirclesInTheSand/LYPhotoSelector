@@ -59,9 +59,13 @@
     }
     
     SubMaterialView *materialView = [[SubMaterialView alloc] initWithSubMaterialModel:model modelType:model.modelType];
-    materialView.frame = CGRectMake(0, 0, Screen_Width, [materialView estimatedHeight]);
     materialView.delegate = self;
     [self.contentView addSubview:materialView];
     
+    [materialView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.top.mas_equalTo(0);
+        make.width.mas_equalTo(self);
+        make.height.mas_equalTo([materialView estimatedHeight]);
+    }];
 }
 @end

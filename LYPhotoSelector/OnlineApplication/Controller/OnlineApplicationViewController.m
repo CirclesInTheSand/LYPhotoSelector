@@ -63,9 +63,25 @@
  添加子视图
  */
 - (void)setUpSubviews{
-    
+
     [self.view addSubview:self.applicationTableView];
+    
+    /**< 表视图的位置调整 */
+    [self.applicationTableView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.top.mas_equalTo(64);
+        make.width.mas_equalTo(self.view);
+        make.height.mas_equalTo(Screen_Height - 64 - AdaptedHeight(72));
+    }];
+    
+    /**< 底部视图位置调整 */
     [self.view addSubview:self.bottomView];
+    [self.bottomView mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.left.mas_equalTo(0);
+        make.bottom.mas_equalTo(self.view);
+        make.width.mas_equalTo(self.view);
+        make.height.mas_equalTo(AdaptedHeight(72));
+    }];
     
     [self.applicationTableView registerClass:[UITableViewMaterialCell class] forCellReuseIdentifier:onlineCellIdentifier];
     
@@ -135,9 +151,6 @@
             
         }
 
-     //   NSIndexSet *indexSet = [[NSIndexSet alloc] initWithIndex:self.currentSelectedMaterialBtn.modelType];
-    //    [self.applicationTableView reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
-   //     [self.applicationTableView reloadData];
         [self.applicationTableView reloadRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:addBtn.photoModel.credentialsSection inSection:addBtn.photoModel.modelType]] withRowAnimation:UITableViewRowAnimationAutomatic];
     }];
     
@@ -151,7 +164,7 @@
 #pragma mark -- 重写方法
 - (UITableView *)applicationTableView{
     if(_applicationTableView == nil){
-        _applicationTableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 64, Screen_Width, Screen_Height - 64 - AdaptedHeight(72)) style:UITableViewStyleGrouped];
+        _applicationTableView = [[UITableView alloc] initWithFrame:CGRectZero style:UITableViewStyleGrouped];
         _applicationTableView.backgroundColor = RGB(240, 240, 240);
         _applicationTableView.delegate = self;
         _applicationTableView.dataSource = self;
@@ -163,7 +176,7 @@
 
 - (UIView *)bottomView{
     if(!_bottomView){
-        _bottomView = [[SubmitBottomView alloc] initWithFrame:CGRectMake(0, Screen_Height - AdaptedHeight(72), Screen_Width, AdaptedHeight(72))];
+        _bottomView = [[SubmitBottomView alloc] init];
         [_bottomView addTarget:self action:@selector(bottomBtnClicked:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _bottomView;

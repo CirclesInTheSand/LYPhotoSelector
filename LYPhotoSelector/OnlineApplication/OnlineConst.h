@@ -10,6 +10,8 @@
 #define OnlineConst_h
 
 #import "NSString+YYQExtension.h"
+#import "Masonry.h"
+
 //屏幕高度
 #define Screen_Height      [[UIScreen mainScreen] bounds].size.height
 //屏幕宽度
