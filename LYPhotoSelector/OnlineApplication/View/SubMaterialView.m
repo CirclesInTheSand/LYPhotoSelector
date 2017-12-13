@@ -109,7 +109,7 @@
             
         }];
         lastBtn = button;
-        self.maximumHeight = colTop + MaterialBtnHeight;
+        self.maximumHeight = AdaptedHeight(35) + colTop + MaterialBtnHeight;
     }
 }
 
